@@ -1,0 +1,28 @@
+{
+  "model": "xlm-roberta-base",
+  "train_variant": "augmented",
+  "test_set": "bidwesh_chittagong",
+  "tag": "full",
+  "labels": [
+    "not_hate",
+    "hate"
+  ],
+  "n": 3054,
+  "accuracy": 0.8290766208251473,
+  "precision_macro": 0.8292166521781126,
+  "recall_macro": 0.8289370572680422,
+  "f1_macro": 0.8289967562557925,
+  "f1_weighted": 0.8290403187481679,
+  "f1_not_hate": 0.8326923076923077,
+  "f1_hate": 0.8253012048192772,
+  "confusion_matrix": [
+    [
+      1299,
+      246
+    ],
+    [
+      276,
+      1233
+    ]
+  ]
+}

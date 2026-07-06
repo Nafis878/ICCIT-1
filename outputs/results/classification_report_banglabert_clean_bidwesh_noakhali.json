@@ -1,0 +1,28 @@
+{
+  "model": "banglabert",
+  "train_variant": "clean",
+  "test_set": "bidwesh_noakhali",
+  "tag": "full",
+  "labels": [
+    "not_hate",
+    "hate"
+  ],
+  "n": 3000,
+  "accuracy": 0.8863333333333333,
+  "precision_macro": 0.8885960159049313,
+  "recall_macro": 0.8866434118450248,
+  "f1_macro": 0.8862192365121692,
+  "f1_weighted": 0.8861904120520856,
+  "f1_not_hate": 0.8826161790017212,
+  "f1_hate": 0.8898222940226171,
+  "confusion_matrix": [
+    [
+      1282,
+      230
+    ],
+    [
+      111,
+      1377
+    ]
+  ]
+}

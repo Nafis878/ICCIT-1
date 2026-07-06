@@ -14,3 +14,4 @@ venv/
 
 # HF cache dirs sometimes created locally
 .cache/
+results.zip

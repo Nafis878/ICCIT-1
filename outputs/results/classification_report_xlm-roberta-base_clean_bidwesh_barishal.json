@@ -1,0 +1,28 @@
+{
+  "model": "xlm-roberta-base",
+  "train_variant": "clean",
+  "test_set": "bidwesh_barishal",
+  "tag": "full",
+  "labels": [
+    "not_hate",
+    "hate"
+  ],
+  "n": 2933,
+  "accuracy": 0.8926014319809069,
+  "precision_macro": 0.8929841414569019,
+  "recall_macro": 0.8929410019043047,
+  "f1_macro": 0.8926012322270584,
+  "f1_weighted": 0.8925984856116416,
+  "f1_not_hate": 0.8924547627176511,
+  "f1_hate": 0.8927477017364658,
+  "confusion_matrix": [
+    [
+      1307,
+      187
+    ],
+    [
+      128,
+      1311
+    ]
+  ]
+}

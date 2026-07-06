@@ -1,0 +1,28 @@
+{
+  "model": "banglabert",
+  "train_variant": "augmented",
+  "test_set": "bidwesh_chittagong",
+  "tag": "full",
+  "labels": [
+    "not_hate",
+    "hate"
+  ],
+  "n": 3054,
+  "accuracy": 0.8307138179436804,
+  "precision_macro": 0.8307652036595204,
+  "recall_macro": 0.8306169455757365,
+  "f1_macro": 0.8306588955190488,
+  "f1_weighted": 0.830694844742444,
+  "f1_not_hate": 0.8337085879704085,
+  "f1_hate": 0.8276092030676893,
+  "confusion_matrix": [
+    [
+      1296,
+      249
+    ],
+    [
+      268,
+      1241
+    ]
+  ]
+}
