@@ -116,7 +116,8 @@ python -m src.explainability.explain --model-dir outputs/models/banglabert --met
 ```
 
 Explains 10 correct + 10 incorrect test predictions → per-example HTML,
-`explanations_summary.json`, and an index in `outputs/explainability/`.
+`explanations_summary.json`, and an index in
+`outputs/explainability/<model-dir-name>/` (one subfolder per model).
 
 ## Repository layout
 

@@ -5,7 +5,7 @@ far as possible) and explains each with LIME (default) or SHAP. Works with
 both saved model kinds (sklearn joblib pipeline / HF transformer dir) via
 the predictors in src.evaluation.evaluate.
 
-Outputs (in outputs/explainability/):
+Outputs (in outputs/explainability/<model-dir-name>/):
 - lime_<row>_<correct|wrong>.html    per-example interactive report
 - explanations_summary.json          top +/- features per example
 - README.md                          index of generated files
@@ -134,7 +134,9 @@ def main() -> None:
     parser.add_argument("--seed", type=int, default=42)
     args = parser.parse_args()
     set_seed(args.seed)
-    ensure_dirs(EXPLAIN_DIR)
+    # Per-model subdir so explanations for several models can coexist.
+    out_dir = EXPLAIN_DIR / Path(args.model_dir).name
+    ensure_dirs(out_dir)
 
     predictor, meta = load_predictor(args.model_dir)
     proba_fn = make_proba_fn(predictor)
@@ -160,7 +162,7 @@ def main() -> None:
             weights, page = explain_shap(text_col, row, proba_fn,
                                          args.num_features)
         fname = f"{args.method}_{row_idx}_{kind}.html"
-        with open(EXPLAIN_DIR / fname, "w", encoding="utf-8") as f:
+        with open(out_dir / fname, "w", encoding="utf-8") as f:
             f.write(page)
         proba = proba_fn([row[text_col]])[0]
         summary.append({
@@ -186,7 +188,7 @@ def main() -> None:
          "note": ("weights are contributions toward the 'hate' class; "
                   "positive pushes toward hate, negative toward not_hate"),
          "examples": summary},
-        EXPLAIN_DIR / "explanations_summary.json",
+        out_dir / "explanations_summary.json",
     )
 
     index_lines = [
@@ -201,9 +203,9 @@ def main() -> None:
             f"- [{mark}] [`{s['file']}`]({s['file']}) — true "
             f"{s['true_label']}, pred {s['predicted_label']} "
             f"(p_hate={s['p_hate']})")
-    with open(EXPLAIN_DIR / "README.md", "w", encoding="utf-8") as f:
+    with open(out_dir / "README.md", "w", encoding="utf-8") as f:
         f.write("\n".join(index_lines) + "\n")
-    print(f"wrote {EXPLAIN_DIR / 'explanations_summary.json'} and README.md")
+    print(f"wrote {out_dir} (HTML + explanations_summary.json + README.md)")
 
 
 if __name__ == "__main__":

@@ -1,0 +1,960 @@
+{
+  "model": "banglabert",
+  "train_variant": "augmented",
+  "method": "lime",
+  "note": "weights are contributions toward the 'hate' class; positive pushes toward hate, negative toward not_hate",
+  "examples": [
+    {
+      "test_row": 1077,
+      "file": "lime_1077_correct.html",
+      "text": "চুরির টাকা",
+      "true_label": "not_hate",
+      "predicted_label": "not_hate",
+      "p_hate": 0.0145,
+      "correct": true,
+      "top_features_toward_hate": [
+        {
+          "token": "র",
+          "weight": -0.4826
+        },
+        {
+          "token": "চ",
+          "weight": -0.1792
+        },
+        {
+          "token": "ট",
+          "weight": -0.1315
+        },
+        {
+          "token": "ক",
+          "weight": -0.0606
+        }
+      ]
+    },
+    {
+      "test_row": 497,
+      "file": "lime_497_correct.html",
+      "text": "ভাই আমার একটা প্রশ্নকতটা পাপ করলে পাপন হওয়া যায়??",
+      "true_label": "not_hate",
+      "predicted_label": "not_hate",
+      "p_hate": 0.0049,
+      "correct": true,
+      "top_features_toward_hate": [
+        {
+          "token": "ভ",
+          "weight": -0.1101
+        },
+        {
+          "token": "আম",
+          "weight": -0.0997
+        },
+        {
+          "token": "প",
+          "weight": -0.0589
+        },
+        {
+          "token": "র",
+          "weight": 0.0448
+        },
+        {
+          "token": "রশ",
+          "weight": -0.0422
+        },
+        {
+          "token": "করল",
+          "weight": -0.0266
+        },
+        {
+          "token": "পন",
+          "weight": -0.0173
+        },
+        {
+          "token": "একট",
+          "weight": 0.0168
+        },
+        {
+          "token": "নকতট",
+          "weight": -0.0128
+        },
+        {
+          "token": "হওয",
+          "weight": -0.0106
+        }
+      ]
+    },
+    {
+      "test_row": 4054,
+      "file": "lime_4054_correct.html",
+      "text": "আমি মনে করি তাহাসান একজন পাপীষ্ট মহিলা মিথিলার হাত থেকে রক্ষা পেয়েছেন তাই তাকে মহান আল্লাহর কাছে শুকরিয়া আদায় উচিৎ",
+      "true_label": "not_hate",
+      "predicted_label": "not_hate",
+      "p_hate": 0.0047,
+      "correct": true,
+      "top_features_toward_hate": [
+        {
+          "token": "মহ",
+          "weight": -0.0395
+        },
+        {
+          "token": "ত",
+          "weight": -0.0318
+        },
+        {
+          "token": "ন",
+          "weight": -0.0253
+        },
+        {
+          "token": "আম",
+          "weight": -0.0219
+        },
+        {
+          "token": "শ",
+          "weight": -0.019
+        },
+        {
+          "token": "রক",
+          "weight": -0.0176
+        },
+        {
+          "token": "কর",
+          "weight": -0.0153
+        },
+        {
+          "token": "আল",
+          "weight": -0.0153
+        },
+        {
+          "token": "আদ",
+          "weight": -0.0149
+        },
+        {
+          "token": "ক",
+          "weight": 0.0039
+        }
+      ]
+    },
+    {
+      "test_row": 2730,
+      "file": "lime_2730_correct.html",
+      "text": "প্রধানমন্ত্রী মনে হয় দাবি মেনে নেওয়ার আগে বলে দিল যে আমার দলের লোকেরা সবাই ছত্রদের পক্ষে কথা বলো, তারা যা করে দেখাইছে তা আমরা কখনো করতে পারি নাই। সুতরাং ক্ষমতা যদি ওদের হাতে চইলা যায়।!! তা না হলে আয়মান সাদিক ও জাফর ইকবাল স্যারের মত মানুষদের কখনো অসহায়দের এই নুংরা রাস্তায় গাড়ি ছাড়া দেখা যায় কেমনে? বিদ্রঃ বোবা মানুষকে কথা বলতে দেখলে এত মজার মজার জোকস পড়া যায়।",
+      "true_label": "not_hate",
+      "predicted_label": "not_hate",
+      "p_hate": 0.0089,
+      "correct": true,
+      "top_features_toward_hate": [
+        {
+          "token": "স",
+          "weight": -0.1243
+        },
+        {
+          "token": "ম",
+          "weight": -0.0626
+        },
+        {
+          "token": "গ",
+          "weight": -0.0625
+        },
+        {
+          "token": "র",
+          "weight": 0.0612
+        },
+        {
+          "token": "খ",
+          "weight": -0.0553
+        },
+        {
+          "token": "অসহ",
+          "weight": -0.0516
+        },
+        {
+          "token": "য",
+          "weight": -0.0513
+        },
+        {
+          "token": "আম",
+          "weight": -0.0429
+        },
+        {
+          "token": "এই",
+          "weight": 0.0246
+        },
+        {
+          "token": "ড",
+          "weight": 0.0239
+        }
+      ]
+    },
+    {
+      "test_row": 2701,
+      "file": "lime_2701_correct.html",
+      "text": "কমেন্ট পড়ার জন্য আসছিলাম",
+      "true_label": "not_hate",
+      "predicted_label": "not_hate",
+      "p_hate": 0.0036,
+      "correct": true,
+      "top_features_toward_hate": [
+        {
+          "token": "আসছ",
+          "weight": -0.0149
+        },
+        {
+          "token": "পড",
+          "weight": -0.0141
+        },
+        {
+          "token": "য",
+          "weight": -0.0114
+        },
+        {
+          "token": "ম",
+          "weight": -0.0092
+        },
+        {
+          "token": "কম",
+          "weight": -0.0057
+        },
+        {
+          "token": "ল",
+          "weight": -0.0013
+        },
+        {
+          "token": "ট",
+          "weight": -0.0009
+        },
+        {
+          "token": "জন",
+          "weight": -0.0009
+        },
+        {
+          "token": "ন",
+          "weight": -0.0002
+        },
+        {
+          "token": "র",
+          "weight": 0.0002
+        }
+      ]
+    },
+    {
+      "test_row": 1347,
+      "file": "lime_1347_correct.html",
+      "text": "এটা শুদু বাংলাদেই সম্বভ অপরাধ করে আবার নিজেই তন্দথ কারি এ গুলা হাসিনার পালিথ কুকুর",
+      "true_label": "hate",
+      "predicted_label": "hate",
+      "p_hate": 0.9923,
+      "correct": true,
+      "top_features_toward_hate": [
+        {
+          "token": "ক",
+          "weight": 0.2941
+        },
+        {
+          "token": "দ",
+          "weight": 0.0943
+        },
+        {
+          "token": "র",
+          "weight": 0.0896
+        },
+        {
+          "token": "ব",
+          "weight": -0.0385
+        },
+        {
+          "token": "আব",
+          "weight": -0.0338
+        },
+        {
+          "token": "ল",
+          "weight": 0.0221
+        },
+        {
+          "token": "প",
+          "weight": -0.0214
+        },
+        {
+          "token": "কর",
+          "weight": -0.0196
+        },
+        {
+          "token": "স",
+          "weight": -0.0134
+        },
+        {
+          "token": "গ",
+          "weight": -0.013
+        }
+      ]
+    },
+    {
+      "test_row": 3545,
+      "file": "lime_3545_correct.html",
+      "text": "বোকাচুদা ভিডিও চোদায়চো",
+      "true_label": "hate",
+      "predicted_label": "hate",
+      "p_hate": 0.9934,
+      "correct": true,
+      "top_features_toward_hate": [
+        {
+          "token": "চ",
+          "weight": 0.5195
+        },
+        {
+          "token": "দ",
+          "weight": 0.1403
+        },
+        {
+          "token": "ব",
+          "weight": 0.1128
+        },
+        {
+          "token": "ভ",
+          "weight": -0.0783
+        },
+        {
+          "token": "ও",
+          "weight": -0.0582
+        },
+        {
+          "token": "য",
+          "weight": -0.0157
+        },
+        {
+          "token": "ড",
+          "weight": 0.0113
+        },
+        {
+          "token": "ক",
+          "weight": -0.005
+        }
+      ]
+    },
+    {
+      "test_row": 1518,
+      "file": "lime_1518_correct.html",
+      "text": "সানজিদা অফিস সহকারী হলে কি হবে খুব সেক্সি আছে তাই এই ডিসি নিজেকে নিয়ন্ত্রণ করতে পারে নি",
+      "true_label": "hate",
+      "predicted_label": "hate",
+      "p_hate": 0.7105,
+      "correct": true,
+      "top_features_toward_hate": [
+        {
+          "token": "ক",
+          "weight": 0.4904
+        },
+        {
+          "token": "স",
+          "weight": 0.4253
+        },
+        {
+          "token": "জ",
+          "weight": -0.0571
+        },
+        {
+          "token": "নজ",
+          "weight": -0.0537
+        },
+        {
+          "token": "র",
+          "weight": 0.0489
+        },
+        {
+          "token": "দ",
+          "weight": -0.0442
+        },
+        {
+          "token": "আছ",
+          "weight": -0.0422
+        },
+        {
+          "token": "সহক",
+          "weight": -0.0388
+        },
+        {
+          "token": "হব",
+          "weight": -0.0378
+        },
+        {
+          "token": "ব",
+          "weight": -0.0352
+        }
+      ]
+    },
+    {
+      "test_row": 3314,
+      "file": "lime_3314_correct.html",
+      "text": "তর রেট কত মাগি",
+      "true_label": "hate",
+      "predicted_label": "hate",
+      "p_hate": 0.9939,
+      "correct": true,
+      "top_features_toward_hate": [
+        {
+          "token": "গ",
+          "weight": 0.3959
+        },
+        {
+          "token": "র",
+          "weight": 0.219
+        },
+        {
+          "token": "ট",
+          "weight": 0.1763
+        },
+        {
+          "token": "ম",
+          "weight": 0.0971
+        },
+        {
+          "token": "কত",
+          "weight": 0.0886
+        },
+        {
+          "token": "তর",
+          "weight": 0.0654
+        }
+      ]
+    },
+    {
+      "test_row": 629,
+      "file": "lime_629_correct.html",
+      "text": "এ সব মাগীদের কাজ নাই।",
+      "true_label": "hate",
+      "predicted_label": "hate",
+      "p_hate": 0.9937,
+      "correct": true,
+      "top_features_toward_hate": [
+        {
+          "token": "গ",
+          "weight": 0.8073
+        },
+        {
+          "token": "ন",
+          "weight": -0.087
+        },
+        {
+          "token": "ক",
+          "weight": -0.0651
+        },
+        {
+          "token": "এ",
+          "weight": 0.0465
+        },
+        {
+          "token": "জ",
+          "weight": -0.0423
+        },
+        {
+          "token": "দ",
+          "weight": 0.0273
+        },
+        {
+          "token": "ম",
+          "weight": 0.0255
+        },
+        {
+          "token": "র",
+          "weight": 0.0162
+        },
+        {
+          "token": "ই",
+          "weight": -0.0141
+        },
+        {
+          "token": "সব",
+          "weight": -0.0088
+        }
+      ]
+    },
+    {
+      "test_row": 2180,
+      "file": "lime_2180_wrong.html",
+      "text": "কাইফা হালুম",
+      "true_label": "not_hate",
+      "predicted_label": "hate",
+      "p_hate": 0.8392,
+      "correct": false,
+      "top_features_toward_hate": [
+        {
+          "token": "ল",
+          "weight": 0.4956
+        },
+        {
+          "token": "হ",
+          "weight": 0.3538
+        },
+        {
+          "token": "ক",
+          "weight": -0.2319
+        },
+        {
+          "token": "ম",
+          "weight": -0.1946
+        },
+        {
+          "token": "ইফ",
+          "weight": -0.1538
+        }
+      ]
+    },
+    {
+      "test_row": 325,
+      "file": "lime_325_wrong.html",
+      "text": "উচিত কথায় বন্ধু বেজার গরম ভাতে বিলাই। খেলা চুদাইতে পারেনে আবার ভাব",
+      "true_label": "not_hate",
+      "predicted_label": "hate",
+      "p_hate": 0.9611,
+      "correct": false,
+      "top_features_toward_hate": [
+        {
+          "token": "চ",
+          "weight": 0.3799
+        },
+        {
+          "token": "দ",
+          "weight": 0.3643
+        },
+        {
+          "token": "খ",
+          "weight": -0.0875
+        },
+        {
+          "token": "ল",
+          "weight": -0.0432
+        },
+        {
+          "token": "প",
+          "weight": -0.0398
+        },
+        {
+          "token": "গরম",
+          "weight": -0.0347
+        },
+        {
+          "token": "কথ",
+          "weight": -0.0264
+        },
+        {
+          "token": "ধ",
+          "weight": -0.0254
+        },
+        {
+          "token": "র",
+          "weight": -0.0219
+        },
+        {
+          "token": "ই",
+          "weight": -0.0169
+        }
+      ]
+    },
+    {
+      "test_row": 4307,
+      "file": "lime_4307_wrong.html",
+      "text": "কিই ছবি দেছো মাগিরা তোগো কারনেই মানুষের আজ এ অবস্তা",
+      "true_label": "not_hate",
+      "predicted_label": "hate",
+      "p_hate": 0.9929,
+      "correct": false,
+      "top_features_toward_hate": [
+        {
+          "token": "গ",
+          "weight": 0.7351
+        },
+        {
+          "token": "ম",
+          "weight": 0.2006
+        },
+        {
+          "token": "র",
+          "weight": 0.1015
+        },
+        {
+          "token": "ছব",
+          "weight": -0.0477
+        },
+        {
+          "token": "আজ",
+          "weight": -0.0294
+        },
+        {
+          "token": "এ",
+          "weight": -0.017
+        },
+        {
+          "token": "ই",
+          "weight": 0.0157
+        },
+        {
+          "token": "অবস",
+          "weight": -0.0146
+        },
+        {
+          "token": "ন",
+          "weight": 0.0139
+        },
+        {
+          "token": "দ",
+          "weight": -0.011
+        }
+      ]
+    },
+    {
+      "test_row": 4170,
+      "file": "lime_4170_wrong.html",
+      "text": "এই সব বালের ভুলভাল খবর কেন প্রচার করিস শুধু ভিউ বাড়ানোর জন্য আল্লাহ এর উপর ভরসা আছে",
+      "true_label": "not_hate",
+      "predicted_label": "hate",
+      "p_hate": 0.8243,
+      "correct": false,
+      "top_features_toward_hate": [
+        {
+          "token": "ল",
+          "weight": 0.4814
+        },
+        {
+          "token": "র",
+          "weight": 0.1964
+        },
+        {
+          "token": "এই",
+          "weight": 0.1905
+        },
+        {
+          "token": "ভ",
+          "weight": -0.1506
+        },
+        {
+          "token": "লভ",
+          "weight": -0.1412
+        },
+        {
+          "token": "খবর",
+          "weight": -0.0849
+        },
+        {
+          "token": "সব",
+          "weight": -0.0638
+        },
+        {
+          "token": "ব",
+          "weight": 0.0601
+        },
+        {
+          "token": "শ",
+          "weight": -0.0556
+        },
+        {
+          "token": "স",
+          "weight": 0.0515
+        }
+      ]
+    },
+    {
+      "test_row": 2242,
+      "file": "lime_2242_wrong.html",
+      "text": "বক্তা মিথ্যাবাদী ওনাকে গণধোলাই দেওয়া উচিত কুরআনের মাহফিলে বাজে মন্তব্য করে কেন?",
+      "true_label": "not_hate",
+      "predicted_label": "hate",
+      "p_hate": 0.5203,
+      "correct": false,
+      "top_features_toward_hate": [
+        {
+          "token": "গণধ",
+          "weight": 0.3353
+        },
+        {
+          "token": "রআন",
+          "weight": -0.2382
+        },
+        {
+          "token": "থ",
+          "weight": -0.1452
+        },
+        {
+          "token": "ল",
+          "weight": 0.1308
+        },
+        {
+          "token": "উচ",
+          "weight": 0.1166
+        },
+        {
+          "token": "ওন",
+          "weight": -0.0868
+        },
+        {
+          "token": "ক",
+          "weight": 0.0858
+        },
+        {
+          "token": "য",
+          "weight": 0.0813
+        },
+        {
+          "token": "বক",
+          "weight": -0.0717
+        },
+        {
+          "token": "ত",
+          "weight": -0.0523
+        }
+      ]
+    },
+    {
+      "test_row": 2825,
+      "file": "lime_2825_wrong.html",
+      "text": "আমি ওকে যদি সামনে পেতাম ওর যে কি হাল করতাম তা আর বলে বোঝাতে পারছি না",
+      "true_label": "hate",
+      "predicted_label": "not_hate",
+      "p_hate": 0.3927,
+      "correct": false,
+      "top_features_toward_hate": [
+        {
+          "token": "ল",
+          "weight": 0.191
+        },
+        {
+          "token": "ওক",
+          "weight": 0.126
+        },
+        {
+          "token": "ত",
+          "weight": 0.0745
+        },
+        {
+          "token": "ম",
+          "weight": -0.0633
+        },
+        {
+          "token": "ওর",
+          "weight": 0.0627
+        },
+        {
+          "token": "য",
+          "weight": -0.0441
+        },
+        {
+          "token": "বল",
+          "weight": 0.0399
+        },
+        {
+          "token": "ন",
+          "weight": -0.0366
+        },
+        {
+          "token": "রছ",
+          "weight": -0.0346
+        },
+        {
+          "token": "ঝ",
+          "weight": -0.0327
+        }
+      ]
+    },
+    {
+      "test_row": 1491,
+      "file": "lime_1491_wrong.html",
+      "text": "মুসলিম হোক যাই হোক আমরা তো সবাই মানুষ ভিডিওটি দেখার পর চোখে জল নেমে আসল আর মানুষ এতই স্বারথপর হয়ে গেছে সবার সামনে রিফাতের খুন হচ্ছে এথচ কেই এগিয়ে আসলো না যদি সবাই যদি এগিয়ে আসতো রিফাতের এভাবে যগন্যো মৃত্যু হতো না আমি সরকারের কাছে এই বিচার চাই রিফাত ভাইয়াকে যেভাবে খুন করেছে তাদের যেন সঠিক বিচার হয় এই কামনা করি আর বিশেষ করে মিন্নির ফাসি ফাসি হোক কারণ ভিডিও টি ভালোভাবে দেখার পর জানা গেল যে মিন্নি কেন আরো বেশি হাত আচ্ছে এই রিফাত ভাইয়ের❤❤ খুনিতে কারন আপনারা সবাই ভিডিওটি ভালোভাবে লখ করুন রিফাত ভাইয়া আসার পর মিন্নি কে যাওয়ার জনোও ডাকে মিন্নি রিফাত ভাইয়ার সাথে না গিয়ে ওই জানুয়ারদের কাছে চলে যায় ওই জানুয়ার রা যেন জানে রিফাত ভাইয়া সঠিক সময়ে আচ্ছে এই বলতে গিয়ে বেয়াদব মেয়ে মিন্নি টা দুরে গিয়ে রিফাত ভাইয়ার সাথে না গিয়ে আবার কলেজের ভিতরে ধুকে পরে বেয়াদব মেয়ে ধুকার পর রিফাত ভাইয়াকে এসে সবাই মারতে শুরু করে আর যখন রিফাত ভাইয়া কে ধরে নিয়ে যায় তখনও সেই দেখেই কিছুই করলেন না তার পিছু পিছু আস্তে আস্তে হাটতে লাগলেন আর যখন জানুয়ার রা✂ রিফাত ভাইয়াকে কুপাতে শুরু করে মিন্নি নামে বিয়াদব মহিলাটা তার কাহিনি শুরু করে দরশক ও মিডিয়ার সামনে তার সাধুটা প্রকাশ করে নিজে বাচ্চার জনোও যাহাতে ওর সনএাসের প্রতিরুপ যেন কেই বুজতে না পারে আমার বলার এই যে রিফাত ভাইকে যারা খুনি করেছে সরকার তাদের সবাইকে যেনো ফাসি দেই আর মিন্নির মাগিকেও ফাসি চাই জনগনবসবাই চাই মিন্নির সাথে যারা জরিত তাদের ও এই ফাসি হোক কারন এই বিচারটি যদি সুস্তভাবে না হয় মিন্নির জনোও আরো অনেক ভাইদের জিবন হারাবে আমি চাই মিন্নির ফাসি ও তার সাথে যারা জরিত তাদেরও ফাসি হয়ে রিফাত ভাইয়ের আত্তা শান্তি হোক এই কামনা এই বিচার যেন সরকার মেনে নোক এই বিচার সকল জনগনের দাবি এই বিচার করুন সরকার আর জনগন এই ভিডিওটি যিনি উপস্তাপন করেছে তাকে অনেক ধন্যবাদ",
+      "true_label": "hate",
+      "predicted_label": "not_hate",
+      "p_hate": 0.0037,
+      "correct": false,
+      "top_features_toward_hate": [
+        {
+          "token": "ম",
+          "weight": -0.0439
+        },
+        {
+          "token": "ভ",
+          "weight": -0.0235
+        },
+        {
+          "token": "ছ",
+          "weight": -0.0212
+        },
+        {
+          "token": "দ",
+          "weight": -0.0206
+        },
+        {
+          "token": "সব",
+          "weight": -0.018
+        },
+        {
+          "token": "হ",
+          "weight": -0.0179
+        },
+        {
+          "token": "ফ",
+          "weight": -0.0165
+        },
+        {
+          "token": "আমর",
+          "weight": -0.0136
+        },
+        {
+          "token": "এই",
+          "weight": 0.0055
+        },
+        {
+          "token": "র",
+          "weight": 0.0051
+        }
+      ]
+    },
+    {
+      "test_row": 2916,
+      "file": "lime_2916_wrong.html",
+      "text": "এই গোলা কারো চোখে পরেনি আগেআর এখন কিছু কিছু বেয়াদবের বাচ্চা আছে শাকিব বুবলির সাথে টা সিনামা করেছে ছয় বছরে তাতেই ওদের এতো এতো চুলকানি বেরেযেসেখানে কোনো চুলকানির মলম লাগালেও তা সারতেছে না",
+      "true_label": "hate",
+      "predicted_label": "not_hate",
+      "p_hate": 0.2187,
+      "correct": false,
+      "top_features_toward_hate": [
+        {
+          "token": "চ",
+          "weight": 0.4388
+        },
+        {
+          "token": "লক",
+          "weight": -0.3231
+        },
+        {
+          "token": "ব",
+          "weight": -0.1777
+        },
+        {
+          "token": "র",
+          "weight": 0.153
+        },
+        {
+          "token": "ক",
+          "weight": -0.135
+        },
+        {
+          "token": "গ",
+          "weight": -0.1132
+        },
+        {
+          "token": "এই",
+          "weight": 0.1098
+        },
+        {
+          "token": "আছ",
+          "weight": -0.1005
+        },
+        {
+          "token": "ছ",
+          "weight": -0.068
+        },
+        {
+          "token": "আর",
+          "weight": -0.0464
+        }
+      ]
+    },
+    {
+      "test_row": 2582,
+      "file": "lime_2582_wrong.html",
+      "text": "আমি রাজাকার তবু তোমার মতো দালাল না",
+      "true_label": "hate",
+      "predicted_label": "not_hate",
+      "p_hate": 0.2303,
+      "correct": false,
+      "top_features_toward_hate": [
+        {
+          "token": "ন",
+          "weight": -0.3452
+        },
+        {
+          "token": "ল",
+          "weight": 0.1574
+        },
+        {
+          "token": "তব",
+          "weight": -0.1443
+        },
+        {
+          "token": "জ",
+          "weight": 0.1096
+        },
+        {
+          "token": "আম",
+          "weight": -0.1059
+        },
+        {
+          "token": "ক",
+          "weight": 0.1032
+        },
+        {
+          "token": "দ",
+          "weight": -0.0805
+        },
+        {
+          "token": "মত",
+          "weight": 0.0413
+        },
+        {
+          "token": "ম",
+          "weight": -0.0371
+        },
+        {
+          "token": "র",
+          "weight": -0.0353
+        }
+      ]
+    },
+    {
+      "test_row": 3564,
+      "file": "lime_3564_wrong.html",
+      "text": "ভারতের মুসলমানদের সাথে আছি ইনশাআল্লাহ থাকবো৷ নরেন্দ্র মোদি আর অমিত শাহকে গনহারে মারবো৷",
+      "true_label": "hate",
+      "predicted_label": "not_hate",
+      "p_hate": 0.0036,
+      "correct": false,
+      "top_features_toward_hate": [
+        {
+          "token": "৷",
+          "weight": -0.1484
+        },
+        {
+          "token": "র",
+          "weight": 0.0977
+        },
+        {
+          "token": "রব",
+          "weight": 0.0738
+        },
+        {
+          "token": "ভ",
+          "weight": -0.0712
+        },
+        {
+          "token": "ইনশ",
+          "weight": -0.0647
+        },
+        {
+          "token": "আছ",
+          "weight": -0.0621
+        },
+        {
+          "token": "শ",
+          "weight": -0.048
+        },
+        {
+          "token": "থ",
+          "weight": -0.042
+        },
+        {
+          "token": "অম",
+          "weight": -0.0342
+        },
+        {
+          "token": "সলম",
+          "weight": -0.0315
+        }
+      ]
+    }
+  ]
+}

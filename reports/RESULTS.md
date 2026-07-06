@@ -1,4 +1,4 @@
-# Results — 2026-07-07 (full runs, classical + transformers)
+# Results — 2026-07-06 (full runs, classical + transformers)
 
 Binary Bangla hate speech detection (BD-SHS Task A, official splits;
 train n=40,181 / val 5,028 / test 5,028). Full metric rows:
@@ -10,6 +10,10 @@ Classical models trained on the CPU dev machine; transformers fine-tuned
 on Google Colab T4 (3 epochs, batch 32/16, lr 2e-5, max_len 128, fp16)
 with results merged back into this repo. "+ synthetic aug" = trained on
 `train_augmented.csv` (original 40K + 20K rule-based noisy copies).
+BanglaBERT+aug was retrained once for the explainability session; the
+retrain scored ~0.4 pt higher than the first run (0.9226 → 0.9270 clean),
+which indicates run-to-run variance of roughly ±0.5 pt for the
+transformer numbers.
 
 ## Macro-F1 across test conditions
 
@@ -23,7 +27,7 @@ with results merged back into this repo. "+ synthetic aug" = trained on
 | XLM-R base | clean | 0.9063 | 0.8915 | 0.8559 | 0.8071 | 0.8695 | 0.8926 |
 | XLM-R base | + synthetic aug | 0.9104 | 0.8994 | 0.8678 | 0.8290 | 0.8813 | 0.8943 |
 | BanglaBERT | clean | 0.9162 | 0.8982 | 0.8704 | 0.8205 | 0.8862 | 0.9059 |
-| BanglaBERT | **+ synthetic aug** | **0.9226** | **0.9069** | **0.8787** | **0.8307** | **0.8972** | **0.9096** |
+| BanglaBERT | **+ synthetic aug** | **0.9270** | **0.9098** | **0.8816** | **0.8315** | **0.9006** | **0.9141** |
 
 (BD-SHS paper's best reported Task A model, BiLSTM + informal fastText:
 F1 ≈ 0.91 — BanglaBERT here exceeds it.)
@@ -37,9 +41,9 @@ F1 ≈ 0.91 — BanglaBERT here exceeds it.)
 | SVM / clean | −0.0242 | −0.0509 | −0.0956 | −0.0374 | −0.0187 |
 | SVM / augmented | −0.0194 | −0.0454 | −0.0857 | −0.0344 | −0.0152 |
 | XLM-R / clean | −0.0147 | −0.0504 | −0.0991 | −0.0367 | −0.0137 |
-| XLM-R / augmented | **−0.0110** | −0.0426 | −0.0814 | −0.0291 | −0.0161 |
+| XLM-R / augmented | −0.0110 | −0.0426 | −0.0814 | −0.0291 | −0.0161 |
 | BanglaBERT / clean | −0.0180 | −0.0459 | −0.0957 | −0.0300 | −0.0104 |
-| BanglaBERT / augmented | −0.0157 | **−0.0439** | −0.0920 | −0.0254 | −0.0130 |
+| BanglaBERT / augmented | −0.0172 | −0.0454 | −0.0954 | −0.0263 | −0.0129 |
 
 BIDWESH rows overlapping BD-SHS train/val sources (exact-match, 28 rows =
 0.3%) are excluded in the `bidwesh_clean` variant — numbers shift by
@@ -48,22 +52,24 @@ BIDWESH rows overlapping BD-SHS train/val sources (exact-match, 28 rows =
 ## Findings
 
 1. **BanglaBERT + augmentation training is the best model everywhere**:
-   0.9226 clean / 0.9069 noisy / 0.8787 real-dialect macro-F1. Ordering is
+   0.9270 clean / 0.9098 noisy / 0.8816 real-dialect macro-F1. Ordering is
    consistent across all test sets: BanglaBERT > XLM-R > TF-IDF LR > SVM.
 2. **Augmentation training helps every model on every shifted test set,
-   at zero (classical) or negative (transformer) clean-test cost.** For
-   BanglaBERT it adds +0.6 pt clean, +0.9 pt noisy, +0.8 pt BIDWESH; for
-   XLM-R +0.4/+0.8/+1.2 pts.
-3. **The real-dialect gap survives pretraining.** Transformers shrink the
-   *absolute* gap (BanglaBERT-aug reaches 0.879 on BIDWESH vs LR-aug
-   0.865) but their *relative* drop clean→BIDWESH (−0.044 to −0.050) is
-   the same size as the classical models' — large-scale Bangla
-   pretraining does not by itself confer dialect robustness.
-4. **Chittagong is the hardest dialect for every model** (best: 0.831),
+   at zero or negative clean-test cost.** For BanglaBERT it adds ~+1.1 pt
+   clean, +1.2 pt noisy, +1.1 pt BIDWESH; for XLM-R +0.4/+0.8/+1.2 pts;
+   for TF-IDF LR it halves the synthetic-noise drop.
+3. **The real-dialect gap survives pretraining.** Transformers raise the
+   *absolute* scores (BanglaBERT-aug 0.882 on BIDWESH vs LR-aug 0.865) but
+   their *relative* drop clean→BIDWESH (−0.043 to −0.050) is the same size
+   as the classical models' — large-scale Bangla pretraining does not by
+   itself confer dialect robustness. Interestingly, augmentation training
+   shrinks the *relative* dialect drop much more for the classical models
+   than for the transformers, whose gains come mainly from a higher clean
+   baseline.
+4. **Chittagong is the hardest dialect for every model** (best: 0.832),
    losing ~2× more F1 than Noakhali and ~5-7× more than Barishal —
    consistent with Chittagonian being the most divergent of the three.
-   Synthetic noise recovers only ~15-20% of the Chittagong drop, so
-   real-dialect methods (e.g. dialect-aware augmentation, BIDWESH-based
+   Real-dialect methods (dialect-aware augmentation, BIDWESH-based
    fine-tuning) are the natural next step.
 5. **Synthetic noise stress-test is a weaker proxy for dialect shift**:
    drops on the synthetic set (1-2.4 pts) are consistently ~⅓ of the
@@ -71,13 +77,15 @@ BIDWESH rows overlapping BD-SHS train/val sources (exact-match, 28 rows =
 
 ## Explainability
 
-`outputs/explainability/`: LIME explanations for 20 test predictions
-(10 correct + 10 incorrect, balanced over classes/error directions) of the
-TF-IDF LR augmentation-trained model; `explanations_summary.json` holds
-top ±10 features per example. Transformer LIME (`--model-dir
-outputs/models/banglabert_aug`) requires the trained weights, which live
-on the Colab runtime — run `python -m src.explainability.explain
---model-dir outputs/models/banglabert_aug --num-samples 500` there.
+LIME explanations (20 test predictions each: 10 correct + 10 incorrect,
+balanced over classes/error directions, weights toward the *hate* class):
+
+- `outputs/explainability/tfidf_lr_aug/` — best classical model
+- `outputs/explainability/banglabert_aug/` — best transformer (run on
+  Colab T4, `--num-samples 500`)
+
+Each folder has per-example interactive HTML, `explanations_summary.json`
+with top ±10 features, and a README index.
 
 ## Reproduce
 
@@ -92,4 +100,5 @@ python -m src.models.train_transformer --model-name xlm-roberta-base --epochs 3 
 python -m src.models.train_transformer --model-name xlm-roberta-base --epochs 3 --batch-size 16 --lr 2e-5 --max-len 128 --train-file data/processed/train_augmented.csv
 python -m src.evaluation.evaluate --all --skip-existing
 python -m src.explainability.explain --model-dir outputs/models/tfidf_lr_aug
+python -m src.explainability.explain --model-dir outputs/models/banglabert_aug --num-samples 500
 ```
