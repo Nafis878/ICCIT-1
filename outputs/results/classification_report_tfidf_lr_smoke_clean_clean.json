@@ -1,0 +1,28 @@
+{
+  "model": "tfidf_lr_smoke",
+  "train_variant": "clean",
+  "test_set": "clean",
+  "tag": "smoke",
+  "labels": [
+    "not_hate",
+    "hate"
+  ],
+  "n": 5028,
+  "accuracy": 0.7806284805091488,
+  "precision_macro": 0.7803234706485886,
+  "recall_macro": 0.7801626218269222,
+  "f1_macro": 0.7802340876898597,
+  "f1_weighted": 0.7805970031479849,
+  "f1_not_hate": 0.7895439801564587,
+  "f1_hate": 0.7709241952232606,
+  "confusion_matrix": [
+    [
+      2069,
+      543
+    ],
+    [
+      560,
+      1856
+    ]
+  ]
+}

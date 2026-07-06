@@ -1,0 +1,28 @@
+{
+  "model": "tfidf_lr_smoke",
+  "train_variant": "clean",
+  "test_set": "bidwesh_noakhali",
+  "tag": "smoke",
+  "labels": [
+    "not_hate",
+    "hate"
+  ],
+  "n": 3000,
+  "accuracy": 0.7493333333333333,
+  "precision_macro": 0.7514435188020003,
+  "recall_macro": 0.7496853131933777,
+  "f1_macro": 0.7489708472367431,
+  "f1_weighted": 0.7488945343743032,
+  "f1_not_hate": 0.7394317394317395,
+  "f1_hate": 0.7585099550417469,
+  "confusion_matrix": [
+    [
+      1067,
+      445
+    ],
+    [
+      307,
+      1181
+    ]
+  ]
+}

@@ -1,0 +1,27 @@
+# Core (versions matching the tested environment; >= pins keep it flexible)
+numpy>=1.26
+pandas>=2.0
+scikit-learn>=1.4
+scipy>=1.11
+joblib>=1.3
+pyarrow>=14.0          # read HF parquet files
+requests>=2.31
+tqdm>=4.66
+matplotlib>=3.8
+seaborn>=0.13
+
+# Transformers stack (tested with torch 2.9.1+cpu and transformers 5.8.1;
+# transformers>=4.46 also works — the code uses the v4/v5-compatible API)
+torch>=2.2
+transformers>=4.46
+accelerate>=0.30
+sentencepiece>=0.2     # XLM-R tokenizer
+protobuf>=4.25
+
+# Explainability
+lime>=0.2.0.1
+shap>=0.45             # fallback method (--method shap)
+
+# Optional extras (not required by the pipeline)
+# bnunicodenormalizer   # stricter Bangla word normalization hook
+# indic-transliteration # romanized-Bangla augmentation experiments

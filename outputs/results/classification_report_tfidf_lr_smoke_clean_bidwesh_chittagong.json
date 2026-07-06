@@ -1,0 +1,28 @@
+{
+  "model": "tfidf_lr_smoke",
+  "train_variant": "clean",
+  "test_set": "bidwesh_chittagong",
+  "tag": "smoke",
+  "labels": [
+    "not_hate",
+    "hate"
+  ],
+  "n": 3054,
+  "accuracy": 0.7095612311722331,
+  "precision_macro": 0.709646480959073,
+  "recall_macro": 0.7093625946585858,
+  "f1_macro": 0.7093764855588791,
+  "f1_weighted": 0.7094628601313562,
+  "f1_not_hate": 0.7167039284573619,
+  "f1_hate": 0.7020490426603964,
+  "confusion_matrix": [
+    [
+      1122,
+      423
+    ],
+    [
+      464,
+      1045
+    ]
+  ]
+}

@@ -1,0 +1,28 @@
+{
+  "model": "xlm-roberta-base_smoke",
+  "train_variant": "clean",
+  "test_set": "bidwesh_clean",
+  "tag": "smoke",
+  "labels": [
+    "not_hate",
+    "hate"
+  ],
+  "n": 497,
+  "accuracy": 0.4909456740442656,
+  "precision_macro": 0.2454728370221328,
+  "recall_macro": 0.5,
+  "f1_macro": 0.3292847503373819,
+  "f1_weighted": 0.32332184741376735,
+  "f1_not_hate": 0.6585695006747638,
+  "f1_hate": 0.0,
+  "confusion_matrix": [
+    [
+      244,
+      0
+    ],
+    [
+      253,
+      0
+    ]
+  ]
+}

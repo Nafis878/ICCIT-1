@@ -1,0 +1,28 @@
+{
+  "model": "banglabert_smoke",
+  "train_variant": "clean",
+  "test_set": "bidwesh_clean",
+  "tag": "smoke",
+  "labels": [
+    "not_hate",
+    "hate"
+  ],
+  "n": 497,
+  "accuracy": 0.5251509054325956,
+  "precision_macro": 0.5742592871108437,
+  "recall_macro": 0.5319931316011145,
+  "f1_macro": 0.4506744098913451,
+  "f1_weighted": 0.44701163142210326,
+  "f1_not_hate": 0.6529411764705882,
+  "f1_hate": 0.2484076433121019,
+  "confusion_matrix": [
+    [
+      222,
+      22
+    ],
+    [
+      214,
+      39
+    ]
+  ]
+}

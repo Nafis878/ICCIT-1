@@ -1,0 +1,25 @@
+# Explainability outputs — tfidf_lr (lime)
+
+20 examples from the clean test set (10 correct + 10 incorrect predictions).
+Weights are toward the **hate** class.
+
+- [OK ] [`lime_1669_correct.html`](lime_1669_correct.html) — true not_hate, pred not_hate (p_hate=0.0184)
+- [OK ] [`lime_5000_correct.html`](lime_5000_correct.html) — true not_hate, pred not_hate (p_hate=0.0755)
+- [OK ] [`lime_4771_correct.html`](lime_4771_correct.html) — true not_hate, pred not_hate (p_hate=0.0536)
+- [OK ] [`lime_4239_correct.html`](lime_4239_correct.html) — true not_hate, pred not_hate (p_hate=0.0294)
+- [OK ] [`lime_4394_correct.html`](lime_4394_correct.html) — true not_hate, pred not_hate (p_hate=0.1856)
+- [OK ] [`lime_3715_correct.html`](lime_3715_correct.html) — true hate, pred hate (p_hate=0.9998)
+- [OK ] [`lime_3145_correct.html`](lime_3145_correct.html) — true hate, pred hate (p_hate=0.997)
+- [OK ] [`lime_1945_correct.html`](lime_1945_correct.html) — true hate, pred hate (p_hate=0.9984)
+- [OK ] [`lime_3175_correct.html`](lime_3175_correct.html) — true hate, pred hate (p_hate=0.8537)
+- [OK ] [`lime_2563_correct.html`](lime_2563_correct.html) — true hate, pred hate (p_hate=0.9631)
+- [MISS] [`lime_2287_wrong.html`](lime_2287_wrong.html) — true not_hate, pred hate (p_hate=0.9228)
+- [MISS] [`lime_1199_wrong.html`](lime_1199_wrong.html) — true not_hate, pred hate (p_hate=0.8727)
+- [MISS] [`lime_1078_wrong.html`](lime_1078_wrong.html) — true not_hate, pred hate (p_hate=0.9348)
+- [MISS] [`lime_2172_wrong.html`](lime_2172_wrong.html) — true not_hate, pred hate (p_hate=0.5911)
+- [MISS] [`lime_1124_wrong.html`](lime_1124_wrong.html) — true not_hate, pred hate (p_hate=0.9237)
+- [MISS] [`lime_3241_wrong.html`](lime_3241_wrong.html) — true hate, pred not_hate (p_hate=0.1318)
+- [MISS] [`lime_888_wrong.html`](lime_888_wrong.html) — true hate, pred not_hate (p_hate=0.3071)
+- [MISS] [`lime_2579_wrong.html`](lime_2579_wrong.html) — true hate, pred not_hate (p_hate=0.1993)
+- [MISS] [`lime_2803_wrong.html`](lime_2803_wrong.html) — true hate, pred not_hate (p_hate=0.3041)
+- [MISS] [`lime_1827_wrong.html`](lime_1827_wrong.html) — true hate, pred not_hate (p_hate=0.2109)

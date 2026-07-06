@@ -1,0 +1,16 @@
+# Data (raw datasets are re-downloadable via src/data/download.py)
+data/raw/
+data/processed/
+
+# Model artifacts and heavy outputs
+outputs/models/
+*.joblib
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# HF cache dirs sometimes created locally
+.cache/

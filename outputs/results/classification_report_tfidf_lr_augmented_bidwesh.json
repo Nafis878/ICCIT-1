@@ -1,0 +1,28 @@
+{
+  "model": "tfidf_lr",
+  "train_variant": "augmented",
+  "test_set": "bidwesh",
+  "tag": "full",
+  "labels": [
+    "not_hate",
+    "hate"
+  ],
+  "n": 8987,
+  "accuracy": 0.8654723489484811,
+  "precision_macro": 0.8659037452101861,
+  "recall_macro": 0.8652495195716952,
+  "f1_macro": 0.8653631006834854,
+  "f1_weighted": 0.8654121770525265,
+  "f1_not_hate": 0.869198312236287,
+  "f1_hate": 0.8615278891306838,
+  "confusion_matrix": [
+    [
+      4017,
+      534
+    ],
+    [
+      675,
+      3761
+    ]
+  ]
+}

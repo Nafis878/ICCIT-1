@@ -1,0 +1,28 @@
+{
+  "model": "xlm-roberta-base_smoke",
+  "train_variant": "clean",
+  "test_set": "bidwesh_chittagong",
+  "tag": "smoke",
+  "labels": [
+    "not_hate",
+    "hate"
+  ],
+  "n": 178,
+  "accuracy": 0.46629213483146065,
+  "precision_macro": 0.23314606741573032,
+  "recall_macro": 0.5,
+  "f1_macro": 0.31800766283524906,
+  "f1_weighted": 0.2965689439924233,
+  "f1_not_hate": 0.6360153256704981,
+  "f1_hate": 0.0,
+  "confusion_matrix": [
+    [
+      83,
+      0
+    ],
+    [
+      95,
+      0
+    ]
+  ]
+}

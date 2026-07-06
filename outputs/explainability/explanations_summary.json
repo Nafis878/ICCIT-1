@@ -1,0 +1,956 @@
+{
+  "model": "tfidf_lr",
+  "train_variant": "augmented",
+  "method": "lime",
+  "note": "weights are contributions toward the 'hate' class; positive pushes toward hate, negative toward not_hate",
+  "examples": [
+    {
+      "test_row": 1669,
+      "file": "lime_1669_correct.html",
+      "text": "তোমার জারি গান ভুল হয়েছে । কারণ স্ত্রীর পরিকল্পনায় স্বামীকে হত্যা করিয়েছে । ভাই গানটি সংশোধন করে আবার পরিবেশন করুন । ধন্যবাদ",
+      "true_label": "not_hate",
+      "predicted_label": "not_hate",
+      "p_hate": 0.0184,
+      "correct": true,
+      "top_features_toward_hate": [
+        {
+          "token": "ন",
+          "weight": -0.0865
+        },
+        {
+          "token": "যব",
+          "weight": -0.0818
+        },
+        {
+          "token": "পন",
+          "weight": -0.0762
+        },
+        {
+          "token": "কল",
+          "weight": -0.0655
+        },
+        {
+          "token": "ছ",
+          "weight": -0.0616
+        },
+        {
+          "token": "গ",
+          "weight": -0.0574
+        },
+        {
+          "token": "ভ",
+          "weight": -0.0528
+        },
+        {
+          "token": "ধন",
+          "weight": -0.0411
+        },
+        {
+          "token": "রণ",
+          "weight": -0.0368
+        },
+        {
+          "token": "র",
+          "weight": 0.0335
+        }
+      ]
+    },
+    {
+      "test_row": 5000,
+      "file": "lime_5000_correct.html",
+      "text": "সেফুদা আমার নাম্বার",
+      "true_label": "not_hate",
+      "predicted_label": "not_hate",
+      "p_hate": 0.0755,
+      "correct": true,
+      "top_features_toward_hate": [
+        {
+          "token": "ফ",
+          "weight": -0.3882
+        },
+        {
+          "token": "দ",
+          "weight": 0.1692
+        },
+        {
+          "token": "স",
+          "weight": -0.0957
+        },
+        {
+          "token": "ন",
+          "weight": -0.0876
+        },
+        {
+          "token": "আম",
+          "weight": -0.0853
+        },
+        {
+          "token": "র",
+          "weight": 0.0821
+        },
+        {
+          "token": "ব",
+          "weight": -0.0476
+        },
+        {
+          "token": "ম",
+          "weight": -0.003
+        }
+      ]
+    },
+    {
+      "test_row": 4771,
+      "file": "lime_4771_correct.html",
+      "text": "মিথিলার সব চিয়ে খারাপ হয়েছে তাহসান ভাইর মত একজন ভাল মানুষকে ছেড়ে যাওয়ায়",
+      "true_label": "not_hate",
+      "predicted_label": "not_hate",
+      "p_hate": 0.0536,
+      "correct": true,
+      "top_features_toward_hate": [
+        {
+          "token": "ভ",
+          "weight": -0.1491
+        },
+        {
+          "token": "ন",
+          "weight": -0.1071
+        },
+        {
+          "token": "ছ",
+          "weight": -0.1023
+        },
+        {
+          "token": "ল",
+          "weight": 0.0863
+        },
+        {
+          "token": "প",
+          "weight": -0.0581
+        },
+        {
+          "token": "ওয",
+          "weight": -0.0579
+        },
+        {
+          "token": "ড",
+          "weight": -0.0453
+        },
+        {
+          "token": "য",
+          "weight": -0.0433
+        },
+        {
+          "token": "ত",
+          "weight": -0.0397
+        },
+        {
+          "token": "থ",
+          "weight": 0.0394
+        }
+      ]
+    },
+    {
+      "test_row": 4239,
+      "file": "lime_4239_correct.html",
+      "text": "এরেস্ট করার জন্য ধন্যবাদ প্রসাশনকে",
+      "true_label": "not_hate",
+      "predicted_label": "not_hate",
+      "p_hate": 0.0294,
+      "correct": true,
+      "top_features_toward_hate": [
+        {
+          "token": "যব",
+          "weight": -0.0563
+        },
+        {
+          "token": "কর",
+          "weight": -0.0217
+        },
+        {
+          "token": "এর",
+          "weight": -0.0166
+        },
+        {
+          "token": "স",
+          "weight": 0.016
+        },
+        {
+          "token": "শনক",
+          "weight": -0.0131
+        },
+        {
+          "token": "জন",
+          "weight": 0.0089
+        },
+        {
+          "token": "র",
+          "weight": 0.0088
+        },
+        {
+          "token": "ধন",
+          "weight": 0.0084
+        },
+        {
+          "token": "প",
+          "weight": -0.0061
+        },
+        {
+          "token": "দ",
+          "weight": -0.0058
+        }
+      ]
+    },
+    {
+      "test_row": 4394,
+      "file": "lime_4394_correct.html",
+      "text": "জেখানেরই হোক ওর যথেষ্ট বিচার হোক তারাতারি",
+      "true_label": "not_hate",
+      "predicted_label": "not_hate",
+      "p_hate": 0.1856,
+      "correct": true,
+      "top_features_toward_hate": [
+        {
+          "token": "ওর",
+          "weight": 0.1857
+        },
+        {
+          "token": "যথ",
+          "weight": -0.1673
+        },
+        {
+          "token": "ত",
+          "weight": -0.1358
+        },
+        {
+          "token": "ন",
+          "weight": -0.1176
+        },
+        {
+          "token": "হ",
+          "weight": -0.0933
+        },
+        {
+          "token": "রই",
+          "weight": 0.055
+        },
+        {
+          "token": "খ",
+          "weight": -0.0479
+        },
+        {
+          "token": "চ",
+          "weight": -0.045
+        },
+        {
+          "token": "জ",
+          "weight": -0.0357
+        },
+        {
+          "token": "ষ",
+          "weight": 0.0279
+        }
+      ]
+    },
+    {
+      "test_row": 3715,
+      "file": "lime_3715_correct.html",
+      "text": "শালা জানোয়ার মরলে জাহান্নামেও তর যায়গা হবে না",
+      "true_label": "hate",
+      "predicted_label": "hate",
+      "p_hate": 0.9998,
+      "correct": true,
+      "top_features_toward_hate": [
+        {
+          "token": "মরল",
+          "weight": 0.0975
+        },
+        {
+          "token": "শ",
+          "weight": 0.0639
+        },
+        {
+          "token": "ল",
+          "weight": 0.0572
+        },
+        {
+          "token": "ন",
+          "weight": 0.045
+        },
+        {
+          "token": "য",
+          "weight": 0.0321
+        },
+        {
+          "token": "র",
+          "weight": 0.0207
+        },
+        {
+          "token": "হব",
+          "weight": -0.0151
+        },
+        {
+          "token": "জ",
+          "weight": 0.0135
+        },
+        {
+          "token": "ও",
+          "weight": -0.0117
+        },
+        {
+          "token": "তর",
+          "weight": 0.009
+        }
+      ]
+    },
+    {
+      "test_row": 3145,
+      "file": "lime_3145_correct.html",
+      "text": "কুকুর কে কুকুরের জায়গায় রাখা উচিৎ",
+      "true_label": "hate",
+      "predicted_label": "hate",
+      "p_hate": 0.997,
+      "correct": true,
+      "top_features_toward_hate": [
+        {
+          "token": "ক",
+          "weight": 0.5554
+        },
+        {
+          "token": "খ",
+          "weight": -0.0327
+        },
+        {
+          "token": "জ",
+          "weight": -0.0316
+        },
+        {
+          "token": "র",
+          "weight": 0.0306
+        },
+        {
+          "token": "উচ",
+          "weight": 0.0222
+        },
+        {
+          "token": "ৎ",
+          "weight": 0.013
+        },
+        {
+          "token": "গ",
+          "weight": -0.0113
+        },
+        {
+          "token": "য",
+          "weight": -0.0078
+        }
+      ]
+    },
+    {
+      "test_row": 1945,
+      "file": "lime_1945_correct.html",
+      "text": "টা ছাগলের বাচ্চা একটা বাগের বাচ্চা",
+      "true_label": "hate",
+      "predicted_label": "hate",
+      "p_hate": 0.9984,
+      "correct": true,
+      "top_features_toward_hate": [
+        {
+          "token": "গল",
+          "weight": 0.2571
+        },
+        {
+          "token": "চ",
+          "weight": 0.2027
+        },
+        {
+          "token": "একট",
+          "weight": 0.1362
+        },
+        {
+          "token": "র",
+          "weight": 0.0763
+        },
+        {
+          "token": "ছ",
+          "weight": 0.0678
+        },
+        {
+          "token": "ব",
+          "weight": -0.0383
+        },
+        {
+          "token": "গ",
+          "weight": -0.0265
+        },
+        {
+          "token": "ট",
+          "weight": 0.0003
+        }
+      ]
+    },
+    {
+      "test_row": 3175,
+      "file": "lime_3175_correct.html",
+      "text": "কুরবানি কি মানুস দেখানোর জন্মে করে সালা মুরখো আল্লাহকে দেখানোর জন্নে করে",
+      "true_label": "hate",
+      "predicted_label": "hate",
+      "p_hate": 0.8537,
+      "correct": true,
+      "top_features_toward_hate": [
+        {
+          "token": "ল",
+          "weight": 0.2594
+        },
+        {
+          "token": "ন",
+          "weight": -0.1435
+        },
+        {
+          "token": "স",
+          "weight": 0.1432
+        },
+        {
+          "token": "জন",
+          "weight": -0.0944
+        },
+        {
+          "token": "রব",
+          "weight": -0.0926
+        },
+        {
+          "token": "ক",
+          "weight": 0.0685
+        },
+        {
+          "token": "রখ",
+          "weight": 0.0659
+        },
+        {
+          "token": "খ",
+          "weight": -0.0425
+        },
+        {
+          "token": "কর",
+          "weight": 0.0266
+        },
+        {
+          "token": "হক",
+          "weight": 0.0235
+        }
+      ]
+    },
+    {
+      "test_row": 2563,
+      "file": "lime_2563_correct.html",
+      "text": ".....সুশীল জানোয়ার",
+      "true_label": "hate",
+      "predicted_label": "hate",
+      "p_hate": 0.9631,
+      "correct": true,
+      "top_features_toward_hate": [
+        {
+          "token": "ন",
+          "weight": 0.4397
+        },
+        {
+          "token": "য",
+          "weight": 0.3412
+        },
+        {
+          "token": "র",
+          "weight": 0.1106
+        },
+        {
+          "token": "শ",
+          "weight": -0.0976
+        },
+        {
+          "token": "স",
+          "weight": -0.0429
+        },
+        {
+          "token": "ল",
+          "weight": -0.0226
+        },
+        {
+          "token": "জ",
+          "weight": 0.0107
+        }
+      ]
+    },
+    {
+      "test_row": 2287,
+      "file": "lime_2287_wrong.html",
+      "text": "মুরগি চুর",
+      "true_label": "not_hate",
+      "predicted_label": "hate",
+      "p_hate": 0.9228,
+      "correct": false,
+      "top_features_toward_hate": [
+        {
+          "token": "রগ",
+          "weight": 0.3915
+        },
+        {
+          "token": "চ",
+          "weight": 0.3341
+        },
+        {
+          "token": "ম",
+          "weight": -0.1166
+        },
+        {
+          "token": "র",
+          "weight": 0.0236
+        }
+      ]
+    },
+    {
+      "test_row": 1199,
+      "file": "lime_1199_wrong.html",
+      "text": "বিচারকদের জুতার মালা পরানো উচিত সবাই আমার সাথে একমত হলে লাইক দিন",
+      "true_label": "not_hate",
+      "predicted_label": "hate",
+      "p_hate": 0.8727,
+      "correct": false,
+      "top_features_toward_hate": [
+        {
+          "token": "ত",
+          "weight": 0.2374
+        },
+        {
+          "token": "ল",
+          "weight": 0.2103
+        },
+        {
+          "token": "হল",
+          "weight": -0.1309
+        },
+        {
+          "token": "র",
+          "weight": 0.1102
+        },
+        {
+          "token": "রকদ",
+          "weight": 0.0997
+        },
+        {
+          "token": "ম",
+          "weight": 0.0874
+        },
+        {
+          "token": "সব",
+          "weight": -0.0814
+        },
+        {
+          "token": "একমত",
+          "weight": -0.0797
+        },
+        {
+          "token": "থ",
+          "weight": -0.0722
+        },
+        {
+          "token": "জ",
+          "weight": 0.0538
+        }
+      ]
+    },
+    {
+      "test_row": 1078,
+      "file": "lime_1078_wrong.html",
+      "text": "চুল লম্বা হালায় নাকি বিচারক ওরে কয়জন চিনে আল্লাহই জানে শুধু আমি না অনেকেই চিনে না ওই হালাকে",
+      "true_label": "not_hate",
+      "predicted_label": "hate",
+      "p_hate": 0.9348,
+      "correct": false,
+      "top_features_toward_hate": [
+        {
+          "token": "ল",
+          "weight": 0.2482
+        },
+        {
+          "token": "হ",
+          "weight": 0.1197
+        },
+        {
+          "token": "ওই",
+          "weight": 0.1117
+        },
+        {
+          "token": "কয",
+          "weight": 0.096
+        },
+        {
+          "token": "ব",
+          "weight": -0.0701
+        },
+        {
+          "token": "অন",
+          "weight": -0.0663
+        },
+        {
+          "token": "আল",
+          "weight": -0.0651
+        },
+        {
+          "token": "লম",
+          "weight": -0.0627
+        },
+        {
+          "token": "য",
+          "weight": 0.0558
+        },
+        {
+          "token": "চ",
+          "weight": 0.0495
+        }
+      ]
+    },
+    {
+      "test_row": 2172,
+      "file": "lime_2172_wrong.html",
+      "text": "ওই গুলা সত্যি ভন্ড",
+      "true_label": "not_hate",
+      "predicted_label": "hate",
+      "p_hate": 0.5911,
+      "correct": false,
+      "top_features_toward_hate": [
+        {
+          "token": "ওই",
+          "weight": 0.4028
+        },
+        {
+          "token": "সত",
+          "weight": -0.1641
+        },
+        {
+          "token": "ভন",
+          "weight": 0.1353
+        },
+        {
+          "token": "য",
+          "weight": -0.1048
+        },
+        {
+          "token": "ড",
+          "weight": 0.0725
+        },
+        {
+          "token": "গ",
+          "weight": -0.0485
+        },
+        {
+          "token": "ল",
+          "weight": -0.0186
+        }
+      ]
+    },
+    {
+      "test_row": 1124,
+      "file": "lime_1124_wrong.html",
+      "text": "দুধ সার্জেরী করে যে ভাবে নিজেকে উপস্থপন করছে মনে হয় উনি জঙ্গল থেকে সিংহ ধরে আনছে। এখন কিছু কুত্তার জন্য কেয়ামতের আলামত শুরু হয়ে গেছে।",
+      "true_label": "not_hate",
+      "predicted_label": "hate",
+      "p_hate": 0.9237,
+      "correct": false,
+      "top_features_toward_hate": [
+        {
+          "token": "ত",
+          "weight": 0.2457
+        },
+        {
+          "token": "ধ",
+          "weight": 0.1151
+        },
+        {
+          "token": "মত",
+          "weight": -0.1019
+        },
+        {
+          "token": "উপস",
+          "weight": 0.0798
+        },
+        {
+          "token": "ক",
+          "weight": 0.0776
+        },
+        {
+          "token": "হয",
+          "weight": -0.0658
+        },
+        {
+          "token": "দ",
+          "weight": 0.0624
+        },
+        {
+          "token": "গল",
+          "weight": 0.0595
+        },
+        {
+          "token": "আনছ",
+          "weight": 0.0472
+        },
+        {
+          "token": "জঙ",
+          "weight": 0.043
+        }
+      ]
+    },
+    {
+      "test_row": 3241,
+      "file": "lime_3241_wrong.html",
+      "text": "গাজা খাবি খা তবে কেন মেয়াদ উত্তিরন খাবি",
+      "true_label": "hate",
+      "predicted_label": "not_hate",
+      "p_hate": 0.1318,
+      "correct": false,
+      "top_features_toward_hate": [
+        {
+          "token": "তব",
+          "weight": -0.1586
+        },
+        {
+          "token": "ব",
+          "weight": -0.1439
+        },
+        {
+          "token": "উত",
+          "weight": -0.1187
+        },
+        {
+          "token": "য",
+          "weight": -0.0773
+        },
+        {
+          "token": "রন",
+          "weight": 0.0491
+        },
+        {
+          "token": "ন",
+          "weight": -0.0418
+        },
+        {
+          "token": "জ",
+          "weight": 0.0378
+        },
+        {
+          "token": "ক",
+          "weight": 0.0288
+        },
+        {
+          "token": "ত",
+          "weight": -0.0279
+        },
+        {
+          "token": "গ",
+          "weight": 0.0258
+        }
+      ]
+    },
+    {
+      "test_row": 888,
+      "file": "lime_888_wrong.html",
+      "text": "সানাই কে তো দেখতে পারছি না এখানে তো বড়ো মত একটা গাভী দেখা জাচ্চে",
+      "true_label": "hate",
+      "predicted_label": "not_hate",
+      "p_hate": 0.3071,
+      "correct": false,
+      "top_features_toward_hate": [
+        {
+          "token": "ন",
+          "weight": -0.2502
+        },
+        {
+          "token": "একট",
+          "weight": 0.123
+        },
+        {
+          "token": "স",
+          "weight": 0.0984
+        },
+        {
+          "token": "রছ",
+          "weight": -0.0924
+        },
+        {
+          "token": "খত",
+          "weight": -0.0894
+        },
+        {
+          "token": "গ",
+          "weight": 0.0759
+        },
+        {
+          "token": "প",
+          "weight": -0.0682
+        },
+        {
+          "token": "মত",
+          "weight": -0.0642
+        },
+        {
+          "token": "ভ",
+          "weight": 0.0515
+        },
+        {
+          "token": "খ",
+          "weight": -0.0498
+        }
+      ]
+    },
+    {
+      "test_row": 2579,
+      "file": "lime_2579_wrong.html",
+      "text": "আপ্নি একজন 'ভার্সিটির অধ্যাপক' তাই নিজের ওয়েট বজায় রাখুন।এসব ছাগলামী করলে শুধু শুধু সম্মান হারাবেন! নাকি 'কমেডি' লেখছেন...?",
+      "true_label": "hate",
+      "predicted_label": "not_hate",
+      "p_hate": 0.1993,
+      "correct": false,
+      "top_features_toward_hate": [
+        {
+          "token": "গল",
+          "weight": 0.2421
+        },
+        {
+          "token": "ন",
+          "weight": -0.1617
+        },
+        {
+          "token": "বজ",
+          "weight": -0.1419
+        },
+        {
+          "token": "পক",
+          "weight": -0.1398
+        },
+        {
+          "token": "ছ",
+          "weight": 0.1249
+        },
+        {
+          "token": "খছ",
+          "weight": -0.1179
+        },
+        {
+          "token": "ধ",
+          "weight": -0.0747
+        },
+        {
+          "token": "য",
+          "weight": -0.0662
+        },
+        {
+          "token": "ব",
+          "weight": -0.0646
+        },
+        {
+          "token": "এসব",
+          "weight": 0.0251
+        }
+      ]
+    },
+    {
+      "test_row": 2803,
+      "file": "lime_2803_wrong.html",
+      "text": "আজ পর্যন্ত দেখলাম না ক্লাস নাইনে পড়ে সেনাবাহিনীতে চাকরি পেতে সার্টিফিকেট ছাড়া সেনাবাহিনীতে গেছে বোকা আবালের মত কথা বলে",
+      "true_label": "hate",
+      "predicted_label": "not_hate",
+      "p_hate": 0.3041,
+      "correct": false,
+      "top_features_toward_hate": [
+        {
+          "token": "ল",
+          "weight": 0.2187
+        },
+        {
+          "token": "ন",
+          "weight": -0.1625
+        },
+        {
+          "token": "ব",
+          "weight": -0.1445
+        },
+        {
+          "token": "ইন",
+          "weight": -0.1186
+        },
+        {
+          "token": "আজ",
+          "weight": -0.1143
+        },
+        {
+          "token": "যন",
+          "weight": -0.1029
+        },
+        {
+          "token": "আব",
+          "weight": 0.0977
+        },
+        {
+          "token": "মত",
+          "weight": 0.0739
+        },
+        {
+          "token": "ত",
+          "weight": 0.051
+        },
+        {
+          "token": "র",
+          "weight": 0.0496
+        }
+      ]
+    },
+    {
+      "test_row": 1827,
+      "file": "lime_1827_wrong.html",
+      "text": "আল্লাহ পাক তাদের উপর গজব ফেলুক",
+      "true_label": "hate",
+      "predicted_label": "not_hate",
+      "p_hate": 0.2109,
+      "correct": false,
+      "top_features_toward_hate": [
+        {
+          "token": "গজব",
+          "weight": 0.3453
+        },
+        {
+          "token": "উপর",
+          "weight": -0.1756
+        },
+        {
+          "token": "ত",
+          "weight": -0.139
+        },
+        {
+          "token": "ক",
+          "weight": -0.1239
+        },
+        {
+          "token": "আল",
+          "weight": -0.1157
+        },
+        {
+          "token": "হ",
+          "weight": -0.0801
+        },
+        {
+          "token": "ল",
+          "weight": 0.0709
+        },
+        {
+          "token": "ফ",
+          "weight": 0.0692
+        },
+        {
+          "token": "র",
+          "weight": 0.0386
+        },
+        {
+          "token": "প",
+          "weight": -0.0348
+        }
+      ]
+    }
+  ]
+}
