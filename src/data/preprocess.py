@@ -112,6 +112,36 @@ def process_bidwesh(bdshs_train_val_texts: set[str]) -> pd.DataFrame:
     n_overlap = int(df["overlaps_bdshs_train"].sum())
     print(f"    {n_overlap}/{len(df)} rows have a source sentence present in "
           f"BD-SHS train/val (marked overlaps_bdshs_train=True)")
+    df = _assign_bidwesh_split(df)
+    return df
+
+
+def _assign_bidwesh_split(df: pd.DataFrame) -> pd.DataFrame:
+    """Grouped 40/10/50 adapt/dev/test split by SOURCE sentence, so the
+    same sentence (in any dialect) never appears on both sides. The
+    'test' half is the held-out dialect benchmark (bidwesh_heldout); the
+    adapt/dev parts feed few-shot dialect adaptation and lexicon mining.
+    Sources overlapping BD-SHS train/val are forced into 'adapt' so the
+    held-out benchmark stays contamination-free."""
+    from sklearn.model_selection import train_test_split
+
+    src = df.groupby("standard_bangla").agg(
+        hate=("label", "max"), overlap=("overlaps_bdshs_train", "any"))
+    clean_src = src[~src["overlap"]]
+    adapt_frac, dev_frac = 0.40, 0.10
+    adapt_dev, test = train_test_split(
+        clean_src.index, test_size=1 - adapt_frac - dev_frac,
+        stratify=clean_src["hate"], random_state=DEFAULT_SEED)
+    adapt, dev = train_test_split(
+        adapt_dev, test_size=dev_frac / (adapt_frac + dev_frac),
+        stratify=clean_src.loc[adapt_dev, "hate"], random_state=DEFAULT_SEED)
+    split_of = {s: "adapt" for s in adapt}
+    split_of.update({s: "dev" for s in dev})
+    split_of.update({s: "test" for s in test})
+    split_of.update({s: "adapt" for s in src.index[src["overlap"]]})
+    df["bidwesh_split"] = df["standard_bangla"].map(split_of)
+    counts = df["bidwesh_split"].value_counts().to_dict()
+    print(f"    bidwesh grouped split (by source sentence): {counts}")
     return df
 
 
@@ -177,6 +207,9 @@ def main() -> None:
     stats_lines.append(
         f"  - rows whose Standard-Bangla source appears in BD-SHS train/val: "
         f"{n_ov} ({n_ov / len(bidwesh):.1%}) -> excluded in 'bidwesh-clean' eval")
+    for split_name, n in bidwesh["bidwesh_split"].value_counts().items():
+        stats_lines.append(f"  - bidwesh_split={split_name}: {n} rows "
+                           f"(grouped by source sentence, seed {DEFAULT_SEED})")
     print(line)
 
     extra30k.to_csv(DATA_PROCESSED / "extra_bengali_hs_30k.csv", index=False,

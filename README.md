@@ -1,185 +1,155 @@
 # Dialect-Robust Explainable Bangla Hate Speech Detection
 
 Research pipeline for binary Bangla hate speech detection (BD-SHS Task A)
-with three evaluation axes:
+built around three evaluation axes and three proposed dialect-robustness
+methods, with journal-grade statistics.
 
-1. **Clean test** — the official BD-SHS test split.
-2. **Synthetic noisy test** — the same test set perturbed with rule-based
-   social-media noise / informal spellings (`test_augmented.csv`).
-   *Synthetic, not verified dialect data* — see the disclaimer in
-   [DATASETS.md](DATASETS.md).
-3. **Real dialect test** — BIDWESH: BD-SHS sentences manually translated
-   into Chittagong, Noakhali and Barishal dialects.
+**Evaluation axes (protocol v2):**
 
-Models: majority baseline, TF-IDF + Logistic Regression, TF-IDF + Linear
-SVM, and fine-tuned transformers (BanglaBERT, XLM-RoBERTa-base). The
-robustness method is **augmentation training** (train on
-`train_augmented.csv`, compare against clean-trained). Explainability via
-LIME (SHAP fallback).
+1. **Clean test** — the official BD-SHS test split (near-duplicates of the
+   training data flagged via a char-3-gram audit).
+2. **Synthetic noisy test** — the test set perturbed with rule-based
+   social-media noise (`test_augmented.csv`). *Synthetic — see
+   [DATASETS.md](DATASETS.md).*
+3. **Real dialect test** — `bidwesh_heldout`: the held-out half of BIDWESH
+   (Chittagong/Noakhali/Barishal), grouped by source sentence so no
+   sentence appears in both adaptation and evaluation, near-duplicates of
+   BD-SHS train excluded.
+
+**Proposed methods:**
+
+- **DIA — Dialect-Informed Augmentation**: a standard→dialect word lexicon
+  (~600 entries, e.g. আমার→মোর/আঁর, আপনি→আমনে) mined automatically from
+  BIDWESH *adapt-split* parallel sentences (`src/data/dialect_lexicon.py`)
+  and applied as training-time augmentation.
+- **NCT — Noise-Consistency Training**: symmetric-KL consistency loss
+  between clean and noised views of each training example
+  (`src/models/consistency_trainer.py`).
+- **Few-shot dialect adaptation**: continue fine-tuning on N ∈ {250, 500,
+  1000, full} BIDWESH adapt examples (`src/models/adapt.py`) — data-
+  efficiency curve + catastrophic-forgetting check.
+
+**Rigor:** 3 seeds (42/43/44) for every main row, per-example prediction
+dumps, bootstrap 95% CIs, paired-bootstrap + McNemar significance tests,
+ERASER-style faithfulness metrics for LIME/SHAP, near-duplicate leakage
+audit. Model families: TF-IDF LR/SVM, BanglaBERT, XLM-R, MuRIL, mBERT,
+Qwen2.5-7B few-shot.
 
 ⚠️ Content warning: the datasets contain highly offensive Bangla text; they
 are used exclusively to build detection systems.
 
 ## Setup
 
-Python ≥ 3.10. On Windows the scripts force UTF-8 output themselves.
+Python ≥ 3.10 (`pip install -r requirements.txt`). CPU auto-detected; GPU
+needed only for full transformer training. On Windows the scripts force
+UTF-8 output themselves.
+
+## Data pipeline
 
 ```bash
-pip install -r requirements.txt
+python -m src.data.download          # 4 datasets, anonymous endpoints
+python -m src.data.preprocess        # standard splits + BIDWESH 40/10/50 grouped split
+python -m src.data.leakage_audit     # near-duplicate flags + reports/leakage_audit.md
+python -m src.data.dialect_lexicon   # DIA lexicon from BIDWESH adapt split
+python -m src.data.augment           # test_augmented, train_augmented,
+                                     # train_dialect_aug, train_aug_dia
 ```
 
-CPU is auto-detected; a GPU is only needed for *full* transformer training.
-
-## Pipeline
-
-Run everything from the repository root.
+## Training
 
 ```bash
-# 1. Download datasets (BD-SHS, BIDWESH, 30K, bn_hate_speech; ~15 MB total)
-python -m src.data.download
-#    -> data/raw/..., data/raw/download_status.json; details in DATASETS.md
+# Classical (CPU, minutes) — every variant x seed:
+python -m src.models.baselines --model tfidf_lr --train-file data/processed/train_aug_dia.csv --seed 42
 
-# 2. Preprocess -> standardized splits (text, text_clean, label, target,
-#    hate_type, source_dataset) + label_mapping.json + reports/data_stats.md
-python -m src.data.preprocess
-
-# 3. Synthetic noisy/dialect-style augmentation
-python -m src.data.augment                     # test_augmented.csv, train_augmented.csv
-```
-
-### Smoke tests (fast end-to-end checks, CPU-friendly)
-
-```bash
-python -m src.models.baselines --model all --smoke
-python -m src.models.train_transformer --model-name csebuetnlp/banglabert --smoke
-python -m src.models.train_transformer --model-name xlm-roberta-base --smoke
-```
-
-Smoke runs train on tiny subsamples, evaluate on 500-row samples of each
-test set, and record rows tagged `smoke` under model ids ending in
-`_smoke` — they never overwrite full results.
-
-### Classical baselines (full data, minutes on CPU)
-
-```bash
-python -m src.models.baselines --model all                # clean-trained
-python -m src.models.baselines --model all \
-    --train-file data/processed/train_augmented.csv       # robustness-trained
-```
-
-### Transformers (full fine-tuning; GPU strongly recommended)
-
-```bash
+# Transformers (GPU) — variants via --train-file, NCT via --method:
+python -m src.models.train_transformer --model-name csebuetnlp/banglabert --seed 42
 python -m src.models.train_transformer --model-name csebuetnlp/banglabert \
-    --epochs 3 --batch-size 16 --lr 2e-5 --max-len 128
-python -m src.models.train_transformer --model-name xlm-roberta-base \
-    --epochs 3 --batch-size 16 --lr 2e-5 --max-len 128
-# robustness-trained variants:
+    --train-file data/processed/train_aug_dia.csv --seed 42
 python -m src.models.train_transformer --model-name csebuetnlp/banglabert \
-    --train-file data/processed/train_augmented.csv
+    --method consistency --seed 42
+
+# Few-shot dialect adaptation (short GPU runs from a trained checkpoint):
+python -m src.models.adapt --from-dir outputs/models/banglabert_augmented_s42 --n 250
+
+# LLM baseline (GPU, 4-bit):
+python -m src.models.llm_baseline
 ```
 
-All knobs: `--model-name --task --batch-size --lr --epochs --max-len
---output-dir --train-file --smoke --seed`. On this repo's CPU-only dev
-machine a full run takes many hours — the scripts are smoke-verified
-locally and meant to be run on GPU (Colab/Kaggle) for full results.
+Every run auto-evaluates on all v2 test sets, upserts
+`outputs/results/results_summary.csv` (keyed by model × variant × test set
+× seed) and dumps per-example predictions to `outputs/predictions/`.
 
-### Evaluation
+### The full GPU experiment queue (Colab/Kaggle)
 
-Training scripts evaluate automatically. To (re-)evaluate saved models:
+All 49 GPU jobs live in `scripts/experiments_manifest.json` (priority
+order). On Colab (T4), run ONE cell and re-run it each session until it
+prints `ALL DONE` — state and checkpoints persist on Drive:
+
+```python
+from google.colab import drive; drive.mount('/content/drive')
+!git clone https://github.com/Nafis878/ICCIT-1.git 2>/dev/null; %cd ICCIT-1
+!git pull
+!pip install -q lime accelerate sentencepiece bitsandbytes
+!python -m src.data.download && python -m src.data.preprocess && \
+ python -m src.data.leakage_audit && python -m src.data.dialect_lexicon && \
+ python -m src.data.augment
+!python scripts/colab_runner.py --state-dir /content/drive/MyDrive/iccit_q1_state --time-budget-min 200
+```
+
+When done: `!cd /content/drive/MyDrive/iccit_q1_state && zip -r q1_results.zip mirror`
+
+## Analysis (local, CPU)
 
 ```bash
-python -m src.evaluation.evaluate --all              # every outputs/models/*/
-python -m src.evaluation.evaluate --model-dir outputs/models/tfidf_lr
+python -m src.evaluation.evaluate --all --skip-existing   # rebuild summaries
+python -m src.evaluation.stats                            # mean±std, CIs, significance
+python -m src.evaluation.slices                           # per-dialect/type/length slices
 ```
 
-Outputs:
+Outputs: `stats_summary.csv`, `significance_tests.csv`,
+`robustness_summary.csv`, `slice_analysis.csv`, confusion matrices in
+`outputs/figures/`. (v1 single-seed results are archived under
+`outputs/results/archive_v1/`.)
 
-- `outputs/results/results_summary.csv` — one row per model × train-variant
-  × test set (accuracy, macro/weighted P/R/F1, per-class F1)
-- `outputs/results/classification_report_*.json` — full reports incl.
-  confusion matrices
-- `outputs/results/robustness_summary.csv` — macro-F1 drops clean→noisy and
-  clean→BIDWESH (full, non-overlapping subset, per dialect)
-- `outputs/figures/confusion_matrix_*.png`
-
-BIDWESH rows whose Standard-Bangla source also appears in BD-SHS train/val
-are flagged and excluded from the `bidwesh_clean` numbers (exact-match
-check — a lower bound on overlap; only ~0.3% of rows).
-
-### Explainability
+## Explainability
 
 ```bash
-python -m src.explainability.explain --model-dir outputs/models/tfidf_lr
-# transformer model / SHAP variant:
-python -m src.explainability.explain --model-dir outputs/models/banglabert --method shap
+python -m src.explainability.explain --model-dir outputs/models/<dir>        # LIME examples
+python -m src.explainability.faithfulness --model-dir outputs/models/<dir> \
+    --method lime            # comprehensiveness / sufficiency / deletion-AUC
 ```
 
-Explains 10 correct + 10 incorrect test predictions → per-example HTML,
-`explanations_summary.json`, and an index in
-`outputs/explainability/<model-dir-name>/` (one subfolder per model).
+Whitespace tokenization is used for both LIME and SHAP (python's `\W`
+regex splits inside Bangla words — combining vowel signs are non-word
+characters — which corrupts attributions).
 
 ## Repository layout
 
 ```
-data/raw/            unmodified downloads (+ download_status.json)
-data/processed/      standardized splits, augmented sets, label_mapping.json
-src/data/            download.py, preprocess.py, augment.py
-src/models/          baselines.py, train_transformer.py
-src/evaluation/      metrics.py, evaluate.py
-src/explainability/  explain.py
-src/utils/           common.py, normalize.py
-outputs/             results/, models/, figures/, explainability/
-reports/             data_stats.md, RESULTS.md
+data/raw|processed/     datasets; dialect_lexicon.json; augmented train files
+src/data/               download, preprocess, augment, dialect_lexicon, leakage_audit
+src/models/             baselines, train_transformer, consistency_trainer, adapt, llm_baseline
+src/evaluation/         metrics, evaluate, stats, slices
+src/explainability/     explain, faithfulness
+scripts/                colab_runner.py, experiments_manifest.json, make_manifest.py
+outputs/                results/, predictions/, models/, figures/, explainability/
+reports/                RESULTS.md, PAPER_NOTES.md, data_stats.md, leakage_audit.md
 ```
 
-## Running on Google Colab (T4 GPU)
+## Notes & caveats
 
-Runtime → Change runtime type → **T4 GPU**, then run these cells in order:
-
-```python
-# 1. Get the code
-!git clone https://github.com/Nafis878/ICCIT-1.git
-%cd ICCIT-1
-
-# 2. Dependencies (Colab already ships torch/transformers; this adds the rest)
-!pip install -q lime accelerate sentencepiece
-
-# 3. Data pipeline (~2 min)
-!python -m src.data.download
-!python -m src.data.preprocess
-!python -m src.data.augment
-
-# 4. Full transformer training on T4 (fp16 auto-enabled on GPU)
-#    ~40-60 min each for BanglaBERT, ~1-1.5 h each for XLM-R
-!python -m src.models.train_transformer --model-name csebuetnlp/banglabert --epochs 3 --batch-size 32 --lr 2e-5 --max-len 128
-!python -m src.models.train_transformer --model-name csebuetnlp/banglabert --epochs 3 --batch-size 32 --lr 2e-5 --max-len 128 --train-file data/processed/train_augmented.csv
-!python -m src.models.train_transformer --model-name xlm-roberta-base --epochs 3 --batch-size 16 --lr 2e-5 --max-len 128
-!python -m src.models.train_transformer --model-name xlm-roberta-base --epochs 3 --batch-size 16 --lr 2e-5 --max-len 128 --train-file data/processed/train_augmented.csv
-
-# 5. Rebuild the robustness summary over everything trained so far
-!python -m src.evaluation.evaluate --all --skip-existing
-
-# 6. Explainability for the best transformer (LIME; use --method shap as fallback)
-!python -m src.explainability.explain --model-dir outputs/models/banglabert_aug --num-samples 500
-
-# 7. Save results before the runtime dies (models are big; results are small)
-!zip -r results.zip outputs/results outputs/figures outputs/explainability reports
-from google.colab import files; files.download("results.zip")
-# optional, large (~450 MB per model): zip outputs/models/banglabert* too
-```
-
-Each training run auto-evaluates on the clean, synthetic-noisy and BIDWESH
-dialect test sets and appends to `outputs/results/results_summary.csv`.
-If a Colab session dies mid-way, just rerun from step 3 — training scripts
-overwrite their own model dir, and evaluation rows are upserted, never
-duplicated.
+- Synthetic augmentation ≠ dialect data; BIDWESH is the only real dialect
+  set, and its adapt/dev halves never touch the held-out benchmark.
+- The DIA lexicon is mined *only* from adapt-split sentence pairs.
+- Transformers code targets the v5 API (`eval_strategy`,
+  `processing_class`, collator-level column removal); also runs on ≥4.46.
+- HS-BAN has no public download (see DATASETS.md §5).
 
 ### If Hugging Face model downloads stall
 
 On some networks the HF Hub python downloader stalls while plain `curl`
-works. Workaround — fetch the model files with curl and pass the local
-folder as `--model-name`:
+works. Fetch the model files with curl and pass the local folder as
+`--model-name`:
 
 ```powershell
 $m = "hf-local\banglabert"
@@ -189,20 +159,3 @@ foreach ($f in @("config.json","pytorch_model.bin","vocab.txt","tokenizer_config
 }
 python -m src.models.train_transformer --model-name "$m" --smoke
 ```
-
-(For `xlm-roberta-base` the files are `config.json`, `model.safetensors`,
-`sentencepiece.bpe.model`, `tokenizer.json`, `tokenizer_config.json`.)
-
-## Notes & caveats
-
-- **Synthetic augmentation ≠ dialect data.** `augment.py` output is
-  rule-based noise imitating informal Bangla; only BIDWESH is real,
-  human-produced dialect data.
-- BD-SHS official train/val/test splits are kept as published.
-- Transformers code targets the v5 API (`eval_strategy`,
-  `processing_class`); it also runs on transformers ≥ 4.46.
-- If `csebuetnlp/banglabert` ever breaks on a new transformers major
-  version, `sagorsarker/bangla-bert-base` is a drop-in `--model-name`
-  alternative.
-- HS-BAN could not be included: no official public download exists (see
-  DATASETS.md §5).

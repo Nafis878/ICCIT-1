@@ -1,0 +1,29 @@
+{
+  "model": "tfidf_lr",
+  "train_variant": "augmented",
+  "test_set": "bidwesh_noakhali",
+  "seed": 44,
+  "tag": "full",
+  "labels": [
+    "not_hate",
+    "hate"
+  ],
+  "n": 1475,
+  "accuracy": 0.8630508474576272,
+  "precision_macro": 0.8631954022988506,
+  "recall_macro": 0.8630992436026137,
+  "f1_macro": 0.8630457485576022,
+  "f1_weighted": 0.8630417827464716,
+  "f1_not_hate": 0.8622100954979536,
+  "f1_hate": 0.8638814016172507,
+  "confusion_matrix": [
+    [
+      632,
+      109
+    ],
+    [
+      93,
+      641
+    ]
+  ]
+}

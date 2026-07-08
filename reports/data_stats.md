@@ -8,6 +8,9 @@
   - noakhali: n=3000 | not_hate=1512 (50.4%), hate=1488 (49.6%)
   - barishal: n=2933 | not_hate=1494 (50.9%), hate=1439 (49.1%)
   - rows whose Standard-Bangla source appears in BD-SHS train/val: 28 (0.3%) -> excluded in 'bidwesh-clean' eval
+  - bidwesh_split=test: 4488 rows (grouped by source sentence, seed 42)
+  - bidwesh_split=adapt: 3605 rows (grouped by source sentence, seed 42)
+  - bidwesh_split=dev: 894 rows (grouped by source sentence, seed 42)
 - `extra_bengali_hs_30k.csv`: n=29831 | not_hate=19874 (66.6%), hate=9957 (33.4%) (not used by default)
 
 Label mapping: 0 = not_hate, 1 = hate (`label_mapping.json`).

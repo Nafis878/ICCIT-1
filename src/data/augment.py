@@ -174,6 +174,40 @@ def augment_frame(df: pd.DataFrame, seed: int, romanize: bool) -> pd.DataFrame:
     return out
 
 
+# --- DIA: dialect-informed augmentation (lexicon mined from BIDWESH) -------
+# Explicit punctuation set: python re's \W would also match Bengali
+# combining vowel signs (category Mc) and mangle words like "কথা".
+_PUNCT_CLS = re.escape("।,.!?;:'\"()[]{}…~_+*/\\|-–—“”‘’#@&%^<>=")
+_TOKEN_PUNCT = re.compile(f"^([{_PUNCT_CLS}]*)(.*?)([{_PUNCT_CLS}]*)$",
+                          re.DOTALL)
+
+
+def dialect_augment_text(text: str, rng: random.Random, lexicon: dict,
+                         p_replace: float = 0.5) -> tuple[str, int]:
+    """Replace standard words with mined dialect variants."""
+    words = text.split()
+    n = 0
+    for i, w in enumerate(words):
+        pre, core, post = _TOKEN_PUNCT.match(w).groups()
+        variants = lexicon.get(core)
+        if variants and rng.random() < p_replace:
+            words[i] = pre + rng.choice(variants) + post
+            n += 1
+    return " ".join(words), n
+
+
+def dialect_augment_frame(df: pd.DataFrame, seed: int,
+                          lexicon: dict) -> pd.DataFrame:
+    rng = random.Random(seed)
+    out = df.copy()
+    results = [dialect_augment_text(t, rng, lexicon) for t in out["text"]]
+    out["text"] = [r[0] for r in results]
+    out["aug_ops"] = [f"dialect_lex[{r[1]}]" for r in results]
+    out["text_clean"] = out["text"].map(clean_for_tfidf)
+    out["n_lex_replacements"] = [r[1] for r in results]
+    return out
+
+
 def main() -> None:
     setup_utf8_stdout()
     parser = argparse.ArgumentParser(description=__doc__)
@@ -197,13 +231,41 @@ def main() -> None:
     sample = train.sample(frac=args.frac, random_state=args.seed)
     sample_aug = augment_frame(sample, args.seed + 1, args.romanize)
     sample_aug["is_augmented"] = True
-    train_out = pd.concat([train.assign(is_augmented=False, aug_ops=""),
-                           sample_aug], ignore_index=True)
+    train_base = train.assign(is_augmented=False, aug_ops="")
+    train_out = pd.concat([train_base, sample_aug], ignore_index=True)
     train_out.to_csv(DATA_PROCESSED / "train_augmented.csv", index=False,
                      encoding="utf-8")
     print(f"train_augmented.csv: {len(train_out)} rows "
           f"({len(sample_aug)} synthetic, frac={args.frac})")
     print("NOTE: synthetic rule-based noise — not verified dialect data.")
+
+    # DIA variants require the mined lexicon (src.data.dialect_lexicon).
+    lex_path = DATA_PROCESSED / "dialect_lexicon.json"
+    if lex_path.exists():
+        import json
+
+        lexicon = json.load(open(lex_path, encoding="utf-8"))["merged"]
+        dia_sample = train.sample(frac=args.frac, random_state=args.seed + 2)
+        dia_aug = dialect_augment_frame(dia_sample, args.seed + 3, lexicon)
+        dia_aug["is_augmented"] = True
+        touched = (dia_aug["n_lex_replacements"] > 0).mean()
+        dia_aug = dia_aug.drop(columns=["n_lex_replacements"])
+
+        dia_out = pd.concat([train_base, dia_aug], ignore_index=True)
+        dia_out.to_csv(DATA_PROCESSED / "train_dialect_aug.csv", index=False,
+                       encoding="utf-8")
+        print(f"train_dialect_aug.csv: {len(dia_out)} rows "
+              f"({len(dia_aug)} DIA copies, {touched:.1%} with >=1 lexicon "
+              f"substitution)")
+
+        both = pd.concat([train_base, sample_aug, dia_aug],
+                         ignore_index=True)
+        both.to_csv(DATA_PROCESSED / "train_aug_dia.csv", index=False,
+                    encoding="utf-8")
+        print(f"train_aug_dia.csv: {len(both)} rows (synthetic + DIA)")
+    else:
+        print("dialect_lexicon.json not found — skipping DIA files "
+              "(run python -m src.data.dialect_lexicon first)")
 
 
 if __name__ == "__main__":

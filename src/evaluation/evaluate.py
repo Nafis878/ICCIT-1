@@ -1,14 +1,22 @@
-"""Evaluate saved models on the clean / synthetic-noisy / real-dialect test
-sets and build the robustness summary.
+"""Evaluate saved models on the v2 protocol test sets and dump per-example
+predictions for statistical analysis.
 
-Works with both model kinds saved under outputs/models/<name>/:
-- sklearn pipelines:  model.joblib + meta.json
-- HF transformers:    save_pretrained dir + meta.json
+Test sets (v2 protocol):
+- clean            BD-SHS official test split
+- augmented        synthetic noisy copy of the test split
+- bidwesh_heldout  BIDWESH held-out half (bidwesh_split == 'test'),
+                   near-duplicates of BD-SHS train/val excluded
+  (+ per-dialect subset rows derived from bidwesh_heldout)
+- bidwesh_dev      adaptation dev set (on demand, --test-set bidwesh_dev)
+
+Every evaluation writes outputs/predictions/<model>_<variant>_s<seed>_
+<testset>.csv (row_id, y_true, y_pred, p_hate) — all statistics
+(bootstrap CIs, McNemar) are computed from these dumps by
+src.evaluation.stats, so GPU machines only ever train + predict.
 
 Usage:
-    python -m src.evaluation.evaluate --model-dir outputs/models/tfidf_lr
-    python -m src.evaluation.evaluate --all          # every dir with meta.json
-    python -m src.evaluation.evaluate --all --skip-existing
+    python -m src.evaluation.evaluate --model-dir outputs/models/<dir>
+    python -m src.evaluation.evaluate --all [--skip-existing]
 """
 import argparse
 from pathlib import Path
@@ -20,18 +28,31 @@ from src.evaluation.metrics import record_results
 from src.utils.common import (
     DATA_PROCESSED,
     MODELS_DIR,
+    OUTPUTS,
     RESULTS_DIR,
+    ensure_dirs,
     load_json,
     setup_utf8_stdout,
 )
 
-# Main test sets (figures generated). Subset rows (no figures) are derived
-# from bidwesh: bidwesh_clean (non-overlapping) + one per dialect.
-MAIN_TEST_SETS = {
-    "clean": DATA_PROCESSED / "test.csv",
-    "augmented": DATA_PROCESSED / "test_augmented.csv",
-    "bidwesh": DATA_PROCESSED / "bidwesh_test.csv",
-}
+PREDICTIONS_DIR = OUTPUTS / "predictions"
+MAIN_TEST_SETS = ("clean", "augmented", "bidwesh_heldout")
+DIALECTS = ("chittagong", "noakhali", "barishal")
+
+
+def load_test_set(name: str) -> pd.DataFrame:
+    if name == "clean":
+        return pd.read_csv(DATA_PROCESSED / "test.csv")
+    if name == "augmented":
+        return pd.read_csv(DATA_PROCESSED / "test_augmented.csv")
+    if name in ("bidwesh_heldout", "bidwesh_dev"):
+        df = pd.read_csv(DATA_PROCESSED / "bidwesh_test.csv")
+        split = "test" if name == "bidwesh_heldout" else "dev"
+        df = df[df["bidwesh_split"] == split]
+        if name == "bidwesh_heldout" and "near_dup_bdshs_train" in df.columns:
+            df = df[~df["near_dup_bdshs_train"]]
+        return df.reset_index(drop=True)
+    raise ValueError(name)
 
 
 class SklearnPredictor:
@@ -41,12 +62,17 @@ class SklearnPredictor:
         self.pipeline = joblib.load(model_dir / "model.joblib")
         self.input_column = meta.get("input_column", "text_clean")
 
-    def predict(self, df: pd.DataFrame) -> np.ndarray:
-        return self.pipeline.predict(df[self.input_column].fillna("").tolist())
+    def predict_with_proba(self, df: pd.DataFrame):
+        texts = df[self.input_column].fillna("").tolist()
+        preds = self.pipeline.predict(texts)
+        proba = None
+        if hasattr(self.pipeline, "predict_proba"):
+            proba = self.pipeline.predict_proba(texts)[:, 1]
+        return np.asarray(preds), proba
 
 
 class HFPredictor:
-    def __init__(self, model_dir: Path, meta: dict, batch_size: int = 32):
+    def __init__(self, model_dir: Path, meta: dict, batch_size: int = 64):
         import torch
         from transformers import (
             AutoModelForSequenceClassification,
@@ -62,9 +88,9 @@ class HFPredictor:
         self.batch_size = batch_size
         self.input_column = meta.get("input_column", "text")
 
-    def predict(self, df: pd.DataFrame) -> np.ndarray:
+    def predict_with_proba(self, df: pd.DataFrame):
         texts = df[self.input_column].fillna("").tolist()
-        preds = []
+        probs = []
         with self.torch.no_grad():
             for i in range(0, len(texts), self.batch_size):
                 enc = self.tokenizer(
@@ -72,8 +98,10 @@ class HFPredictor:
                     max_length=self.max_len, padding=True,
                     return_tensors="pt").to(self.device)
                 logits = self.model(**enc).logits
-                preds.append(logits.argmax(dim=-1).cpu().numpy())
-        return np.concatenate(preds)
+                probs.append(
+                    self.torch.softmax(logits.float(), dim=-1).cpu().numpy())
+        probs = np.concatenate(probs)
+        return probs.argmax(axis=1), probs[:, 1]
 
 
 def load_predictor(model_dir: Path):
@@ -83,69 +111,89 @@ def load_predictor(model_dir: Path):
     return HFPredictor(model_dir, meta), meta
 
 
+def dump_predictions(model_id: str, variant: str, seed: int, test_name: str,
+                     df: pd.DataFrame, preds, proba) -> None:
+    ensure_dirs(PREDICTIONS_DIR)
+    out = pd.DataFrame({
+        "row_id": df.index.values,
+        "y_true": df["label"].values,
+        "y_pred": preds,
+    })
+    if proba is not None:
+        out["p_hate"] = np.round(proba, 5)
+    out.to_csv(
+        PREDICTIONS_DIR / f"{model_id}_{variant}_s{seed}_{test_name}.csv",
+        index=False)
+
+
 def evaluate_saved_model(model_dir: Path, skip_existing: bool = False) -> None:
     model_dir = Path(model_dir)
-    predictor, meta = load_predictor(model_dir)
+    meta = load_json(model_dir / "meta.json")
     model_id = meta["model_id"]
     train_variant = meta.get("train_variant", "clean")
+    seed = int(meta.get("seed", 42))
     tag = meta.get("tag", "full")
-    print(f"  evaluating {model_id} (train={train_variant}, tag={tag})")
 
     if skip_existing:
         summary_path = RESULTS_DIR / "results_summary.csv"
         if summary_path.exists():
             s = pd.read_csv(summary_path)
-            done = s[(s["model"] == model_id) &
-                     (s["train_variant"] == train_variant)]["test_set"]
+            if "seed" not in s.columns:
+                s["seed"] = 42
+            done = s[(s["model"] == model_id)
+                     & (s["train_variant"] == train_variant)
+                     & (s["seed"] == seed)]["test_set"]
             if set(MAIN_TEST_SETS) <= set(done):
-                print("    all main test sets already recorded, skipping")
+                print(f"  {model_id}/{train_variant}/s{seed}: already "
+                      f"recorded, skipping")
                 return
 
-    # Smoke-tagged models (CPU sanity runs) are evaluated on a 500-row
-    # sample per test set so transformer smoke tests stay fast.
+    predictor, _ = load_predictor(model_dir)
+    print(f"  evaluating {model_id} (train={train_variant}, seed={seed}, "
+          f"tag={tag})")
     limit = 500 if tag == "smoke" else None
 
-    for test_name, path in MAIN_TEST_SETS.items():
-        df = pd.read_csv(path)
+    for test_name in MAIN_TEST_SETS:
+        df = load_test_set(test_name)
         if limit and len(df) > limit:
             df = df.sample(n=limit, random_state=42).reset_index(drop=True)
-        preds = predictor.predict(df)
+        preds, proba = predictor.predict_with_proba(df)
         record_results(model_id, train_variant, test_name,
-                       df["label"].values, preds, tag=tag)
-        if test_name == "bidwesh":
-            subsets = {"bidwesh_clean": df[~df["overlaps_bdshs_train"]]}
-            for dialect in ("chittagong", "noakhali", "barishal"):
-                subsets[f"bidwesh_{dialect}"] = df[df["dialect"] == dialect]
-            for sub_name, sub in subsets.items():
+                       df["label"].values, preds, tag=tag, seed=seed)
+        dump_predictions(model_id, train_variant, seed, test_name,
+                         df, preds, proba)
+        if test_name == "bidwesh_heldout":
+            for dialect in DIALECTS:
+                sub = df[df["dialect"] == dialect]
                 if len(sub) == 0:
                     continue
-                record_results(model_id, train_variant, sub_name,
-                               sub["label"].values, preds[sub.index.values],
-                               tag=tag, make_figure=False)
+                record_results(model_id, train_variant,
+                               f"bidwesh_{dialect}", sub["label"].values,
+                               preds[sub.index.values], tag=tag, seed=seed,
+                               make_figure=False)
 
 
 def build_robustness_summary() -> pd.DataFrame:
-    """Pivot results_summary.csv into per-model robustness drops."""
+    """Per (model, variant, seed) macro-F1 drops vs clean."""
     summary = pd.read_csv(RESULTS_DIR / "results_summary.csv")
+    if "seed" not in summary.columns:
+        summary["seed"] = 42
     rows = []
-    for (model, variant), grp in summary.groupby(["model", "train_variant"]):
+    for (model, variant, seed), grp in summary.groupby(
+            ["model", "train_variant", "seed"]):
         f1 = grp.set_index("test_set")["f1_macro"]
         if "clean" not in f1.index:
             continue
         clean = f1["clean"]
-        row = {
-            "model": model,
-            "train_variant": variant,
-            "tag": grp["tag"].iloc[0],
-            "f1_clean": round(clean, 4),
-        }
-        for ts in ("augmented", "bidwesh", "bidwesh_clean", "bidwesh_chittagong",
+        row = {"model": model, "train_variant": variant, "seed": seed,
+               "tag": grp["tag"].iloc[0], "f1_clean": round(clean, 4)}
+        for ts in ("augmented", "bidwesh_heldout", "bidwesh_chittagong",
                    "bidwesh_noakhali", "bidwesh_barishal"):
             if ts in f1.index:
                 row[f"f1_{ts}"] = round(f1[ts], 4)
                 row[f"drop_{ts}"] = round(clean - f1[ts], 4)
         rows.append(row)
-    out = pd.DataFrame(rows).sort_values(["model", "train_variant"])
+    out = pd.DataFrame(rows).sort_values(["model", "train_variant", "seed"])
     out.to_csv(RESULTS_DIR / "robustness_summary.csv", index=False,
                encoding="utf-8")
     return out

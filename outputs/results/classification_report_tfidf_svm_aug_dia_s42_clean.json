@@ -1,0 +1,29 @@
+{
+  "model": "tfidf_svm",
+  "train_variant": "aug_dia",
+  "test_set": "clean",
+  "seed": 42,
+  "tag": "full",
+  "labels": [
+    "not_hate",
+    "hate"
+  ],
+  "n": 5028,
+  "accuracy": 0.8997613365155132,
+  "precision_macro": 0.8997417613890459,
+  "recall_macro": 0.8994379608125513,
+  "f1_macro": 0.8995725482953847,
+  "f1_weighted": 0.8997422844932983,
+  "f1_not_hate": 0.9039268013724743,
+  "f1_hate": 0.8952182952182952,
+  "confusion_matrix": [
+    [
+      2371,
+      241
+    ],
+    [
+      263,
+      2153
+    ]
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "model": "banglabert-nct_smoke",
+  "train_variant": "clean",
+  "test_set": "bidwesh_barishal",
+  "seed": 42,
+  "tag": "smoke",
+  "labels": [
+    "not_hate",
+    "hate"
+  ],
+  "n": 140,
+  "accuracy": 0.5357142857142857,
+  "precision_macro": 0.5776515151515151,
+  "recall_macro": 0.5167654876303414,
+  "f1_macro": 0.408130081300813,
+  "f1_weighted": 0.4199070847851336,
+  "f1_not_hate": 0.6829268292682927,
+  "f1_hate": 0.13333333333333333,
+  "confusion_matrix": [
+    [
+      70,
+      3
+    ],
+    [
+      62,
+      5
+    ]
+  ]
+}

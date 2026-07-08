@@ -1,0 +1,29 @@
+{
+  "model": "tfidf_svm",
+  "train_variant": "aug_dia",
+  "test_set": "bidwesh_barishal",
+  "seed": 43,
+  "tag": "full",
+  "labels": [
+    "not_hate",
+    "hate"
+  ],
+  "n": 1439,
+  "accuracy": 0.8846421125781793,
+  "precision_macro": 0.88464147792506,
+  "recall_macro": 0.8845493122678736,
+  "f1_macro": 0.8845885513296228,
+  "f1_weighted": 0.8846352014493333,
+  "f1_not_hate": 0.8870748299319728,
+  "f1_hate": 0.8821022727272727,
+  "confusion_matrix": [
+    [
+      652,
+      81
+    ],
+    [
+      85,
+      621
+    ]
+  ]
+}

@@ -67,8 +67,7 @@ def train_one(model_id: str, train_df: pd.DataFrame, train_variant: str,
     # Smoke runs get a distinct id so they never overwrite full-run rows
     # in results_summary.csv.
     full_id = model_id + ("_smoke" if tag == "smoke" else "")
-    out_dir = MODELS_DIR / (
-        full_id + ("_aug" if train_variant == "augmented" else ""))
+    out_dir = MODELS_DIR / f"{full_id}_{train_variant}_s{seed}"
     ensure_dirs(out_dir)
 
     texts = train_df[INPUT_COLUMN].fillna("").tolist()
@@ -112,9 +111,11 @@ def main() -> None:
     args = parser.parse_args()
     set_seed(args.seed)
 
+    from src.utils.common import VARIANT_OF_FILE
+
     train_df = pd.read_csv(args.train_file)
-    train_variant = ("augmented" if "augmented" in args.train_file.name
-                     else "clean")
+    train_variant = VARIANT_OF_FILE.get(args.train_file.name,
+                                        args.train_file.stem)
     tag = "smoke" if args.smoke else "full"
     if args.smoke:
         train_df = train_df.sample(n=min(500, len(train_df)),

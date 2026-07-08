@@ -1,0 +1,29 @@
+{
+  "model": "majority",
+  "train_variant": "clean",
+  "test_set": "bidwesh_chittagong",
+  "seed": 42,
+  "tag": "full",
+  "labels": [
+    "not_hate",
+    "hate"
+  ],
+  "n": 1494,
+  "accuracy": 0.5033467202141901,
+  "precision_macro": 0.25167336010709507,
+  "recall_macro": 0.5,
+  "f1_macro": 0.3348174532502226,
+  "f1_weighted": 0.33705853392793494,
+  "f1_not_hate": 0.6696349065004452,
+  "f1_hate": 0.0,
+  "confusion_matrix": [
+    [
+      752,
+      0
+    ],
+    [
+      742,
+      0
+    ]
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "model": "tfidf_lr",
+  "train_variant": "augmented",
+  "test_set": "bidwesh_chittagong",
+  "seed": 44,
+  "tag": "full",
+  "labels": [
+    "not_hate",
+    "hate"
+  ],
+  "n": 1494,
+  "accuracy": 0.8333333333333334,
+  "precision_macro": 0.8368382314284213,
+  "recall_macro": 0.8329898348339737,
+  "f1_macro": 0.8327920888560871,
+  "f1_weighted": 0.8328557646769394,
+  "f1_not_hate": 0.8423052564914503,
+  "f1_hate": 0.8232789212207239,
+  "confusion_matrix": [
+    [
+      665,
+      87
+    ],
+    [
+      162,
+      580
+    ]
+  ]
+}

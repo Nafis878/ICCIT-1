@@ -1,0 +1,772 @@
+{
+  "model": "tfidf_lr",
+  "train_variant": "aug_dia",
+  "method": "lime",
+  "note": "weights are contributions toward the 'hate' class; positive pushes toward hate, negative toward not_hate",
+  "examples": [
+    {
+      "test_row": 4617,
+      "file": "lime_4617_correct.html",
+      "text": "বাবরি মসজিদ চাই আমাদের",
+      "true_label": "not_hate",
+      "predicted_label": "not_hate",
+      "p_hate": 0.0019,
+      "correct": true,
+      "top_features_toward_hate": [
+        {
+          "token": "বাবরি",
+          "weight": -0.01
+        },
+        {
+          "token": "মসজিদ",
+          "weight": -0.0091
+        },
+        {
+          "token": "আমাদের",
+          "weight": 0.0016
+        },
+        {
+          "token": "চাই",
+          "weight": -0.0007
+        }
+      ]
+    },
+    {
+      "test_row": 4693,
+      "file": "lime_4693_correct.html",
+      "text": "ভাই চোখের পানি ধরে রাখতে পারছি না",
+      "true_label": "not_hate",
+      "predicted_label": "not_hate",
+      "p_hate": 0.0165,
+      "correct": true,
+      "top_features_toward_hate": [
+        {
+          "token": "রাখতে",
+          "weight": -0.0354
+        },
+        {
+          "token": "ভাই",
+          "weight": -0.0332
+        },
+        {
+          "token": "পানি",
+          "weight": -0.0276
+        },
+        {
+          "token": "ধরে",
+          "weight": 0.025
+        },
+        {
+          "token": "চোখের",
+          "weight": 0.0232
+        },
+        {
+          "token": "পারছি",
+          "weight": 0.0076
+        },
+        {
+          "token": "না",
+          "weight": -0.007
+        }
+      ]
+    },
+    {
+      "test_row": 4248,
+      "file": "lime_4248_correct.html",
+      "text": "ঐ সব কথা বলে হিন্দুদের ভয় দেখাস না",
+      "true_label": "not_hate",
+      "predicted_label": "not_hate",
+      "p_hate": 0.3415,
+      "correct": true,
+      "top_features_toward_hate": [
+        {
+          "token": "হিন্দুদের",
+          "weight": 0.3116
+        },
+        {
+          "token": "ভয়",
+          "weight": -0.1911
+        },
+        {
+          "token": "ঐ",
+          "weight": 0.1365
+        },
+        {
+          "token": "বলে",
+          "weight": 0.0487
+        },
+        {
+          "token": "সব",
+          "weight": 0.0469
+        },
+        {
+          "token": "দেখাস",
+          "weight": -0.0451
+        },
+        {
+          "token": "না",
+          "weight": -0.04
+        },
+        {
+          "token": "কথা",
+          "weight": -0.0213
+        }
+      ]
+    },
+    {
+      "test_row": 4917,
+      "file": "lime_4917_correct.html",
+      "text": "সত্যি দুঃখ প্রকাশ",
+      "true_label": "not_hate",
+      "predicted_label": "not_hate",
+      "p_hate": 0.0102,
+      "correct": true,
+      "top_features_toward_hate": [
+        {
+          "token": "সত্যি",
+          "weight": -0.0105
+        },
+        {
+          "token": "দুঃখ",
+          "weight": -0.0104
+        },
+        {
+          "token": "প্রকাশ",
+          "weight": 0.0072
+        }
+      ]
+    },
+    {
+      "test_row": 1702,
+      "file": "lime_1702_correct.html",
+      "text": "বমি আর মাথা ব্যাথা হওয়ার কথা। কিন্তু অজ্ঞান হয়ে পড়ে গেল কেন",
+      "true_label": "not_hate",
+      "predicted_label": "not_hate",
+      "p_hate": 0.0182,
+      "correct": true,
+      "top_features_toward_hate": [
+        {
+          "token": "গেল",
+          "weight": -0.0214
+        },
+        {
+          "token": "ব্যাথা",
+          "weight": 0.0117
+        },
+        {
+          "token": "বমি",
+          "weight": 0.0099
+        },
+        {
+          "token": "কিন্তু",
+          "weight": -0.0079
+        },
+        {
+          "token": "পড়ে",
+          "weight": -0.0074
+        },
+        {
+          "token": "কথা",
+          "weight": -0.0049
+        },
+        {
+          "token": "মাথা",
+          "weight": 0.0046
+        },
+        {
+          "token": "অজ্ঞান",
+          "weight": -0.0045
+        },
+        {
+          "token": "হওয়ার",
+          "weight": 0.0043
+        },
+        {
+          "token": "আর",
+          "weight": -0.0043
+        }
+      ]
+    },
+    {
+      "test_row": 3745,
+      "file": "lime_3745_correct.html",
+      "text": "শালী তোর মা কে কি সুওর রে চুদেছিলো ম্যাগী",
+      "true_label": "hate",
+      "predicted_label": "hate",
+      "p_hate": 0.9998,
+      "correct": true,
+      "top_features_toward_hate": [
+        {
+          "token": "শালী",
+          "weight": 0.1085
+        },
+        {
+          "token": "চুদেছিলো",
+          "weight": 0.1004
+        },
+        {
+          "token": "ম্যাগী",
+          "weight": 0.0901
+        },
+        {
+          "token": "তোর",
+          "weight": 0.0569
+        },
+        {
+          "token": "রে",
+          "weight": -0.0174
+        },
+        {
+          "token": "মা",
+          "weight": 0.0152
+        },
+        {
+          "token": "কে",
+          "weight": 0.0105
+        },
+        {
+          "token": "সুওর",
+          "weight": -0.0034
+        },
+        {
+          "token": "কি",
+          "weight": 0.0024
+        }
+      ]
+    },
+    {
+      "test_row": 1306,
+      "file": "lime_1306_correct.html",
+      "text": "আই সব মাগি গো পতিতালয় রাখা উচিত",
+      "true_label": "hate",
+      "predicted_label": "hate",
+      "p_hate": 0.9998,
+      "correct": true,
+      "top_features_toward_hate": [
+        {
+          "token": "মাগি",
+          "weight": 0.3579
+        },
+        {
+          "token": "পতিতালয়",
+          "weight": 0.2143
+        },
+        {
+          "token": "গো",
+          "weight": 0.0466
+        },
+        {
+          "token": "উচিত",
+          "weight": 0.0397
+        },
+        {
+          "token": "সব",
+          "weight": 0.0263
+        },
+        {
+          "token": "আই",
+          "weight": 0.0176
+        },
+        {
+          "token": "রাখা",
+          "weight": 0.0152
+        }
+      ]
+    },
+    {
+      "test_row": 183,
+      "file": "lime_183_correct.html",
+      "text": "বোকা চোদা চেনেল আবাল",
+      "true_label": "hate",
+      "predicted_label": "hate",
+      "p_hate": 0.9998,
+      "correct": true,
+      "top_features_toward_hate": [
+        {
+          "token": "চোদা",
+          "weight": 0.3167
+        },
+        {
+          "token": "আবাল",
+          "weight": 0.2868
+        },
+        {
+          "token": "বোকা",
+          "weight": 0.0498
+        },
+        {
+          "token": "চেনেল",
+          "weight": 0.024
+        }
+      ]
+    },
+    {
+      "test_row": 642,
+      "file": "lime_642_correct.html",
+      "text": "এই মাগীকে।জুতা দিয়া পাঠানোর দরকার নিলজ্জা শালী",
+      "true_label": "hate",
+      "predicted_label": "hate",
+      "p_hate": 0.999,
+      "correct": true,
+      "top_features_toward_hate": [
+        {
+          "token": "মাগীকে",
+          "weight": 0.1993
+        },
+        {
+          "token": "শালী",
+          "weight": 0.1951
+        },
+        {
+          "token": "জুতা",
+          "weight": 0.0839
+        },
+        {
+          "token": "নিলজ্জা",
+          "weight": -0.0532
+        },
+        {
+          "token": "দিয়া",
+          "weight": 0.0318
+        },
+        {
+          "token": "এই",
+          "weight": 0.0289
+        },
+        {
+          "token": "পাঠানোর",
+          "weight": -0.0103
+        },
+        {
+          "token": "দরকার",
+          "weight": -0.0082
+        }
+      ]
+    },
+    {
+      "test_row": 1299,
+      "file": "lime_1299_correct.html",
+      "text": "অই হালার সাথে বিয়া করাইয়া দেন",
+      "true_label": "hate",
+      "predicted_label": "hate",
+      "p_hate": 0.9266,
+      "correct": true,
+      "top_features_toward_hate": [
+        {
+          "token": "হালার",
+          "weight": 0.9076
+        },
+        {
+          "token": "অই",
+          "weight": 0.0268
+        },
+        {
+          "token": "সাথে",
+          "weight": -0.0238
+        },
+        {
+          "token": "দেন",
+          "weight": -0.0179
+        },
+        {
+          "token": "বিয়া",
+          "weight": -0.0178
+        },
+        {
+          "token": "করাইয়া",
+          "weight": -0.0129
+        }
+      ]
+    },
+    {
+      "test_row": 2172,
+      "file": "lime_2172_wrong.html",
+      "text": "ওই গুলা সত্যি ভন্ড",
+      "true_label": "not_hate",
+      "predicted_label": "hate",
+      "p_hate": 0.5305,
+      "correct": false,
+      "top_features_toward_hate": [
+        {
+          "token": "সত্যি",
+          "weight": -0.3191
+        },
+        {
+          "token": "ওই",
+          "weight": 0.3117
+        },
+        {
+          "token": "গুলা",
+          "weight": 0.1285
+        },
+        {
+          "token": "ভন্ড",
+          "weight": 0.0842
+        }
+      ]
+    },
+    {
+      "test_row": 2216,
+      "file": "lime_2216_wrong.html",
+      "text": "তুই তো নবি থেকে বের হয়ে গেছো হালার পুত",
+      "true_label": "not_hate",
+      "predicted_label": "hate",
+      "p_hate": 0.9988,
+      "correct": false,
+      "top_features_toward_hate": [
+        {
+          "token": "হালার",
+          "weight": 0.3953
+        },
+        {
+          "token": "পুত",
+          "weight": 0.2227
+        },
+        {
+          "token": "তুই",
+          "weight": 0.0527
+        },
+        {
+          "token": "বের",
+          "weight": 0.043
+        },
+        {
+          "token": "হয়ে",
+          "weight": 0.0323
+        },
+        {
+          "token": "গেছো",
+          "weight": -0.0276
+        },
+        {
+          "token": "নবি",
+          "weight": -0.0244
+        },
+        {
+          "token": "তো",
+          "weight": 0.0238
+        },
+        {
+          "token": "থেকে",
+          "weight": -0.0116
+        }
+      ]
+    },
+    {
+      "test_row": 4087,
+      "file": "lime_4087_wrong.html",
+      "text": "আরে তোর বাবাকে মারার সমাই তোর হাতটা কাপলো না বাবাকে মারলো তার তো হাতটা কেটেফেলা উচিত তার পর বুজবেবাবাকে মারার কষ্টটা৷৷৷৷৷৷ আরে যে বাবা তোকে এতো কষ্টকরে মানুষ করলো আর তুই সে বাবার গায়ে হাত তুল্লি",
+      "true_label": "not_hate",
+      "predicted_label": "hate",
+      "p_hate": 0.9577,
+      "correct": false,
+      "top_features_toward_hate": [
+        {
+          "token": "কেটেফেলা",
+          "weight": 0.1803
+        },
+        {
+          "token": "মারার",
+          "weight": 0.1204
+        },
+        {
+          "token": "তোর",
+          "weight": 0.1139
+        },
+        {
+          "token": "কষ্টটা৷৷",
+          "weight": 0.1101
+        },
+        {
+          "token": "বুজবেবাবাকে",
+          "weight": 0.0671
+        },
+        {
+          "token": "পর",
+          "weight": 0.064
+        },
+        {
+          "token": "তুই",
+          "weight": 0.05
+        },
+        {
+          "token": "এতো",
+          "weight": 0.041
+        },
+        {
+          "token": "বাবাকে",
+          "weight": -0.0391
+        },
+        {
+          "token": "মানুষ",
+          "weight": -0.0263
+        }
+      ]
+    },
+    {
+      "test_row": 2205,
+      "file": "lime_2205_wrong.html",
+      "text": "তারার মার হেটা দেওয়ান বাগি বলেন যে আমাকে এসে কিছু করতে তার বোন্রে সুদিয়া",
+      "true_label": "not_hate",
+      "predicted_label": "hate",
+      "p_hate": 0.8744,
+      "correct": false,
+      "top_features_toward_hate": [
+        {
+          "token": "সুদিয়া",
+          "weight": 0.5112
+        },
+        {
+          "token": "বাগি",
+          "weight": 0.1692
+        },
+        {
+          "token": "মার",
+          "weight": 0.1579
+        },
+        {
+          "token": "এসে",
+          "weight": -0.1294
+        },
+        {
+          "token": "আমাকে",
+          "weight": -0.0616
+        },
+        {
+          "token": "বোন্রে",
+          "weight": -0.0586
+        },
+        {
+          "token": "দেওয়ান",
+          "weight": 0.0498
+        },
+        {
+          "token": "বলেন",
+          "weight": 0.0263
+        },
+        {
+          "token": "কিছু",
+          "weight": -0.0172
+        },
+        {
+          "token": "তারার",
+          "weight": -0.0165
+        }
+      ]
+    },
+    {
+      "test_row": 1123,
+      "file": "lime_1123_wrong.html",
+      "text": "দুদু বড় কড়ে রা",
+      "true_label": "not_hate",
+      "predicted_label": "hate",
+      "p_hate": 0.611,
+      "correct": false,
+      "top_features_toward_hate": [
+        {
+          "token": "দুদু",
+          "weight": 0.6526
+        },
+        {
+          "token": "কড়ে",
+          "weight": -0.2995
+        },
+        {
+          "token": "রা",
+          "weight": 0.0475
+        },
+        {
+          "token": "বড়",
+          "weight": 0.0453
+        }
+      ]
+    },
+    {
+      "test_row": 3256,
+      "file": "lime_3256_wrong.html",
+      "text": "চোখের পানি ধরে রাখতে পারলাম না এটাকে শিরোৎচ্ছেদ করতে হবে আর যদি বেচে যায় ওর যদি ছেলে হয় সেটা ওকে কোপাবে ওর এর থেকে দুরদসা অবস্থা হবে",
+      "true_label": "hate",
+      "predicted_label": "not_hate",
+      "p_hate": 0.1804,
+      "correct": false,
+      "top_features_toward_hate": [
+        {
+          "token": "ওর",
+          "weight": 0.0926
+        },
+        {
+          "token": "হবে",
+          "weight": -0.0797
+        },
+        {
+          "token": "অবস্থা",
+          "weight": -0.0744
+        },
+        {
+          "token": "আর",
+          "weight": -0.0588
+        },
+        {
+          "token": "কোপাবে",
+          "weight": 0.053
+        },
+        {
+          "token": "এটাকে",
+          "weight": 0.0502
+        },
+        {
+          "token": "চোখের",
+          "weight": 0.0494
+        },
+        {
+          "token": "হয়",
+          "weight": 0.0475
+        },
+        {
+          "token": "পানি",
+          "weight": -0.0432
+        },
+        {
+          "token": "রাখতে",
+          "weight": -0.0379
+        }
+      ]
+    },
+    {
+      "test_row": 1333,
+      "file": "lime_1333_wrong.html",
+      "text": "এই মেয়ে বৌ নামের ডাইনি",
+      "true_label": "hate",
+      "predicted_label": "not_hate",
+      "p_hate": 0.3214,
+      "correct": false,
+      "top_features_toward_hate": [
+        {
+          "token": "বৌ",
+          "weight": -0.087
+        },
+        {
+          "token": "ডাইনি",
+          "weight": 0.0851
+        },
+        {
+          "token": "এই",
+          "weight": 0.0769
+        },
+        {
+          "token": "নামের",
+          "weight": 0.0767
+        },
+        {
+          "token": "মেয়ে",
+          "weight": 0.0124
+        }
+      ]
+    },
+    {
+      "test_row": 2618,
+      "file": "lime_2618_wrong.html",
+      "text": "পাকিস্তান আমলেও অনেক বেশি ধর্ষণ হতো, স্যার জাফর ইকবাল ও ধর্ষণের ফসল।",
+      "true_label": "hate",
+      "predicted_label": "not_hate",
+      "p_hate": 0.0617,
+      "correct": false,
+      "top_features_toward_hate": [
+        {
+          "token": "আমলেও",
+          "weight": -0.0691
+        },
+        {
+          "token": "ধর্ষণের",
+          "weight": 0.0603
+        },
+        {
+          "token": "জাফর",
+          "weight": 0.0481
+        },
+        {
+          "token": "অনেক",
+          "weight": -0.0269
+        },
+        {
+          "token": "হতো",
+          "weight": -0.0176
+        },
+        {
+          "token": "ফসল",
+          "weight": -0.0166
+        },
+        {
+          "token": "ইকবাল",
+          "weight": 0.016
+        },
+        {
+          "token": "পাকিস্তান",
+          "weight": -0.013
+        },
+        {
+          "token": "স্যার",
+          "weight": -0.0129
+        },
+        {
+          "token": "বেশি",
+          "weight": -0.0123
+        }
+      ]
+    },
+    {
+      "test_row": 2813,
+      "file": "lime_2813_wrong.html",
+      "text": "আপানার নামবার দেন",
+      "true_label": "hate",
+      "predicted_label": "not_hate",
+      "p_hate": 0.2679,
+      "correct": false,
+      "top_features_toward_hate": [
+        {
+          "token": "আপানার",
+          "weight": 0.1959
+        },
+        {
+          "token": "নামবার",
+          "weight": 0.1846
+        },
+        {
+          "token": "দেন",
+          "weight": -0.0644
+        }
+      ]
+    },
+    {
+      "test_row": 1849,
+      "file": "lime_1849_wrong.html",
+      "text": "এই বেয়াদফটা নাম্বার ওয়ান বন্ড",
+      "true_label": "hate",
+      "predicted_label": "not_hate",
+      "p_hate": 0.059,
+      "correct": false,
+      "top_features_toward_hate": [
+        {
+          "token": "এই",
+          "weight": 0.1039
+        },
+        {
+          "token": "বন্ড",
+          "weight": -0.089
+        },
+        {
+          "token": "ওয়ান",
+          "weight": -0.0841
+        },
+        {
+          "token": "নাম্বার",
+          "weight": 0.0231
+        },
+        {
+          "token": "বেয়াদফটা",
+          "weight": 0.0122
+        }
+      ]
+    }
+  ]
+}

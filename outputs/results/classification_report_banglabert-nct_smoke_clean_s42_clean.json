@@ -1,0 +1,29 @@
+{
+  "model": "banglabert-nct_smoke",
+  "train_variant": "clean",
+  "test_set": "clean",
+  "seed": 42,
+  "tag": "smoke",
+  "labels": [
+    "not_hate",
+    "hate"
+  ],
+  "n": 500,
+  "accuracy": 0.548,
+  "precision_macro": 0.6871584699453552,
+  "recall_macro": 0.5176081228712808,
+  "f1_macro": 0.39078303249876,
+  "f1_weighted": 0.41058989454616035,
+  "f1_not_hate": 0.7002652519893899,
+  "f1_hate": 0.08130081300813008,
+  "confusion_matrix": [
+    [
+      264,
+      2
+    ],
+    [
+      224,
+      10
+    ]
+  ]
+}

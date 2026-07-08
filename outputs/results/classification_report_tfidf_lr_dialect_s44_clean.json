@@ -1,0 +1,29 @@
+{
+  "model": "tfidf_lr",
+  "train_variant": "dialect",
+  "test_set": "clean",
+  "seed": 44,
+  "tag": "full",
+  "labels": [
+    "not_hate",
+    "hate"
+  ],
+  "n": 5028,
+  "accuracy": 0.9041368337311058,
+  "precision_macro": 0.9047266101953602,
+  "recall_macro": 0.903400821983104,
+  "f1_macro": 0.9038554675722423,
+  "f1_weighted": 0.9040582167161292,
+  "f1_not_hate": 0.9090566037735849,
+  "f1_hate": 0.8986543313708999,
+  "confusion_matrix": [
+    [
+      2409,
+      203
+    ],
+    [
+      279,
+      2137
+    ]
+  ]
+}

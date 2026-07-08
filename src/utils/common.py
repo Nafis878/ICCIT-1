@@ -17,6 +17,14 @@ REPORTS_DIR = PROJECT_ROOT / "reports"
 
 DEFAULT_SEED = 42
 
+# Maps a training-file name to its canonical train_variant label.
+VARIANT_OF_FILE = {
+    "train.csv": "clean",
+    "train_augmented.csv": "augmented",
+    "train_dialect_aug.csv": "dialect",
+    "train_aug_dia.csv": "aug_dia",
+}
+
 
 def setup_utf8_stdout() -> None:
     """Bangla text crashes/mojibakes the default Windows cp1252 console."""

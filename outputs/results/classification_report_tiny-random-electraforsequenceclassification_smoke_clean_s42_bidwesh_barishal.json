@@ -1,0 +1,29 @@
+{
+  "model": "tiny-random-electraforsequenceclassification_smoke",
+  "train_variant": "clean",
+  "test_set": "bidwesh_barishal",
+  "seed": 42,
+  "tag": "smoke",
+  "labels": [
+    "not_hate",
+    "hate"
+  ],
+  "n": 140,
+  "accuracy": 0.5214285714285715,
+  "precision_macro": 0.26071428571428573,
+  "recall_macro": 0.5,
+  "f1_macro": 0.3427230046948357,
+  "f1_weighted": 0.3574111334674715,
+  "f1_not_hate": 0.6854460093896714,
+  "f1_hate": 0.0,
+  "confusion_matrix": [
+    [
+      73,
+      0
+    ],
+    [
+      67,
+      0
+    ]
+  ]
+}

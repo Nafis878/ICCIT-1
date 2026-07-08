@@ -92,7 +92,10 @@ def explain_lime(texts_col: str, row: pd.Series, proba_fn, num_features: int,
                  num_samples: int, seed: int):
     from lime.lime_text import LimeTextExplainer
 
-    explainer = LimeTextExplainer(class_names=LABEL_NAMES, random_state=seed)
+    # Whitespace splitting: LIME's default \W+ mangles Bangla because
+    # python re treats combining vowel signs as non-word characters.
+    explainer = LimeTextExplainer(class_names=LABEL_NAMES, random_state=seed,
+                                  split_expression=r"\s+", bow=True)
     exp = explainer.explain_instance(
         row[texts_col], proba_fn, num_features=num_features,
         num_samples=num_samples, labels=(1,))
@@ -103,7 +106,7 @@ def explain_lime(texts_col: str, row: pd.Series, proba_fn, num_features: int,
 def explain_shap(texts_col: str, row: pd.Series, proba_fn, num_features: int):
     import shap
 
-    masker = shap.maskers.Text(r"\W+")
+    masker = shap.maskers.Text(r"\s+")  # \W+ would split inside Bangla words
     explainer = shap.Explainer(lambda x: proba_fn(x)[:, 1], masker,
                                silent=True)
     sv = explainer([row[texts_col]])
@@ -144,7 +147,7 @@ def main() -> None:
 
     df = pd.read_csv(DATA_PROCESSED / "test.csv")
     df[text_col] = df[text_col].fillna("")
-    preds = predictor.predict(df)
+    preds, _ = predictor.predict_with_proba(df)
     picked = pick_examples(df, preds, args.num_each, args.seed)
     print(f"explaining {len(picked)} examples "
           f"({int(picked['correct'].sum())} correct, "

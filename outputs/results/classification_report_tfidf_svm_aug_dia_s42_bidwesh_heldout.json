@@ -1,0 +1,29 @@
+{
+  "model": "tfidf_svm",
+  "train_variant": "aug_dia",
+  "test_set": "bidwesh_heldout",
+  "seed": 42,
+  "tag": "full",
+  "labels": [
+    "not_hate",
+    "hate"
+  ],
+  "n": 4408,
+  "accuracy": 0.867513611615245,
+  "precision_macro": 0.8675516812037207,
+  "recall_macro": 0.8675774098789162,
+  "f1_macro": 0.8675129297629216,
+  "f1_weighted": 0.8675159299131446,
+  "f1_not_hate": 0.8678134902670892,
+  "f1_hate": 0.867212369258754,
+  "confusion_matrix": [
+    [
+      1917,
+      309
+    ],
+    [
+      275,
+      1907
+    ]
+  ]
+}

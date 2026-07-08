@@ -51,7 +51,7 @@ configure `%USERPROFILE%\.kaggle\kaggle.json` and run
 | Files | `BIDWESH Dataset.csv` (dialect texts + labels), `Regional Translated Texts.csv` (row-aligned Standard Bangla source + the 3 dialect translations; alignment verified 100%) |
 | Columns | `Chittagong`, `Noakhali`, `Barishal` (dialect texts) · `target`, `type`, `hate speech` (same scheme as BD-SHS) · `Standard Bangla` (source sentence, second file) |
 | Download status | ✅ automatic (Mendeley public API; the script falls back to system `curl` because the WAF rejects Python's TLS fingerprint) |
-| Role in this project | **Evaluation-only** real-dialect stress test. BIDWESH sentences are derived from BD-SHS, so preprocessing marks rows whose Standard-Bangla source also appears in BD-SHS train/val (`overlaps_bdshs_train`) and results are reported for the full set and the non-overlapping subset. |
+| Role in this project (protocol v2) | Grouped **40/10/50 adapt/dev/test split by source sentence** (`bidwesh_split` column, seed 42): the *adapt* half feeds the DIA lexicon mining and few-shot adaptation experiments; the *test* half (`bidwesh_heldout`, ~4.4K rows after excluding near-duplicates of BD-SHS train/val at char-3-gram cosine ≥ 0.9 — see `reports/leakage_audit.md`) is the held-out dialect benchmark. Sources overlapping BD-SHS train/val are forced into the adapt half. |
 
 ```bibtex
 @misc{fayaz2025bidwesh,

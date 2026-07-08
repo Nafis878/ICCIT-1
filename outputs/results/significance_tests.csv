@@ -1,0 +1,4 @@
+a,b,test_set,delta_f1_macro,p_paired_bootstrap,mcnemar_b_only,mcnemar_a_only,p_mcnemar,n_seeds_a,n_seeds_b
+tfidf_lr:augmented,tfidf_lr:clean,bidwesh_heldout,0.0093,0.0,53,94,0.000906,3,3
+tfidf_lr:dialect,tfidf_lr:clean,bidwesh_heldout,0.0241,0.0,72,178,0.0,3,3
+tfidf_lr:aug_dia,tfidf_lr:clean,bidwesh_heldout,0.0244,0.0,75,182,0.0,3,3

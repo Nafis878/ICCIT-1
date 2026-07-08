@@ -1,104 +1,101 @@
-# Results — 2026-07-06 (full runs, classical + transformers)
+# Results — protocol v2 (Q1 package)
 
-Binary Bangla hate speech detection (BD-SHS Task A, official splits;
-train n=40,181 / val 5,028 / test 5,028). Full metric rows:
-`outputs/results/results_summary.csv`; drops:
-`outputs/results/robustness_summary.csv`; per-run JSON + confusion
-matrices under `outputs/results/` and `outputs/figures/`.
+Updated 2026-07-06. Binary Bangla hate speech detection (BD-SHS Task A,
+official splits). **Protocol v2**: BIDWESH grouped 40/10/50
+adapt/dev/heldout split by source sentence; held-out dialect benchmark
+`bidwesh_heldout` (n=4,408 after excluding char-3-gram near-duplicates of
+BD-SHS train/val, threshold 0.9 — `reports/leakage_audit.md`); 3 seeds per
+configuration; per-example prediction dumps; bootstrap 95% CIs; paired
+bootstrap + McNemar significance. v1 single-seed results archived in
+`outputs/results/archive_v1/`.
 
-Classical models trained on the CPU dev machine; transformers fine-tuned
-on Google Colab T4 (3 epochs, batch 32/16, lr 2e-5, max_len 128, fp16)
-with results merged back into this repo. "+ synthetic aug" = trained on
-`train_augmented.csv` (original 40K + 20K rule-based noisy copies).
-BanglaBERT+aug was retrained once for the explainability session; the
-retrain scored ~0.4 pt higher than the first run (0.9226 → 0.9270 clean),
-which indicates run-to-run variance of roughly ±0.5 pt for the
-transformer numbers.
+Tables: `outputs/results/stats_summary.csv` (mean±std + CI),
+`significance_tests.csv`, `robustness_summary.csv` (per-seed drops),
+`slice_analysis.csv`. Figures: `outputs/figures/robustness_bars_*.png`,
+`faithfulness_bars.png` (+ `adaptation_curve.png` after GPU phase).
 
-## Macro-F1 across test conditions
+## Methods under test
 
-| model | train data | clean test | synthetic-noisy | BIDWESH (all) | Chittagong | Noakhali | Barishal |
-|---|---|---|---|---|---|---|---|
-| majority | — | 0.342 | 0.342 | 0.336 | 0.336 | 0.335 | 0.338 |
-| TF-IDF + LR | clean | 0.9036 | 0.8796 | 0.8574 | 0.8136 | 0.8707 | 0.8888 |
-| TF-IDF + LR | + synthetic aug | 0.9050 | 0.8926 | 0.8654 | 0.8294 | 0.8747 | 0.8929 |
-| TF-IDF + SVM | clean | 0.9014 | 0.8771 | 0.8505 | 0.8058 | 0.8640 | 0.8827 |
-| TF-IDF + SVM | + synthetic aug | 0.9010 | 0.8816 | 0.8556 | 0.8153 | 0.8666 | 0.8858 |
-| XLM-R base | clean | 0.9063 | 0.8915 | 0.8559 | 0.8071 | 0.8695 | 0.8926 |
-| XLM-R base | + synthetic aug | 0.9104 | 0.8994 | 0.8678 | 0.8290 | 0.8813 | 0.8943 |
-| BanglaBERT | clean | 0.9162 | 0.8982 | 0.8704 | 0.8205 | 0.8862 | 0.9059 |
-| BanglaBERT | **+ synthetic aug** | **0.9270** | **0.9098** | **0.8816** | **0.8315** | **0.9006** | **0.9141** |
+- **synthetic aug** — rule-based social-media noise (train_augmented.csv)
+- **DIA** (proposed) — Dialect-Informed Augmentation via a 601-entry
+  standard→dialect lexicon mined from BIDWESH adapt-split parallel
+  sentences (train_dialect_aug.csv)
+- **synthetic+DIA** — both (train_aug_dia.csv)
+- **NCT** (proposed) — noise-consistency training (transformers only;
+  GPU phase)
+- **few-shot adaptation** (proposed) — continued fine-tuning on N BIDWESH
+  adapt rows (transformers only; GPU phase)
 
-(BD-SHS paper's best reported Task A model, BiLSTM + informal fastText:
-F1 ≈ 0.91 — BanglaBERT here exceeds it.)
+## Classical results (complete, local; macro-F1, 3 seeds, 95% bootstrap CI)
 
-## Robustness drops (macro-F1 vs each model's clean score)
+| model | train variant | clean test | synthetic-noisy | BIDWESH held-out |
+|---|---|---|---|---|
+| majority | — | 0.342 | 0.342 | 0.336 |
+| TF-IDF LR | clean | 0.9036 [.895–.912] | 0.8796 | 0.8538 [.843–.864] |
+| TF-IDF LR | synthetic aug | 0.9050 [.897–.913] | 0.8926 | 0.8631 [.853–.873] |
+| TF-IDF LR | **DIA** | 0.9039 [.895–.912] | 0.8835 | **0.8779 [.869–.888]** |
+| TF-IDF LR | synthetic+DIA | 0.9047 [.896–.913] | 0.8892 | **0.8782 [.868–.888]** |
+| TF-IDF SVM | clean | 0.9014 [.893–.909] | 0.8771 | 0.8447 [.834–.856] |
+| TF-IDF SVM | synthetic aug | 0.9010 [.893–.909] | 0.8816 | 0.8510 [.841–.861] |
+| TF-IDF SVM | DIA | 0.9004 [.892–.909] | 0.8781 | 0.8614 [.851–.872] |
+| TF-IDF SVM | synthetic+DIA | 0.8996 [.891–.908] | 0.8874 | 0.8675 [.857–.878] |
 
-| model / train | → synthetic noisy | → BIDWESH all | → Chittagong | → Noakhali | → Barishal |
-|---|---|---|---|---|---|
-| LR / clean | −0.0240 | −0.0462 | −0.0900 | −0.0329 | −0.0148 |
-| LR / augmented | −0.0124 | −0.0397 | −0.0757 | −0.0304 | −0.0121 |
-| SVM / clean | −0.0242 | −0.0509 | −0.0956 | −0.0374 | −0.0187 |
-| SVM / augmented | −0.0194 | −0.0454 | −0.0857 | −0.0344 | −0.0152 |
-| XLM-R / clean | −0.0147 | −0.0504 | −0.0991 | −0.0367 | −0.0137 |
-| XLM-R / augmented | −0.0110 | −0.0426 | −0.0814 | −0.0291 | −0.0161 |
-| BanglaBERT / clean | −0.0180 | −0.0459 | −0.0957 | −0.0300 | −0.0104 |
-| BanglaBERT / augmented | −0.0172 | −0.0454 | −0.0954 | −0.0263 | −0.0129 |
+(Classical seed-to-seed std ≈ 0 — LR/SVM training is deterministic given
+the data; uncertainty is carried by the example-level bootstrap CIs.)
 
-BIDWESH rows overlapping BD-SHS train/val sources (exact-match, 28 rows =
-0.3%) are excluded in the `bidwesh_clean` variant — numbers shift by
-< 0.001, so contamination is not driving these scores.
+### Significance (paired bootstrap + McNemar, seed-pooled)
 
-## Findings
+| comparison (on BIDWESH held-out) | ΔF1 | p (bootstrap) | p (McNemar) |
+|---|---|---|---|
+| LR synthetic-aug vs clean | +0.0093 | <0.001 | 9.1e-4 |
+| LR **DIA vs clean** | **+0.0241** | <0.001 | 3.1e-11 |
+| LR **synthetic+DIA vs clean** | **+0.0244** | <0.001 | 3.8e-11 |
 
-1. **BanglaBERT + augmentation training is the best model everywhere**:
-   0.9270 clean / 0.9098 noisy / 0.8816 real-dialect macro-F1. Ordering is
-   consistent across all test sets: BanglaBERT > XLM-R > TF-IDF LR > SVM.
-2. **Augmentation training helps every model on every shifted test set,
-   at zero or negative clean-test cost.** For BanglaBERT it adds ~+1.1 pt
-   clean, +1.2 pt noisy, +1.1 pt BIDWESH; for XLM-R +0.4/+0.8/+1.2 pts;
-   for TF-IDF LR it halves the synthetic-noise drop.
-3. **The real-dialect gap survives pretraining.** Transformers raise the
-   *absolute* scores (BanglaBERT-aug 0.882 on BIDWESH vs LR-aug 0.865) but
-   their *relative* drop clean→BIDWESH (−0.043 to −0.050) is the same size
-   as the classical models' — large-scale Bangla pretraining does not by
-   itself confer dialect robustness. Interestingly, augmentation training
-   shrinks the *relative* dialect drop much more for the classical models
-   than for the transformers, whose gains come mainly from a higher clean
-   baseline.
-4. **Chittagong is the hardest dialect for every model** (best: 0.832),
-   losing ~2× more F1 than Noakhali and ~5-7× more than Barishal —
-   consistent with Chittagonian being the most divergent of the three.
-   Real-dialect methods (dialect-aware augmentation, BIDWESH-based
-   fine-tuning) are the natural next step.
-5. **Synthetic noise stress-test is a weaker proxy for dialect shift**:
-   drops on the synthetic set (1-2.4 pts) are consistently ~⅓ of the
-   real-dialect drops (4-5 pts).
+## Key findings so far
 
-## Explainability
+1. **DIA (proposed) beats synthetic augmentation on real dialects by
+   ~2.6×** for LR: +2.41 pts vs +0.93 pts macro-F1 on the held-out dialect
+   benchmark, both highly significant, at zero clean-test cost
+   (0.9039 vs 0.9036). Same ordering for SVM (+1.7 vs +0.6 pts).
+2. **DIA recovers about half of the dialect gap**: LR's clean→dialect drop
+   shrinks from 4.98 pts (clean-trained) to 2.60 pts (DIA-trained).
+3. Synthetic noise mainly helps the synthetic-noisy test (as expected —
+   it matches that distribution); DIA transfers to real dialect text
+   because its substitutions come from real dialect parallel data.
+4. **Explanations are faithful, quantitatively**: on 200 test examples,
+   LIME comprehensiveness 0.341 / sufficiency −0.095 / deletion-AUC 0.571
+   vs random-attribution 0.053 / 0.209 / 0.766 (LIME ≥ SHAP on all three;
+   `faithfulness_summary.csv`). LIME/SHAP now use whitespace tokenization —
+   python's `\W` splits Bangla combining vowel signs and corrupts
+   attributions (fixed; the v1 single-character artifact is gone).
+5. Leakage rigor: near-duplicate audit found 188 BIDWESH rows (vs 28
+   exact-match) and 2.1% of BD-SHS test near-duplicated in train at
+   cosine ≥0.9; the dialect benchmark excludes them, and slice analysis
+   covers the test-set flag.
 
-LIME explanations (20 test predictions each: 10 correct + 10 incorrect,
-balanced over classes/error directions, weights toward the *hate* class):
+## Transformer phase (GPU queue — in progress)
 
-- `outputs/explainability/tfidf_lr_aug/` — best classical model
-- `outputs/explainability/banglabert_aug/` — best transformer (run on
-  Colab T4, `--num-samples 500`)
+49 jobs in `scripts/experiments_manifest.json`: BanglaBERT ×
+{clean, synthetic aug, DIA, synthetic+DIA, NCT} × 3 seeds, few-shot
+adaptation curve (N ∈ {250, 500, 1000, full} × 3 seeds), XLM-R (3 variants
+× 3 seeds), MuRIL (2 × 3), mBERT (2 × 1), Qwen2.5-7B few-shot baseline,
+transformer faithfulness (LIME/SHAP/random). Run via
+`scripts/colab_runner.py` (resume-safe; see README). Analysis after each
+returned batch: `evaluate --all --skip-existing && stats && slices &&
+figures`.
 
-Each folder has per-example interactive HTML, `explanations_summary.json`
-with top ±10 features, and a README index.
-
-## Reproduce
+## Reproduce (local part)
 
 ```bash
-python -m src.data.download && python -m src.data.preprocess && python -m src.data.augment
-python -m src.models.baselines --model all
-python -m src.models.baselines --model all --train-file data/processed/train_augmented.csv
-# on GPU (Colab T4):
-python -m src.models.train_transformer --model-name csebuetnlp/banglabert --epochs 3 --batch-size 32 --lr 2e-5 --max-len 128
-python -m src.models.train_transformer --model-name csebuetnlp/banglabert --epochs 3 --batch-size 32 --lr 2e-5 --max-len 128 --train-file data/processed/train_augmented.csv
-python -m src.models.train_transformer --model-name xlm-roberta-base --epochs 3 --batch-size 16 --lr 2e-5 --max-len 128
-python -m src.models.train_transformer --model-name xlm-roberta-base --epochs 3 --batch-size 16 --lr 2e-5 --max-len 128 --train-file data/processed/train_augmented.csv
-python -m src.evaluation.evaluate --all --skip-existing
-python -m src.explainability.explain --model-dir outputs/models/tfidf_lr_aug
-python -m src.explainability.explain --model-dir outputs/models/banglabert_aug --num-samples 500
+python -m src.data.download && python -m src.data.preprocess
+python -m src.data.leakage_audit && python -m src.data.dialect_lexicon
+python -m src.data.augment
+for s in 42 43 44; do for f in train train_augmented train_dialect_aug train_aug_dia; do
+  python -m src.models.baselines --model tfidf_lr  --train-file data/processed/$f.csv --seed $s
+  python -m src.models.baselines --model tfidf_svm --train-file data/processed/$f.csv --seed $s
+done; done
+python -m src.models.baselines --model majority
+python -m src.evaluation.stats && python -m src.evaluation.slices && python -m src.evaluation.figures
+python -m src.explainability.faithfulness --model-dir outputs/models/tfidf_lr_aug_dia_s42 --method lime
+python -m src.explainability.explain --model-dir outputs/models/tfidf_lr_aug_dia_s42
 ```

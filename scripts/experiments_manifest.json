@@ -1,0 +1,407 @@
+{
+ "jobs": [
+  {
+   "id": "banglabert_augmented_s42",
+   "kind": "train",
+   "model_name": "csebuetnlp/banglabert",
+   "train_file": "train_augmented.csv",
+   "method": "standard",
+   "seed": 42,
+   "batch_size": 32,
+   "persist_glob": "banglabert_augmented_s42"
+  },
+  {
+   "id": "banglabert_augmented_s43",
+   "kind": "train",
+   "model_name": "csebuetnlp/banglabert",
+   "train_file": "train_augmented.csv",
+   "method": "standard",
+   "seed": 43,
+   "batch_size": 32,
+   "persist_glob": "banglabert_augmented_s43"
+  },
+  {
+   "id": "banglabert_augmented_s44",
+   "kind": "train",
+   "model_name": "csebuetnlp/banglabert",
+   "train_file": "train_augmented.csv",
+   "method": "standard",
+   "seed": 44,
+   "batch_size": 32,
+   "persist_glob": "banglabert_augmented_s44"
+  },
+  {
+   "id": "banglabert_clean_s42",
+   "kind": "train",
+   "model_name": "csebuetnlp/banglabert",
+   "train_file": "train.csv",
+   "method": "standard",
+   "seed": 42,
+   "batch_size": 32
+  },
+  {
+   "id": "banglabert_clean_s43",
+   "kind": "train",
+   "model_name": "csebuetnlp/banglabert",
+   "train_file": "train.csv",
+   "method": "standard",
+   "seed": 43,
+   "batch_size": 32
+  },
+  {
+   "id": "banglabert_clean_s44",
+   "kind": "train",
+   "model_name": "csebuetnlp/banglabert",
+   "train_file": "train.csv",
+   "method": "standard",
+   "seed": 44,
+   "batch_size": 32
+  },
+  {
+   "id": "banglabert_aug_dia_s42",
+   "kind": "train",
+   "model_name": "csebuetnlp/banglabert",
+   "train_file": "train_aug_dia.csv",
+   "method": "standard",
+   "seed": 42,
+   "batch_size": 32,
+   "persist_glob": "banglabert_aug_dia_s42"
+  },
+  {
+   "id": "banglabert_aug_dia_s43",
+   "kind": "train",
+   "model_name": "csebuetnlp/banglabert",
+   "train_file": "train_aug_dia.csv",
+   "method": "standard",
+   "seed": 43,
+   "batch_size": 32
+  },
+  {
+   "id": "banglabert_aug_dia_s44",
+   "kind": "train",
+   "model_name": "csebuetnlp/banglabert",
+   "train_file": "train_aug_dia.csv",
+   "method": "standard",
+   "seed": 44,
+   "batch_size": 32
+  },
+  {
+   "id": "banglabert-nct_clean_s42",
+   "kind": "train",
+   "model_name": "csebuetnlp/banglabert",
+   "train_file": "train.csv",
+   "method": "consistency",
+   "seed": 42,
+   "batch_size": 16
+  },
+  {
+   "id": "banglabert-nct_clean_s43",
+   "kind": "train",
+   "model_name": "csebuetnlp/banglabert",
+   "train_file": "train.csv",
+   "method": "consistency",
+   "seed": 43,
+   "batch_size": 16
+  },
+  {
+   "id": "banglabert-nct_clean_s44",
+   "kind": "train",
+   "model_name": "csebuetnlp/banglabert",
+   "train_file": "train.csv",
+   "method": "consistency",
+   "seed": 44,
+   "batch_size": 16
+  },
+  {
+   "id": "banglabert_dialect_s42",
+   "kind": "train",
+   "model_name": "csebuetnlp/banglabert",
+   "train_file": "train_dialect_aug.csv",
+   "method": "standard",
+   "seed": 42,
+   "batch_size": 32
+  },
+  {
+   "id": "banglabert_dialect_s43",
+   "kind": "train",
+   "model_name": "csebuetnlp/banglabert",
+   "train_file": "train_dialect_aug.csv",
+   "method": "standard",
+   "seed": 43,
+   "batch_size": 32
+  },
+  {
+   "id": "banglabert_dialect_s44",
+   "kind": "train",
+   "model_name": "csebuetnlp/banglabert",
+   "train_file": "train_dialect_aug.csv",
+   "method": "standard",
+   "seed": 44,
+   "batch_size": 32
+  },
+  {
+   "id": "banglabert-adapt250_augmented_s42",
+   "kind": "adapt",
+   "from": "banglabert_augmented_s42",
+   "n": 250,
+   "seed": 42
+  },
+  {
+   "id": "banglabert-adapt500_augmented_s42",
+   "kind": "adapt",
+   "from": "banglabert_augmented_s42",
+   "n": 500,
+   "seed": 42
+  },
+  {
+   "id": "banglabert-adapt1000_augmented_s42",
+   "kind": "adapt",
+   "from": "banglabert_augmented_s42",
+   "n": 1000,
+   "seed": 42
+  },
+  {
+   "id": "banglabert-adaptfull_augmented_s42",
+   "kind": "adapt",
+   "from": "banglabert_augmented_s42",
+   "n": 0,
+   "seed": 42
+  },
+  {
+   "id": "banglabert-adapt250_augmented_s43",
+   "kind": "adapt",
+   "from": "banglabert_augmented_s43",
+   "n": 250,
+   "seed": 43
+  },
+  {
+   "id": "banglabert-adapt500_augmented_s43",
+   "kind": "adapt",
+   "from": "banglabert_augmented_s43",
+   "n": 500,
+   "seed": 43
+  },
+  {
+   "id": "banglabert-adapt1000_augmented_s43",
+   "kind": "adapt",
+   "from": "banglabert_augmented_s43",
+   "n": 1000,
+   "seed": 43
+  },
+  {
+   "id": "banglabert-adaptfull_augmented_s43",
+   "kind": "adapt",
+   "from": "banglabert_augmented_s43",
+   "n": 0,
+   "seed": 43
+  },
+  {
+   "id": "banglabert-adapt250_augmented_s44",
+   "kind": "adapt",
+   "from": "banglabert_augmented_s44",
+   "n": 250,
+   "seed": 44
+  },
+  {
+   "id": "banglabert-adapt500_augmented_s44",
+   "kind": "adapt",
+   "from": "banglabert_augmented_s44",
+   "n": 500,
+   "seed": 44
+  },
+  {
+   "id": "banglabert-adapt1000_augmented_s44",
+   "kind": "adapt",
+   "from": "banglabert_augmented_s44",
+   "n": 1000,
+   "seed": 44
+  },
+  {
+   "id": "banglabert-adaptfull_augmented_s44",
+   "kind": "adapt",
+   "from": "banglabert_augmented_s44",
+   "n": 0,
+   "seed": 44
+  },
+  {
+   "id": "faith_banglabert_lime",
+   "kind": "faithfulness",
+   "model_dir": "banglabert_aug_dia_s42",
+   "method": "lime"
+  },
+  {
+   "id": "faith_banglabert_shap",
+   "kind": "faithfulness",
+   "model_dir": "banglabert_aug_dia_s42",
+   "method": "shap"
+  },
+  {
+   "id": "faith_banglabert_random",
+   "kind": "faithfulness",
+   "model_dir": "banglabert_aug_dia_s42",
+   "method": "random"
+  },
+  {
+   "id": "explain_banglabert",
+   "kind": "explain",
+   "model_dir": "banglabert_aug_dia_s42"
+  },
+  {
+   "id": "xlm-roberta-base_clean_s42",
+   "kind": "train",
+   "model_name": "xlm-roberta-base",
+   "train_file": "train.csv",
+   "method": "standard",
+   "seed": 42,
+   "batch_size": 16
+  },
+  {
+   "id": "xlm-roberta-base_augmented_s42",
+   "kind": "train",
+   "model_name": "xlm-roberta-base",
+   "train_file": "train_augmented.csv",
+   "method": "standard",
+   "seed": 42,
+   "batch_size": 16
+  },
+  {
+   "id": "xlm-roberta-base_aug_dia_s42",
+   "kind": "train",
+   "model_name": "xlm-roberta-base",
+   "train_file": "train_aug_dia.csv",
+   "method": "standard",
+   "seed": 42,
+   "batch_size": 16
+  },
+  {
+   "id": "xlm-roberta-base_clean_s43",
+   "kind": "train",
+   "model_name": "xlm-roberta-base",
+   "train_file": "train.csv",
+   "method": "standard",
+   "seed": 43,
+   "batch_size": 16
+  },
+  {
+   "id": "xlm-roberta-base_augmented_s43",
+   "kind": "train",
+   "model_name": "xlm-roberta-base",
+   "train_file": "train_augmented.csv",
+   "method": "standard",
+   "seed": 43,
+   "batch_size": 16
+  },
+  {
+   "id": "xlm-roberta-base_aug_dia_s43",
+   "kind": "train",
+   "model_name": "xlm-roberta-base",
+   "train_file": "train_aug_dia.csv",
+   "method": "standard",
+   "seed": 43,
+   "batch_size": 16
+  },
+  {
+   "id": "xlm-roberta-base_clean_s44",
+   "kind": "train",
+   "model_name": "xlm-roberta-base",
+   "train_file": "train.csv",
+   "method": "standard",
+   "seed": 44,
+   "batch_size": 16
+  },
+  {
+   "id": "xlm-roberta-base_augmented_s44",
+   "kind": "train",
+   "model_name": "xlm-roberta-base",
+   "train_file": "train_augmented.csv",
+   "method": "standard",
+   "seed": 44,
+   "batch_size": 16
+  },
+  {
+   "id": "xlm-roberta-base_aug_dia_s44",
+   "kind": "train",
+   "model_name": "xlm-roberta-base",
+   "train_file": "train_aug_dia.csv",
+   "method": "standard",
+   "seed": 44,
+   "batch_size": 16
+  },
+  {
+   "id": "muril-base-cased_clean_s42",
+   "kind": "train",
+   "model_name": "google/muril-base-cased",
+   "train_file": "train.csv",
+   "method": "standard",
+   "seed": 42,
+   "batch_size": 16
+  },
+  {
+   "id": "muril-base-cased_augmented_s42",
+   "kind": "train",
+   "model_name": "google/muril-base-cased",
+   "train_file": "train_augmented.csv",
+   "method": "standard",
+   "seed": 42,
+   "batch_size": 16
+  },
+  {
+   "id": "muril-base-cased_clean_s43",
+   "kind": "train",
+   "model_name": "google/muril-base-cased",
+   "train_file": "train.csv",
+   "method": "standard",
+   "seed": 43,
+   "batch_size": 16
+  },
+  {
+   "id": "muril-base-cased_augmented_s43",
+   "kind": "train",
+   "model_name": "google/muril-base-cased",
+   "train_file": "train_augmented.csv",
+   "method": "standard",
+   "seed": 43,
+   "batch_size": 16
+  },
+  {
+   "id": "muril-base-cased_clean_s44",
+   "kind": "train",
+   "model_name": "google/muril-base-cased",
+   "train_file": "train.csv",
+   "method": "standard",
+   "seed": 44,
+   "batch_size": 16
+  },
+  {
+   "id": "muril-base-cased_augmented_s44",
+   "kind": "train",
+   "model_name": "google/muril-base-cased",
+   "train_file": "train_augmented.csv",
+   "method": "standard",
+   "seed": 44,
+   "batch_size": 16
+  },
+  {
+   "id": "bert-base-multilingual-cased_clean_s42",
+   "kind": "train",
+   "model_name": "bert-base-multilingual-cased",
+   "train_file": "train.csv",
+   "method": "standard",
+   "seed": 42,
+   "batch_size": 16
+  },
+  {
+   "id": "bert-base-multilingual-cased_augmented_s42",
+   "kind": "train",
+   "model_name": "bert-base-multilingual-cased",
+   "train_file": "train_augmented.csv",
+   "method": "standard",
+   "seed": 42,
+   "batch_size": 16
+  },
+  {
+   "id": "llm_qwen25_7b",
+   "kind": "llm"
+  }
+ ]
+}

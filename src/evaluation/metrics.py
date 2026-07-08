@@ -86,28 +86,32 @@ def plot_confusion(cm, path: Path, title: str) -> None:
 
 
 def record_results(model_id: str, train_variant: str, test_set: str,
-                   y_true, y_pred, tag: str = "full",
+                   y_true, y_pred, tag: str = "full", seed: int = 42,
                    make_figure: bool = True) -> dict:
     """Compute metrics, write the JSON report (+ optional figure), and
-    upsert the row in outputs/results/results_summary.csv."""
+    upsert the row in outputs/results/results_summary.csv.
+    Row key: (model, train_variant, test_set, seed)."""
     ensure_dirs(RESULTS_DIR, FIGURES_DIR)
     metrics = compute_all(y_true, y_pred)
-    slug = f"{model_id}_{train_variant}_{test_set}"
+    slug = f"{model_id}_{train_variant}_s{seed}_{test_set}"
 
     report = {
         "model": model_id,
         "train_variant": train_variant,
         "test_set": test_set,
+        "seed": int(seed),
         "tag": tag,
         "labels": LABEL_NAMES,
         **metrics,
     }
     save_json(report, RESULTS_DIR / f"classification_report_{slug}.json")
 
-    if make_figure:
+    # One confusion matrix per configuration (reference seed), not per seed.
+    if make_figure and seed == 42:
         plot_confusion(
             metrics["confusion_matrix"],
-            FIGURES_DIR / f"confusion_matrix_{slug}.png",
+            FIGURES_DIR / f"confusion_matrix_{model_id}_{train_variant}_"
+                          f"{test_set}.png",
             f"{model_id} ({train_variant} train) on {test_set}\n"
             f"macro-F1 {metrics['f1_macro']:.3f}",
         )
@@ -118,14 +122,18 @@ def record_results(model_id: str, train_variant: str, test_set: str,
     summary_path = RESULTS_DIR / "results_summary.csv"
     if summary_path.exists():
         summary = pd.read_csv(summary_path)
+        if "seed" not in summary.columns:
+            summary["seed"] = 42  # legacy rows predate the seed column
         key = (summary["model"] == model_id) & \
               (summary["train_variant"] == train_variant) & \
-              (summary["test_set"] == test_set)
+              (summary["test_set"] == test_set) & \
+              (summary["seed"] == int(seed))
         summary = summary[~key]
         summary = pd.concat([summary, pd.DataFrame([row])], ignore_index=True)
     else:
         summary = pd.DataFrame([row])
-    summary.sort_values(["model", "train_variant", "test_set"], inplace=True)
+    summary.sort_values(["model", "train_variant", "test_set", "seed"],
+                        inplace=True)
     summary.to_csv(summary_path, index=False, encoding="utf-8")
 
     print(f"    [{slug}] acc={metrics['accuracy']:.4f} "

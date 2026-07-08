@@ -1,0 +1,26 @@
+{
+ "jobs": [
+  {
+   "id": "smoke_train",
+   "kind": "train",
+   "model_name": "hf-internal-testing/tiny-random-ElectraForSequenceClassification",
+   "train_file": "train.csv",
+   "method": "standard",
+   "seed": 42,
+   "batch_size": 16
+  },
+  {
+   "id": "smoke_adapt",
+   "kind": "adapt",
+   "from": "tiny-random-electraforsequenceclassification_smoke_clean_s42",
+   "n": 50,
+   "seed": 42
+  },
+  {
+   "id": "smoke_faith",
+   "kind": "faithfulness",
+   "model_dir": "tiny-random-electraforsequenceclassification_smoke_clean_s42",
+   "method": "lime"
+  }
+ ]
+}

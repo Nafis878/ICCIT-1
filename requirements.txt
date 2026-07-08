@@ -22,6 +22,9 @@ protobuf>=4.25
 lime>=0.2.0.1
 shap>=0.45             # fallback method (--method shap)
 
+# GPU-only extras (Colab/Kaggle; not needed on CPU dev machines)
+# bitsandbytes>=0.43   # 4-bit quantization for the Qwen LLM baseline
+
 # Optional extras (not required by the pipeline)
 # bnunicodenormalizer   # stricter Bangla word normalization hook
 # indic-transliteration # romanized-Bangla augmentation experiments
