@@ -104,6 +104,39 @@ from google.colab import drive; drive.mount('/content/drive')
 
 When done: `!cd /content/drive/MyDrive/iccit_q1_state && zip -r q1_results.zip mirror`
 
+### Fast plan: whole queue in one ~4–5 h sitting (Kaggle dual-T4, free)
+
+The manifest is split into two dependency-safe lanes (`lane A`: BanglaBERT
+core + adaptation + XAI; `lane B`: XLM-R/MuRIL/LLMs). On Kaggle
+(Settings → Accelerator → **GPU T4 ×2**, internet ON) both lanes run in
+parallel, one per GPU:
+
+```python
+!git clone https://github.com/Nafis878/ICCIT-1.git
+%cd ICCIT-1
+!pip install -q lime accelerate sentencepiece bitsandbytes peft unsloth
+!python -m src.data.download && python -m src.data.preprocess && \
+ python -m src.data.leakage_audit && python -m src.data.dialect_lexicon && \
+ python -m src.data.augment
+
+import os, subprocess
+def lane(l, gpu):
+    env = {**os.environ, "CUDA_VISIBLE_DEVICES": gpu}
+    return subprocess.Popen(
+        ["python", "scripts/colab_runner.py", "--state-dir", "/kaggle/working/state",
+         "--lane", l, "--time-budget-min", "520"], env=env)
+a, b = lane("A", "0"), lane("B", "1")
+a.wait(); b.wait()
+
+!cd /kaggle/working/state && zip -r q1_results.zip mirror
+# download q1_results.zip from the Kaggle output panel
+```
+
+Same idea works across platforms: run lane A on Colab and lane B on Kaggle
+at the same time (`--lane A` / `--lane B`), each with its own state dir.
+With a paid Colab A100, the whole queue fits in a single ~2 h session
+(use the normal cell, no lanes needed).
+
 ## Analysis (local, CPU)
 
 ```bash

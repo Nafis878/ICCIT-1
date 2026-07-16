@@ -7,7 +7,9 @@
    "train_file": "train.csv",
    "method": "standard",
    "seed": 42,
-   "batch_size": 16
+   "batch_size": 16,
+   "epochs": 3,
+   "lane": "A"
   },
   {
    "id": "smoke_adapt",

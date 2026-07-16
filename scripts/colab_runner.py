@@ -129,6 +129,10 @@ def main() -> None:
     parser.add_argument("--time-budget-min", type=float, default=200,
                         help="stop starting new jobs after this many "
                              "minutes (finish + mirror first)")
+    parser.add_argument("--lane", default="all", choices=["all", "A", "B"],
+                        help="run only one dependency-safe lane — lets two "
+                             "GPUs/platforms work the queue in parallel "
+                             "(A: BanglaBERT+adapt+XAI, B: breadth+LLMs)")
     parser.add_argument("--local-smoke", action="store_true")
     args = parser.parse_args()
 
@@ -138,6 +142,9 @@ def main() -> None:
     restore_models(state)
 
     jobs = json.loads(args.manifest.read_text(encoding="utf-8"))["jobs"]
+    if args.lane != "all":
+        jobs = [j for j in jobs if j.get("lane", "A") == args.lane]
+        print(f"lane {args.lane}: {len(jobs)} jobs")
     t0 = time.time()
     n_done_before = sum(
         1 for j in jobs if (state / "done" / f"{j['id']}.json").exists())

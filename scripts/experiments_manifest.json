@@ -7,7 +7,9 @@
    "train_file": "train_augmented.csv",
    "method": "standard",
    "seed": 42,
-   "batch_size": 32,
+   "batch_size": 64,
+   "epochs": 3,
+   "lane": "A",
    "persist_glob": "banglabert_augmented_s42"
   },
   {
@@ -17,7 +19,9 @@
    "train_file": "train_augmented.csv",
    "method": "standard",
    "seed": 43,
-   "batch_size": 32,
+   "batch_size": 64,
+   "epochs": 3,
+   "lane": "A",
    "persist_glob": "banglabert_augmented_s43"
   },
   {
@@ -27,7 +31,9 @@
    "train_file": "train_augmented.csv",
    "method": "standard",
    "seed": 44,
-   "batch_size": 32,
+   "batch_size": 64,
+   "epochs": 3,
+   "lane": "A",
    "persist_glob": "banglabert_augmented_s44"
   },
   {
@@ -37,7 +43,9 @@
    "train_file": "train.csv",
    "method": "standard",
    "seed": 42,
-   "batch_size": 32
+   "batch_size": 64,
+   "epochs": 3,
+   "lane": "A"
   },
   {
    "id": "banglabert_clean_s43",
@@ -46,7 +54,9 @@
    "train_file": "train.csv",
    "method": "standard",
    "seed": 43,
-   "batch_size": 32
+   "batch_size": 64,
+   "epochs": 3,
+   "lane": "A"
   },
   {
    "id": "banglabert_clean_s44",
@@ -55,7 +65,9 @@
    "train_file": "train.csv",
    "method": "standard",
    "seed": 44,
-   "batch_size": 32
+   "batch_size": 64,
+   "epochs": 3,
+   "lane": "A"
   },
   {
    "id": "banglabert_aug_dia_s42",
@@ -64,7 +76,9 @@
    "train_file": "train_aug_dia.csv",
    "method": "standard",
    "seed": 42,
-   "batch_size": 32,
+   "batch_size": 64,
+   "epochs": 3,
+   "lane": "A",
    "persist_glob": "banglabert_aug_dia_s42"
   },
   {
@@ -74,7 +88,9 @@
    "train_file": "train_aug_dia.csv",
    "method": "standard",
    "seed": 43,
-   "batch_size": 32
+   "batch_size": 64,
+   "epochs": 3,
+   "lane": "A"
   },
   {
    "id": "banglabert_aug_dia_s44",
@@ -83,7 +99,9 @@
    "train_file": "train_aug_dia.csv",
    "method": "standard",
    "seed": 44,
-   "batch_size": 32
+   "batch_size": 64,
+   "epochs": 3,
+   "lane": "A"
   },
   {
    "id": "banglabert-nct_clean_s42",
@@ -92,7 +110,9 @@
    "train_file": "train.csv",
    "method": "consistency",
    "seed": 42,
-   "batch_size": 16
+   "batch_size": 32,
+   "epochs": 3,
+   "lane": "A"
   },
   {
    "id": "banglabert-nct_clean_s43",
@@ -101,7 +121,9 @@
    "train_file": "train.csv",
    "method": "consistency",
    "seed": 43,
-   "batch_size": 16
+   "batch_size": 32,
+   "epochs": 3,
+   "lane": "A"
   },
   {
    "id": "banglabert-nct_clean_s44",
@@ -110,7 +132,9 @@
    "train_file": "train.csv",
    "method": "consistency",
    "seed": 44,
-   "batch_size": 16
+   "batch_size": 32,
+   "epochs": 3,
+   "lane": "A"
   },
   {
    "id": "banglabert_dialect_s42",
@@ -119,7 +143,9 @@
    "train_file": "train_dialect_aug.csv",
    "method": "standard",
    "seed": 42,
-   "batch_size": 32
+   "batch_size": 64,
+   "epochs": 3,
+   "lane": "A"
   },
   {
    "id": "banglabert_dialect_s43",
@@ -128,7 +154,9 @@
    "train_file": "train_dialect_aug.csv",
    "method": "standard",
    "seed": 43,
-   "batch_size": 32
+   "batch_size": 64,
+   "epochs": 3,
+   "lane": "A"
   },
   {
    "id": "banglabert_dialect_s44",
@@ -137,114 +165,132 @@
    "train_file": "train_dialect_aug.csv",
    "method": "standard",
    "seed": 44,
-   "batch_size": 32
+   "batch_size": 64,
+   "epochs": 3,
+   "lane": "A"
   },
   {
    "id": "banglabert-adapt250_augmented_s42",
    "kind": "adapt",
    "from": "banglabert_augmented_s42",
    "n": 250,
-   "seed": 42
+   "seed": 42,
+   "lane": "A"
   },
   {
    "id": "banglabert-adapt500_augmented_s42",
    "kind": "adapt",
    "from": "banglabert_augmented_s42",
    "n": 500,
-   "seed": 42
+   "seed": 42,
+   "lane": "A"
   },
   {
    "id": "banglabert-adapt1000_augmented_s42",
    "kind": "adapt",
    "from": "banglabert_augmented_s42",
    "n": 1000,
-   "seed": 42
+   "seed": 42,
+   "lane": "A"
   },
   {
    "id": "banglabert-adaptfull_augmented_s42",
    "kind": "adapt",
    "from": "banglabert_augmented_s42",
    "n": 0,
-   "seed": 42
+   "seed": 42,
+   "lane": "A"
   },
   {
    "id": "banglabert-adapt250_augmented_s43",
    "kind": "adapt",
    "from": "banglabert_augmented_s43",
    "n": 250,
-   "seed": 43
+   "seed": 43,
+   "lane": "A"
   },
   {
    "id": "banglabert-adapt500_augmented_s43",
    "kind": "adapt",
    "from": "banglabert_augmented_s43",
    "n": 500,
-   "seed": 43
+   "seed": 43,
+   "lane": "A"
   },
   {
    "id": "banglabert-adapt1000_augmented_s43",
    "kind": "adapt",
    "from": "banglabert_augmented_s43",
    "n": 1000,
-   "seed": 43
+   "seed": 43,
+   "lane": "A"
   },
   {
    "id": "banglabert-adaptfull_augmented_s43",
    "kind": "adapt",
    "from": "banglabert_augmented_s43",
    "n": 0,
-   "seed": 43
+   "seed": 43,
+   "lane": "A"
   },
   {
    "id": "banglabert-adapt250_augmented_s44",
    "kind": "adapt",
    "from": "banglabert_augmented_s44",
    "n": 250,
-   "seed": 44
+   "seed": 44,
+   "lane": "A"
   },
   {
    "id": "banglabert-adapt500_augmented_s44",
    "kind": "adapt",
    "from": "banglabert_augmented_s44",
    "n": 500,
-   "seed": 44
+   "seed": 44,
+   "lane": "A"
   },
   {
    "id": "banglabert-adapt1000_augmented_s44",
    "kind": "adapt",
    "from": "banglabert_augmented_s44",
    "n": 1000,
-   "seed": 44
+   "seed": 44,
+   "lane": "A"
   },
   {
    "id": "banglabert-adaptfull_augmented_s44",
    "kind": "adapt",
    "from": "banglabert_augmented_s44",
    "n": 0,
-   "seed": 44
+   "seed": 44,
+   "lane": "A"
   },
   {
    "id": "faith_banglabert_lime",
    "kind": "faithfulness",
    "model_dir": "banglabert_aug_dia_s42",
-   "method": "lime"
+   "method": "lime",
+   "lane": "A"
   },
   {
    "id": "faith_banglabert_shap",
    "kind": "faithfulness",
    "model_dir": "banglabert_aug_dia_s42",
-   "method": "shap"
+   "method": "shap",
+   "lane": "A"
   },
   {
    "id": "faith_banglabert_random",
    "kind": "faithfulness",
    "model_dir": "banglabert_aug_dia_s42",
-   "method": "random"
+   "method": "random",
+   "lane": "A"
   },
   {
    "id": "explain_banglabert",
    "kind": "explain",
-   "model_dir": "banglabert_aug_dia_s42"
+   "model_dir": "banglabert_aug_dia_s42",
+   "lane": "A"
   },
   {
    "id": "xlm-roberta-base_clean_s42",
@@ -253,7 +299,9 @@
    "train_file": "train.csv",
    "method": "standard",
    "seed": 42,
-   "batch_size": 16
+   "batch_size": 32,
+   "epochs": 2,
+   "lane": "B"
   },
   {
    "id": "xlm-roberta-base_augmented_s42",
@@ -262,7 +310,9 @@
    "train_file": "train_augmented.csv",
    "method": "standard",
    "seed": 42,
-   "batch_size": 16
+   "batch_size": 32,
+   "epochs": 2,
+   "lane": "B"
   },
   {
    "id": "xlm-roberta-base_aug_dia_s42",
@@ -271,7 +321,9 @@
    "train_file": "train_aug_dia.csv",
    "method": "standard",
    "seed": 42,
-   "batch_size": 16
+   "batch_size": 32,
+   "epochs": 2,
+   "lane": "B"
   },
   {
    "id": "xlm-roberta-base_clean_s43",
@@ -280,7 +332,9 @@
    "train_file": "train.csv",
    "method": "standard",
    "seed": 43,
-   "batch_size": 16
+   "batch_size": 32,
+   "epochs": 2,
+   "lane": "B"
   },
   {
    "id": "xlm-roberta-base_augmented_s43",
@@ -289,7 +343,9 @@
    "train_file": "train_augmented.csv",
    "method": "standard",
    "seed": 43,
-   "batch_size": 16
+   "batch_size": 32,
+   "epochs": 2,
+   "lane": "B"
   },
   {
    "id": "xlm-roberta-base_aug_dia_s43",
@@ -298,7 +354,9 @@
    "train_file": "train_aug_dia.csv",
    "method": "standard",
    "seed": 43,
-   "batch_size": 16
+   "batch_size": 32,
+   "epochs": 2,
+   "lane": "B"
   },
   {
    "id": "xlm-roberta-base_clean_s44",
@@ -307,7 +365,9 @@
    "train_file": "train.csv",
    "method": "standard",
    "seed": 44,
-   "batch_size": 16
+   "batch_size": 32,
+   "epochs": 2,
+   "lane": "B"
   },
   {
    "id": "xlm-roberta-base_augmented_s44",
@@ -316,7 +376,9 @@
    "train_file": "train_augmented.csv",
    "method": "standard",
    "seed": 44,
-   "batch_size": 16
+   "batch_size": 32,
+   "epochs": 2,
+   "lane": "B"
   },
   {
    "id": "xlm-roberta-base_aug_dia_s44",
@@ -325,7 +387,9 @@
    "train_file": "train_aug_dia.csv",
    "method": "standard",
    "seed": 44,
-   "batch_size": 16
+   "batch_size": 32,
+   "epochs": 2,
+   "lane": "B"
   },
   {
    "id": "muril-base-cased_clean_s42",
@@ -334,7 +398,9 @@
    "train_file": "train.csv",
    "method": "standard",
    "seed": 42,
-   "batch_size": 16
+   "batch_size": 32,
+   "epochs": 2,
+   "lane": "B"
   },
   {
    "id": "muril-base-cased_augmented_s42",
@@ -343,7 +409,9 @@
    "train_file": "train_augmented.csv",
    "method": "standard",
    "seed": 42,
-   "batch_size": 16
+   "batch_size": 32,
+   "epochs": 2,
+   "lane": "B"
   },
   {
    "id": "muril-base-cased_clean_s43",
@@ -352,7 +420,9 @@
    "train_file": "train.csv",
    "method": "standard",
    "seed": 43,
-   "batch_size": 16
+   "batch_size": 32,
+   "epochs": 2,
+   "lane": "B"
   },
   {
    "id": "muril-base-cased_augmented_s43",
@@ -361,7 +431,9 @@
    "train_file": "train_augmented.csv",
    "method": "standard",
    "seed": 43,
-   "batch_size": 16
+   "batch_size": 32,
+   "epochs": 2,
+   "lane": "B"
   },
   {
    "id": "muril-base-cased_clean_s44",
@@ -370,7 +442,9 @@
    "train_file": "train.csv",
    "method": "standard",
    "seed": 44,
-   "batch_size": 16
+   "batch_size": 32,
+   "epochs": 2,
+   "lane": "B"
   },
   {
    "id": "muril-base-cased_augmented_s44",
@@ -379,15 +453,19 @@
    "train_file": "train_augmented.csv",
    "method": "standard",
    "seed": 44,
-   "batch_size": 16
+   "batch_size": 32,
+   "epochs": 2,
+   "lane": "B"
   },
   {
    "id": "llm_qwen25_7b",
-   "kind": "llm"
+   "kind": "llm",
+   "lane": "B"
   },
   {
    "id": "llm_qwen25_7b_qlora",
-   "kind": "llm_finetune"
+   "kind": "llm_finetune",
+   "lane": "B"
   }
  ]
 }

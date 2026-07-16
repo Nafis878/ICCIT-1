@@ -1,6 +1,9 @@
 """Metric computation, classification reports, confusion-matrix figures,
 and the shared results_summary.csv (one row per model x train-variant x
 test-set, upserted so re-runs overwrite instead of duplicating)."""
+import os
+import time
+from contextlib import contextmanager
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -22,6 +25,32 @@ LABEL_NAMES = ["not_hate", "hate"]
 _SEQ_RAMP = ["#cde2fb", "#9ec5f4", "#6da7ec", "#3987e5", "#256abf", "#184f95", "#0d366b"]
 _INK = "#1f2429"
 _MUTED = "#5f6b76"
+
+
+@contextmanager
+def _summary_lock(timeout_s: float = 30.0, stale_s: float = 120.0):
+    """Cross-process lock via O_EXCL lockfile (portable, no deps)."""
+    lock = RESULTS_DIR / ".summary.lock"
+    deadline = time.time() + timeout_s
+    while True:
+        try:
+            fd = os.open(lock, os.O_CREAT | os.O_EXCL | os.O_WRONLY)
+            os.close(fd)
+            break
+        except FileExistsError:
+            try:  # clear locks abandoned by killed processes
+                if time.time() - lock.stat().st_mtime > stale_s:
+                    lock.unlink(missing_ok=True)
+                    continue
+            except OSError:
+                pass
+            if time.time() > deadline:  # proceed rather than deadlock
+                break
+            time.sleep(0.2)
+    try:
+        yield
+    finally:
+        lock.unlink(missing_ok=True)
 
 
 def compute_all(y_true, y_pred) -> dict:
@@ -120,21 +149,25 @@ def record_results(model_id: str, train_variant: str, test_set: str,
            if k not in ("confusion_matrix", "labels")}
     row["timestamp"] = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%MZ")
     summary_path = RESULTS_DIR / "results_summary.csv"
-    if summary_path.exists():
-        summary = pd.read_csv(summary_path)
-        if "seed" not in summary.columns:
-            summary["seed"] = 42  # legacy rows predate the seed column
-        key = (summary["model"] == model_id) & \
-              (summary["train_variant"] == train_variant) & \
-              (summary["test_set"] == test_set) & \
-              (summary["seed"] == int(seed))
-        summary = summary[~key]
-        summary = pd.concat([summary, pd.DataFrame([row])], ignore_index=True)
-    else:
-        summary = pd.DataFrame([row])
-    summary.sort_values(["model", "train_variant", "test_set", "seed"],
-                        inplace=True)
-    summary.to_csv(summary_path, index=False, encoding="utf-8")
+    # Lockfile keeps the read-modify-write safe when two runner lanes
+    # (parallel GPUs/processes) finish jobs at the same moment.
+    with _summary_lock():
+        if summary_path.exists():
+            summary = pd.read_csv(summary_path)
+            if "seed" not in summary.columns:
+                summary["seed"] = 42  # legacy rows predate the seed column
+            key = (summary["model"] == model_id) & \
+                  (summary["train_variant"] == train_variant) & \
+                  (summary["test_set"] == test_set) & \
+                  (summary["seed"] == int(seed))
+            summary = summary[~key]
+            summary = pd.concat([summary, pd.DataFrame([row])],
+                                ignore_index=True)
+        else:
+            summary = pd.DataFrame([row])
+        summary.sort_values(["model", "train_variant", "test_set", "seed"],
+                            inplace=True)
+        summary.to_csv(summary_path, index=False, encoding="utf-8")
 
     print(f"    [{slug}] acc={metrics['accuracy']:.4f} "
           f"macroF1={metrics['f1_macro']:.4f} "
