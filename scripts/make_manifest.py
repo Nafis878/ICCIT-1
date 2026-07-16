@@ -79,12 +79,12 @@ def main() -> None:
         for tf in ("train.csv", "train_augmented.csv"):
             jobs.append(train("muril-base-cased", "google/muril-base-cased",
                               tf, s))
-    for tf in ("train.csv", "train_augmented.csv"):
-        jobs.append(train("bert-base-multilingual-cased",
-                          "bert-base-multilingual-cased", tf, 42))
+    # (mBERT dropped: MuRIL covers the generic-multilingual niche better
+    #  for Bangla; saves ~3 T4-hours.)
 
-    # 5. LLM baseline
+    # 5. LLM baselines: few-shot + Unsloth QLoRA fine-tuned
     jobs.append({"id": "llm_qwen25_7b", "kind": "llm"})
+    jobs.append({"id": "llm_qwen25_7b_qlora", "kind": "llm_finetune"})
 
     (SCRIPTS / "experiments_manifest.json").write_text(
         json.dumps({"jobs": jobs}, indent=1), encoding="utf-8")

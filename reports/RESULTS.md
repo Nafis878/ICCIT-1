@@ -75,14 +75,22 @@ the data; uncertainty is carried by the example-level bootstrap CIs.)
 
 ## Transformer phase (GPU queue — in progress)
 
-49 jobs in `scripts/experiments_manifest.json`: BanglaBERT ×
+48 jobs in `scripts/experiments_manifest.json`: BanglaBERT ×
 {clean, synthetic aug, DIA, synthetic+DIA, NCT} × 3 seeds, few-shot
 adaptation curve (N ∈ {250, 500, 1000, full} × 3 seeds), XLM-R (3 variants
-× 3 seeds), MuRIL (2 × 3), mBERT (2 × 1), Qwen2.5-7B few-shot baseline,
-transformer faithfulness (LIME/SHAP/random). Run via
+× 3 seeds), MuRIL (2 × 3), Qwen2.5-7B few-shot **and** Unsloth-QLoRA
+fine-tuned baselines, transformer faithfulness (LIME/SHAP/random). Run via
 `scripts/colab_runner.py` (resume-safe; see README). Analysis after each
 returned batch: `evaluate --all --skip-existing && stats && slices &&
 figures`.
+
+Speed engineering (all smoke-verified on CPU): length-bucketed batching
+cuts padded-token compute **4.08×** on this corpus (median comment = 13
+BanglaBERT tokens, p95 = 52; measured against the 4.37× ideal), so the
+queue needs ≈12–18 T4-hours (~2 Colab sessions) instead of ~40+. The LLM
+fine-tune uses Unsloth fused kernels (~2× vs plain QLoRA). mBERT was cut
+from the matrix (MuRIL covers the generic-multilingual comparison for
+Bangla); noted as a scope decision in PAPER_NOTES.md.
 
 ## Reproduce (local part)
 

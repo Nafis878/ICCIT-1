@@ -382,26 +382,12 @@
    "batch_size": 16
   },
   {
-   "id": "bert-base-multilingual-cased_clean_s42",
-   "kind": "train",
-   "model_name": "bert-base-multilingual-cased",
-   "train_file": "train.csv",
-   "method": "standard",
-   "seed": 42,
-   "batch_size": 16
-  },
-  {
-   "id": "bert-base-multilingual-cased_augmented_s42",
-   "kind": "train",
-   "model_name": "bert-base-multilingual-cased",
-   "train_file": "train_augmented.csv",
-   "method": "standard",
-   "seed": 42,
-   "batch_size": 16
-  },
-  {
    "id": "llm_qwen25_7b",
    "kind": "llm"
+  },
+  {
+   "id": "llm_qwen25_7b_qlora",
+   "kind": "llm_finetune"
   }
  ]
 }

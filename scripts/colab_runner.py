@@ -11,7 +11,7 @@ Colab cell:
     from google.colab import drive; drive.mount('/content/drive')
     !git clone https://github.com/Nafis878/ICCIT-1.git 2>/dev/null; cd ICCIT-1 && git pull
     %cd ICCIT-1
-    !pip install -q lime accelerate sentencepiece bitsandbytes
+    !pip install -q lime accelerate sentencepiece bitsandbytes peft unsloth
     !python -m src.data.download && python -m src.data.preprocess && python -m src.data.augment
     !python scripts/colab_runner.py --state-dir /content/drive/MyDrive/iccit_q1_state --time-budget-min 200
 
@@ -59,6 +59,14 @@ def job_command(job: dict, smoke: bool) -> list[str]:
         if smoke:
             cmd += ["--smoke", "--no-quant",
                     "--model-name", "Qwen/Qwen2.5-0.5B-Instruct"]
+        return cmd
+    if kind == "llm_finetune":
+        cmd = py + ["src.models.llm_finetune"]
+        if smoke:
+            cmd += ["--smoke", "--no-quant", "--model-name",
+                    "trl-internal-testing/tiny-Qwen2ForCausalLM-2.5"]
+        else:
+            cmd += ["--unsloth"]
         return cmd
     if kind == "faithfulness":
         return py + ["src.explainability.faithfulness",

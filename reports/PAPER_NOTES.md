@@ -30,8 +30,11 @@ bootstrap, prediction dumps in `outputs/predictions/`.
   across TF-IDF/mBERT/MuRIL/XLM-R/BanglaBERT.
 - C4 DIA/NCT close X% of the gap at zero clean cost; adaptation with
   N=250 closes Y%.
-- C5 LLM few-shot (Qwen2.5-7B) underperforms fine-tuned models by Z pts
-  (or not — report either way).
+- C5 LLM comparison: Qwen2.5-7B few-shot AND Unsloth-QLoRA fine-tuned
+  (8K SFT examples) vs fine-tuned encoders — report gaps either way.
+  Scope note: mBERT dropped from the matrix (MuRIL is the stronger
+  generic-multilingual representative for Bangla; budget went to the
+  LLM fine-tune instead).
 - C6 Faithfulness: LIME vs SHAP vs random comprehensiveness/sufficiency/
   deletion-AUC for TF-IDF LR + BanglaBERT.
 - C7 Leakage rigor: near-dup rates (BIDWESH↔train 188 rows @0.9;

@@ -32,8 +32,14 @@ methods, with journal-grade statistics.
 **Rigor:** 3 seeds (42/43/44) for every main row, per-example prediction
 dumps, bootstrap 95% CIs, paired-bootstrap + McNemar significance tests,
 ERASER-style faithfulness metrics for LIME/SHAP, near-duplicate leakage
-audit. Model families: TF-IDF LR/SVM, BanglaBERT, XLM-R, MuRIL, mBERT,
-Qwen2.5-7B few-shot.
+audit. Model families: TF-IDF LR/SVM, BanglaBERT, XLM-R, MuRIL,
+Qwen2.5-7B few-shot **and** Unsloth-QLoRA fine-tuned.
+
+**Speed:** training uses length-bucketed batching (BD-SHS comments have a
+median of 13 tokens; bucketing cuts padded-token compute 4.1× vs random
+batches — measured in `reports/RESULTS.md`), fp16, and Unsloth kernels for
+the LLM fine-tune, so the whole 48-job GPU queue fits in roughly 12–18
+T4-hours (~2 Colab sessions).
 
 ⚠️ Content warning: the datasets contain highly offensive Bangla text; they
 are used exclusively to build detection systems.
@@ -89,7 +95,7 @@ prints `ALL DONE` — state and checkpoints persist on Drive:
 from google.colab import drive; drive.mount('/content/drive')
 !git clone https://github.com/Nafis878/ICCIT-1.git 2>/dev/null; %cd ICCIT-1
 !git pull
-!pip install -q lime accelerate sentencepiece bitsandbytes
+!pip install -q lime accelerate sentencepiece bitsandbytes peft unsloth
 !python -m src.data.download && python -m src.data.preprocess && \
  python -m src.data.leakage_audit && python -m src.data.dialect_lexicon && \
  python -m src.data.augment

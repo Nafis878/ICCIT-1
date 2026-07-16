@@ -160,6 +160,12 @@ def run_training(
         report_to=[],
         # the paired-view keys must survive the RemoveColumnsCollator wrapper
         remove_unused_columns=(method != "consistency"),
+        # BD-SHS comments are short (median 13 tokens, p95=52): batching
+        # similar lengths together cuts padding compute ~2x vs random
+        # batches that pad everything to the batch max. (Arg renamed in v5.)
+        **({"train_sampling_strategy": "group_by_length"}
+           if "train_sampling_strategy" in TrainingArguments.__dataclass_fields__
+           else {"group_by_length": True}),
     )
     trainer = trainer_cls(
         model=model,
