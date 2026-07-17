@@ -48,6 +48,73 @@ def _style_axes(ax):
     ax.set_axisbelow(True)
 
 
+def _save(fig, name: str) -> None:
+    """PNG (300 dpi) + vector PDF, as journals require."""
+    fig.savefig(FIGURES_DIR / f"{name}.png", dpi=300, bbox_inches="tight")
+    fig.savefig(FIGURES_DIR / f"{name}.pdf", bbox_inches="tight")
+    plt.close(fig)
+    print(f"  {name}.png/.pdf")
+
+
+MODEL_LABEL = {
+    "tfidf_lr": "TF-IDF LR", "tfidf_svm": "TF-IDF SVM",
+    "xlm-roberta-base": "XLM-R", "muril-base-cased": "MuRIL",
+    "banglabert": "BanglaBERT",
+}
+
+
+def main_results(stats: pd.DataFrame) -> None:
+    """Two-panel money plot: (a) held-out dialect macro-F1 with 95% CIs,
+    (b) dialect gap (clean minus held-out), per model family x variant."""
+    models = [m for m in MODEL_LABEL if m in set(stats["model"])]
+    variants = ["clean", "augmented", "dialect", "aug_dia"]
+    x = np.arange(len(models))
+    width = 0.19
+
+    fig, (ax1, ax2) = plt.subplots(
+        2, 1, figsize=(7.0, 5.6), dpi=150, sharex=True,
+        gridspec_kw={"height_ratios": [3, 2], "hspace": 0.12})
+    for i, v in enumerate(variants):
+        y, lo, hi, gap = [], [], [], []
+        for m in models:
+            r_h = stats[(stats["model"] == m)
+                        & (stats["train_variant"] == v)
+                        & (stats["test_set"] == "bidwesh_heldout")]
+            r_c = stats[(stats["model"] == m)
+                        & (stats["train_variant"] == v)
+                        & (stats["test_set"] == "clean")]
+            if r_h.empty or r_c.empty:
+                y.append(np.nan), lo.append(np.nan), hi.append(np.nan)
+                gap.append(np.nan)
+                continue
+            y.append(r_h["f1_macro_mean"].iloc[0])
+            lo.append(r_h["f1_ci95_lo"].iloc[0])
+            hi.append(r_h["f1_ci95_hi"].iloc[0])
+            gap.append(r_c["f1_macro_mean"].iloc[0]
+                       - r_h["f1_macro_mean"].iloc[0])
+        pos = x + (i - (len(variants) - 1) / 2) * width
+        ax1.bar(pos, y, width * 0.9, color=VARIANT_COLOR[v],
+                label=VARIANT_LABEL[v], zorder=3)
+        ax1.errorbar(pos, y,
+                     yerr=[np.array(y) - np.array(lo),
+                           np.array(hi) - np.array(y)],
+                     fmt="none", ecolor=_INK, elinewidth=0.9, capsize=1.8,
+                     zorder=4)
+        ax2.bar(pos, gap, width * 0.9, color=VARIANT_COLOR[v], zorder=3)
+
+    ax1.set_ylabel("macro-F1 on BIDWESH held-out", color=_MUTED, fontsize=9)
+    ax1.set_ylim(bottom=0.82)
+    ax1.legend(frameon=False, fontsize=8, ncol=4, loc="upper left")
+    ax2.set_ylabel("dialect gap\n(clean − held-out)", color=_MUTED,
+                   fontsize=9)
+    ax2.set_xticks(x, [MODEL_LABEL[m] for m in models], color=_MUTED,
+                   fontsize=9)
+    for ax in (ax1, ax2):
+        _style_axes(ax)
+    fig.align_ylabels((ax1, ax2))
+    _save(fig, "main_results")
+
+
 def robustness_bars(stats: pd.DataFrame, model: str) -> None:
     sub = stats[(stats["model"] == model)
                 & stats["test_set"].isin(TEST_LABEL)]
@@ -85,10 +152,7 @@ def robustness_bars(stats: pd.DataFrame, model: str) -> None:
               loc="upper center", bbox_to_anchor=(0.5, -0.10))
     _style_axes(ax)
     fig.tight_layout()
-    fig.savefig(FIGURES_DIR / f"robustness_bars_{model}.png",
-                bbox_inches="tight")
-    plt.close(fig)
-    print(f"  robustness_bars_{model}.png")
+    _save(fig, f"robustness_bars_{model}")
 
 
 def adaptation_curve() -> None:
@@ -132,9 +196,7 @@ def adaptation_curve() -> None:
     ax.legend(frameon=False, fontsize=8)
     _style_axes(ax)
     fig.tight_layout()
-    fig.savefig(FIGURES_DIR / "adaptation_curve.png", bbox_inches="tight")
-    plt.close(fig)
-    print("  adaptation_curve.png")
+    _save(fig, "adaptation_curve")
 
 
 def faithfulness_bars() -> None:
@@ -174,9 +236,7 @@ def faithfulness_bars() -> None:
                  "lower sufficiency/deletion-AUC = more faithful)",
                  fontsize=10, color=_INK)
     fig.tight_layout()
-    fig.savefig(FIGURES_DIR / "faithfulness_bars.png", bbox_inches="tight")
-    plt.close(fig)
-    print("  faithfulness_bars.png")
+    _save(fig, "faithfulness_bars")
 
 
 def main() -> None:
@@ -192,6 +252,7 @@ def main() -> None:
                     if "smoke" not in m and m != "majority"
                     and "-adapt" not in m])
     print("figures:")
+    main_results(stats)
     for m in models:
         robustness_bars(stats, m)
     adaptation_curve()
