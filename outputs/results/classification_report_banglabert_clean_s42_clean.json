@@ -1,0 +1,29 @@
+{
+  "model": "banglabert",
+  "train_variant": "clean",
+  "test_set": "clean",
+  "seed": 42,
+  "tag": "full",
+  "labels": [
+    "not_hate",
+    "hate"
+  ],
+  "n": 5028,
+  "accuracy": 0.9230310262529833,
+  "precision_macro": 0.9228480384965787,
+  "recall_macro": 0.9234185952760058,
+  "f1_macro": 0.9229787429934337,
+  "f1_weighted": 0.9230569683283323,
+  "f1_not_hate": 0.9249854622988951,
+  "f1_hate": 0.9209720236879723,
+  "confusion_matrix": [
+    [
+      2386,
+      226
+    ],
+    [
+      161,
+      2255
+    ]
+  ]
+}

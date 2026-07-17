@@ -1,0 +1,29 @@
+{
+  "model": "banglabert",
+  "train_variant": "aug_dia",
+  "test_set": "bidwesh_barishal",
+  "seed": 44,
+  "tag": "full",
+  "labels": [
+    "not_hate",
+    "hate"
+  ],
+  "n": 1439,
+  "accuracy": 0.911049339819319,
+  "precision_macro": 0.9112175623251573,
+  "recall_macro": 0.9113049712269419,
+  "f1_macro": 0.9110482658970703,
+  "f1_weighted": 0.9110540650772129,
+  "f1_not_hate": 0.9113573407202216,
+  "f1_hate": 0.9107391910739191,
+  "confusion_matrix": [
+    [
+      658,
+      75
+    ],
+    [
+      53,
+      653
+    ]
+  ]
+}

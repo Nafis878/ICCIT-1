@@ -1,0 +1,29 @@
+{
+  "model": "banglabert",
+  "train_variant": "dialect",
+  "test_set": "bidwesh_noakhali",
+  "seed": 44,
+  "tag": "full",
+  "labels": [
+    "not_hate",
+    "hate"
+  ],
+  "n": 1475,
+  "accuracy": 0.903728813559322,
+  "precision_macro": 0.904725491785759,
+  "recall_macro": 0.9038489117364781,
+  "f1_macro": 0.9036862706146789,
+  "f1_weighted": 0.9036766641433078,
+  "f1_not_hate": 0.9016620498614959,
+  "f1_hate": 0.9057104913678619,
+  "confusion_matrix": [
+    [
+      651,
+      90
+    ],
+    [
+      52,
+      682
+    ]
+  ]
+}

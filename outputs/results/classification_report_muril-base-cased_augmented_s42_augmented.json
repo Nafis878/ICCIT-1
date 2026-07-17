@@ -1,0 +1,29 @@
+{
+  "model": "muril-base-cased",
+  "train_variant": "augmented",
+  "test_set": "augmented",
+  "seed": 42,
+  "tag": "full",
+  "labels": [
+    "not_hate",
+    "hate"
+  ],
+  "n": 5028,
+  "accuracy": 0.9079156722354813,
+  "precision_macro": 0.9078785210083715,
+  "recall_macro": 0.9084976496658317,
+  "f1_macro": 0.9078770131192205,
+  "f1_weighted": 0.9079505780394836,
+  "f1_not_hate": 0.9097641785227051,
+  "f1_hate": 0.905989847715736,
+  "confusion_matrix": [
+    [
+      2334,
+      278
+    ],
+    [
+      185,
+      2231
+    ]
+  ]
+}

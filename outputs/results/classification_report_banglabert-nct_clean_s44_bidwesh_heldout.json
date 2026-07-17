@@ -1,0 +1,29 @@
+{
+  "model": "banglabert-nct",
+  "train_variant": "clean",
+  "test_set": "bidwesh_heldout",
+  "seed": 44,
+  "tag": "full",
+  "labels": [
+    "not_hate",
+    "hate"
+  ],
+  "n": 4408,
+  "accuracy": 0.8865698729582577,
+  "precision_macro": 0.8873227008840217,
+  "recall_macro": 0.8867986293145832,
+  "f1_macro": 0.8865474282196285,
+  "f1_weighted": 0.88653149969544,
+  "f1_not_hate": 0.8849516797054763,
+  "f1_hate": 0.8881431767337807,
+  "confusion_matrix": [
+    [
+      1923,
+      303
+    ],
+    [
+      197,
+      1985
+    ]
+  ]
+}

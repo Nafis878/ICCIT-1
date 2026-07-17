@@ -1,0 +1,29 @@
+{
+  "model": "banglabert-adapt500",
+  "train_variant": "augmented",
+  "test_set": "bidwesh_barishal",
+  "seed": 43,
+  "tag": "full",
+  "labels": [
+    "not_hate",
+    "hate"
+  ],
+  "n": 1439,
+  "accuracy": 0.9082696316886727,
+  "precision_macro": 0.9095289804577411,
+  "recall_macro": 0.9088373288399182,
+  "f1_macro": 0.9082536370486292,
+  "f1_weighted": 0.9082309078233043,
+  "f1_not_hate": 0.9070422535211268,
+  "f1_hate": 0.9094650205761317,
+  "confusion_matrix": [
+    [
+      644,
+      89
+    ],
+    [
+      43,
+      663
+    ]
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "model": "qwen2.5-7b-fewshot",
+  "train_variant": "fewshot",
+  "test_set": "bidwesh_heldout_subset",
+  "seed": 42,
+  "tag": "full",
+  "labels": [
+    "not_hate",
+    "hate"
+  ],
+  "n": 1500,
+  "accuracy": 0.696,
+  "precision_macro": 0.7140876468029578,
+  "recall_macro": 0.696,
+  "f1_macro": 0.6894404297708578,
+  "f1_weighted": 0.689440429770858,
+  "f1_not_hate": 0.6443057722308893,
+  "f1_hate": 0.7345750873108265,
+  "confusion_matrix": [
+    [
+      413,
+      337
+    ],
+    [
+      119,
+      631
+    ]
+  ]
+}

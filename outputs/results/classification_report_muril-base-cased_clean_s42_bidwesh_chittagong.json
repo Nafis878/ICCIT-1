@@ -1,0 +1,29 @@
+{
+  "model": "muril-base-cased",
+  "train_variant": "clean",
+  "test_set": "bidwesh_chittagong",
+  "seed": 42,
+  "tag": "full",
+  "labels": [
+    "not_hate",
+    "hate"
+  ],
+  "n": 1494,
+  "accuracy": 0.8239625167336011,
+  "precision_macro": 0.8249888018017857,
+  "recall_macro": 0.8237709324998566,
+  "f1_macro": 0.8237571402619946,
+  "f1_weighted": 0.8237974101583879,
+  "f1_not_hate": 0.8297734627831715,
+  "f1_hate": 0.8177408177408177,
+  "confusion_matrix": [
+    [
+      641,
+      111
+    ],
+    [
+      152,
+      590
+    ]
+  ]
+}

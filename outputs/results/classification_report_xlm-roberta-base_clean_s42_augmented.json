@@ -1,0 +1,29 @@
+{
+  "model": "xlm-roberta-base",
+  "train_variant": "clean",
+  "test_set": "augmented",
+  "seed": 42,
+  "tag": "full",
+  "labels": [
+    "not_hate",
+    "hate"
+  ],
+  "n": 5028,
+  "accuracy": 0.895186953062848,
+  "precision_macro": 0.8952274549837353,
+  "recall_macro": 0.894786733162277,
+  "f1_macro": 0.8949728796985881,
+  "f1_weighted": 0.8951577183743367,
+  "f1_not_hate": 0.8997145575642246,
+  "f1_hate": 0.8902312018329515,
+  "confusion_matrix": [
+    [
+      2364,
+      248
+    ],
+    [
+      279,
+      2137
+    ]
+  ]
+}

@@ -1,4 +1,11 @@
 a,b,test_set,delta_f1_macro,p_paired_bootstrap,mcnemar_b_only,mcnemar_a_only,p_mcnemar,n_seeds_a,n_seeds_b
+banglabert:augmented,banglabert:clean,bidwesh_heldout,0.0073,0.002,70,98,0.036927,3,3
+banglabert:augmented,banglabert:clean,augmented,0.0071,0.004,75,115,0.004537,3,3
+banglabert-nct:clean,banglabert:augmented,bidwesh_heldout,-0.0054,0.008,79,64,0.241604,3,3
+banglabert:aug_dia,banglabert:augmented,bidwesh_heldout,0.0086,0.0,65,110,0.000831,3,3
+banglabert:dialect,banglabert:clean,bidwesh_heldout,0.0158,0.0,85,151,2.3e-05,3,3
+banglabert:clean,tfidf_lr:clean,clean,0.0203,0.0,143,252,0.0,3,3
+banglabert:clean,tfidf_lr:clean,bidwesh_heldout,0.0266,0.0,185,314,0.0,3,3
 tfidf_lr:augmented,tfidf_lr:clean,bidwesh_heldout,0.0093,0.0,53,94,0.000906,3,3
 tfidf_lr:dialect,tfidf_lr:clean,bidwesh_heldout,0.0241,0.0,72,178,0.0,3,3
 tfidf_lr:aug_dia,tfidf_lr:clean,bidwesh_heldout,0.0244,0.0,75,182,0.0,3,3

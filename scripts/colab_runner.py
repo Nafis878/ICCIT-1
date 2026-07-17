@@ -31,7 +31,7 @@ PROJECT_ROOT = Path(__file__).resolve().parents[1]
 OUTPUTS = PROJECT_ROOT / "outputs"
 MODELS_DIR = OUTPUTS / "models"
 MIRROR_DIRS = ["outputs/results", "outputs/predictions", "outputs/figures",
-               "reports"]
+               "outputs/explainability", "reports"]
 
 
 def job_command(job: dict, smoke: bool) -> list[str]:
@@ -94,7 +94,11 @@ def mirror_outputs(state: Path) -> None:
             if p.is_file():
                 q = dst / p.relative_to(src)
                 q.parent.mkdir(parents=True, exist_ok=True)
+                # NB: also compare size — Drive's FUSE mount reports sync
+                # time as mtime, which silently defeats a pure mtime check
+                # for files that are rewritten in place (results_summary).
                 if (not q.exists()
+                        or p.stat().st_size != q.stat().st_size
                         or p.stat().st_mtime > q.stat().st_mtime):
                     shutil.copy2(p, q)
 

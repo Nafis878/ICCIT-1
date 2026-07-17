@@ -1,0 +1,29 @@
+{
+  "model": "xlm-roberta-base",
+  "train_variant": "augmented",
+  "test_set": "bidwesh_noakhali",
+  "seed": 44,
+  "tag": "full",
+  "labels": [
+    "not_hate",
+    "hate"
+  ],
+  "n": 1475,
+  "accuracy": 0.8908474576271187,
+  "precision_macro": 0.8945751619437705,
+  "recall_macro": 0.8910798795353506,
+  "f1_macro": 0.8906284757899643,
+  "f1_weighted": 0.8906052504435995,
+  "f1_not_hate": 0.8857345635202271,
+  "f1_hate": 0.8955223880597015,
+  "confusion_matrix": [
+    [
+      624,
+      117
+    ],
+    [
+      44,
+      690
+    ]
+  ]
+}

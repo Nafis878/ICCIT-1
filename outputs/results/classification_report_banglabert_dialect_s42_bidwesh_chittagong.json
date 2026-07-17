@@ -1,0 +1,29 @@
+{
+  "model": "banglabert",
+  "train_variant": "dialect",
+  "test_set": "bidwesh_chittagong",
+  "seed": 42,
+  "tag": "full",
+  "labels": [
+    "not_hate",
+    "hate"
+  ],
+  "n": 1494,
+  "accuracy": 0.8674698795180723,
+  "precision_macro": 0.8695677233429395,
+  "recall_macro": 0.8677238057005219,
+  "f1_macro": 0.8673329350791934,
+  "f1_weighted": 0.8673044049877604,
+  "f1_not_hate": 0.8630705394190872,
+  "f1_hate": 0.8715953307392996,
+  "confusion_matrix": [
+    [
+      624,
+      128
+    ],
+    [
+      70,
+      672
+    ]
+  ]
+}
